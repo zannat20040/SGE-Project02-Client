@@ -1,19 +1,22 @@
 import { Button } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { GoEye, GoEyeClosed, GoUnlock } from "react-icons/go";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import { IoPersonOutline } from "react-icons/io5";
 import { GoMail } from "react-icons/go";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CiWarning } from "react-icons/ci";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { updateProfile } from "firebase/auth";
 
 export default function Signup() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isPassSame, setIsPassSame] = useState(true);
+  const { createWithPass, loading, setLoading } = useContext(AuthContext);
 
-  const HandleSignup = (e) => {
+  const HandleSignup = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -32,10 +35,29 @@ export default function Signup() {
       firstName,
       lastName,
       email,
-      password
+      password,
     };
 
-    console.log(userdata);
+    try {
+      setLoading(true);
+      const userCredential = await createWithPass(email, password);
+      const user = userCredential.user;
+      console.log(user);
+      await updateProfile(user, {
+        displayName: `${firstName} ${lastName}`,
+      });
+
+      setLoading(false);
+      console.log("User created and profile updated:", user);
+      // Redirect or display success message here
+    } catch (error) {
+      setLoading(false);
+      console.error("Error during signup:", error.message);
+      // Handle error here, e.g., show an alert
+    }
+
+    // form.reset();
+    // console.log(userdata);
   };
   return (
     <div className="card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center ">
@@ -65,6 +87,7 @@ export default function Signup() {
               type="text"
               className="grow text-sm  hover:bg-gray-100  outline-0"
               placeholder="John"
+              o
             />
           </label>
           <label className="p-2 py-3 rounded-tr rounded-none outline-none flex items-center gap-2 hover:bg-gray-100 border border-l-0">
@@ -140,7 +163,6 @@ export default function Signup() {
               <CiWarning /> <span>Password didn't match</span>
             </span>
           )}
-         
         </div>
         {/* remember checkbox  */}
         <div className="form-control mt-3 ">

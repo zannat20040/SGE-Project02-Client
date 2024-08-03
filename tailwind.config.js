@@ -8,7 +8,8 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        "primary-color": "#D83264", 
+        "primary-color": "#7B7C00", 
+        "secondary-color" :'#9A9348'
       },
     },
   },

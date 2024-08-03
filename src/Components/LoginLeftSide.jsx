@@ -7,10 +7,10 @@ export default function LoginLeftSide() {
   return (
     <div className="relative items-center justify-center bg-primary-color w-full flex md:h-full min-h-screen">
       {/* background design */}
-      <div className="absolute -top-2 left-[20%] h-16 w-16 rounded-full bg-gradient-to-br from-white via-pink-300 to-primary-color"></div>
-      <div className="absolute bottom-[18%] left-[20%] h-20 w-20 rounded-full bg-gradient-to-br from-white via-pink-300 to-primary-color"></div>
-      <div className="absolute right-0 md:-right-7 top-[50%] h-14 w-14 -translate-y-1/2 rounded-full bg-gradient-to-br from-white via-pink-300 to-primary-color transition-all"></div>
-      <div className="absolute left-[50%] top-[22%] h-24 w-24 -translate-x-1/2 rounded-full bg-gradient-to-br from-white via-pink-300 to-primary-color"></div>
+      <div className="absolute -top-2 left-[20%] h-16 w-16 rounded-full bg-gradient-to-br from-white via-secondary-color to-primary-color"></div>
+      <div className="absolute bottom-[18%] left-[20%] h-20 w-20 rounded-full bg-gradient-to-br from-white via-secondary-color to-primary-color"></div>
+      <div className="absolute right-0 md:-right-7 top-[50%] h-14 w-14 -translate-y-1/2 rounded-full bg-gradient-to-br from-white via-secondary-color to-primary-color transition-all"></div>
+      <div className="absolute left-[50%] top-[22%] h-24 w-24 -translate-x-1/2 rounded-full bg-gradient-to-br from-white via-secondary-color to-primary-color"></div>
       {/* text slider */}
       <div className="z-10 space-y-2 text-center">
         <Carousel
