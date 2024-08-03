@@ -6,11 +6,37 @@ import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import { IoPersonOutline } from "react-icons/io5";
 import { GoMail } from "react-icons/go";
 import { Link, useLocation } from "react-router-dom";
+import { CiWarning } from "react-icons/ci";
 
 export default function Signup() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [isPassSame, setIsPassSame] = useState(true);
 
+  const HandleSignup = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const confirmpass = form.confirmpass.value;
+
+    if (password !== confirmpass) {
+      setIsPassSame(false);
+      return;
+    }
+
+    const userdata = {
+      firstName,
+      lastName,
+      email,
+      password
+    };
+
+    console.log(userdata);
+  };
   return (
     <div className="card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center ">
       {/* login top text */}
@@ -28,12 +54,14 @@ export default function Signup() {
           expenses..
         </p>
       </div>
-      <form className="">
+      <form onSubmit={HandleSignup}>
         {/* name */}
         <div className="grid grid-cols-2">
           <label className="p-2 py-3 rounded-none rounded-tl outline-none flex items-center gap-2 hover:bg-gray-100 border">
             <IoPersonOutline className="text-2xl  text-gray-300 " />
             <input
+              name="firstName"
+              required
               type="text"
               className="grow text-sm  hover:bg-gray-100  outline-0"
               placeholder="John"
@@ -42,6 +70,8 @@ export default function Signup() {
           <label className="p-2 py-3 rounded-tr rounded-none outline-none flex items-center gap-2 hover:bg-gray-100 border border-l-0">
             <IoPersonOutline className="text-2xl  text-gray-300 " />
             <input
+              name="lastName"
+              required
               type="text"
               className="grow text-sm  hover:bg-gray-100  outline-0"
               placeholder="Doe"
@@ -52,6 +82,8 @@ export default function Signup() {
         <label className="p-2 py-3 rounded-none outline-none flex items-center gap-2 hover:bg-gray-100 border border-t-0">
           <GoMail className=" text-gray-300 " />
           <input
+            name="email"
+            required
             type="email"
             className="grow text-sm  hover:bg-gray-100  outline-0"
             placeholder="example@gmail.com"
@@ -62,6 +94,8 @@ export default function Signup() {
           <label className="relative p-2 py-3 rounded-none rounded-bl hover:bg-gray-100 flex items-center gap-2  border-t-0 border">
             <GoUnlock className=" text-gray-300" />
             <input
+              name="password"
+              required
               type={passwordVisible ? "text" : "password"}
               className="grow text-sm hover:bg-gray-100  outline-0"
               placeholder="••••••••"
@@ -82,6 +116,8 @@ export default function Signup() {
           <label className="relative p-2 py-3 rounded-none rounded-br  hover:bg-gray-100 flex items-center gap-2  border-t-0 border-l-0 border">
             <GoUnlock className=" text-gray-300" />
             <input
+              name="confirmpass"
+              required
               type={confirmPasswordVisible ? "text" : "password"}
               className="grow text-sm hover:bg-gray-100 outline-0"
               placeholder="••••••••"
@@ -99,9 +135,15 @@ export default function Signup() {
               )}
             </button>
           </label>
+          {!isPassSame && (
+            <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
+              <CiWarning /> <span>Password didn't match</span>
+            </span>
+          )}
+         
         </div>
         {/* remember checkbox  */}
-        <div className="form-control mt-4 ">
+        <div className="form-control mt-3 ">
           <label className="label cursor-pointer justify-start items-start gap-3 text-start ">
             <input
               type="checkbox"
@@ -117,7 +159,10 @@ export default function Signup() {
 
         {/* button */}
         <div className="flex mt-4 items-center gap-2">
-          <Button className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none">
+          <Button
+            type="submit"
+            className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none"
+          >
             Create New Account
           </Button>
           <Link to={"/"}>
