@@ -2,6 +2,7 @@ import React from "react";
 import LoginLeftSide from "../Components/LoginLeftSide";
 import Login from "../Components/Login";
 import { AiOutlineGlobal } from "react-icons/ai";
+import { Outlet } from "react-router-dom";
 
 export default function Root() {
   return (
@@ -11,10 +12,8 @@ export default function Root() {
           <LoginLeftSide />
         </div>
 
-        <div className="card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center ">
-          {/* login form */}
-          <Login />
-        </div>
+        <Outlet />
+        <div></div>
       </div>
     </div>
   );

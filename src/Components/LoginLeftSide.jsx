@@ -1,6 +1,7 @@
 import { Carousel } from "@material-tailwind/react";
 import React from "react";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
+import { Link } from "react-router-dom";
 
 export default function LoginLeftSide() {
   return (
@@ -71,8 +72,11 @@ export default function LoginLeftSide() {
           </div>
         </Carousel>
       </div>
-      <div className="absolute bottom-5">
-        <ButtonOutlined label={"Let's Explore"} />
+      {/* explore btn */}
+      <div className="absolute bottom-5 md:hidden flex ">
+        <Link to={"/login"}>
+          <ButtonOutlined label={"Let's Explore"} />
+        </Link>
       </div>
     </div>
   );
