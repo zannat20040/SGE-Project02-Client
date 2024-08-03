@@ -5,7 +5,7 @@ import { GoEye, GoEyeClosed, GoUnlock } from "react-icons/go";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import { IoPersonOutline } from "react-icons/io5";
 import { GoMail } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiWarning } from "react-icons/ci";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { updateProfile } from "firebase/auth";
@@ -17,7 +17,9 @@ export default function Signup() {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isPassSame, setIsPassSame] = useState(true);
   const { createWithPass, loading, setLoading } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  // signup function
   const HandleSignup = async (e) => {
     e.preventDefault();
 
@@ -33,6 +35,7 @@ export default function Signup() {
       return;
     }
 
+    // firebase function call
     createWithPass(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -43,6 +46,7 @@ export default function Signup() {
             setLoading(false);
             toast.success("Signup successful! Welcome To Shabuj Global!");
             form.reset();
+            navigate("/dashboar/member");
           })
           .catch((error) => {
             setLoading(false);
@@ -57,6 +61,7 @@ export default function Signup() {
   return (
     <div className="relative">
       <div className=" card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center ">
+       {/* loading */}
         {loading && <Loading />}
         {/* login top text */}
         <div>

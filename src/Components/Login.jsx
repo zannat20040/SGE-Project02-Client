@@ -3,13 +3,17 @@ import { GoEye, GoEyeClosed, GoMail, GoUnlock } from "react-icons/go";
 import { Button } from "@material-tailwind/react";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
+import Loading from "../Shared Component/Loading";
 
 export default function Login() {
   // states
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loginWithPass, loading, setLoading } = useContext(AuthContext);
+  const navigate = useNavigate();
+
 
   // login function
   const HandleSignin = async (e) => {
@@ -27,11 +31,12 @@ export default function Login() {
     try {
       await loginWithPass(email, password);
       form.reset();
-      console.log("Login successful");
+      toast.success('Login successful')
       setLoading(false);
+      navigate("/dashboar/member");
     } catch (error) {
       setLoading(false);
-      console.error("Login error:", error.message);
+      toast.error(error.message)
     } finally {
       setLoading(false);
     }
@@ -39,12 +44,10 @@ export default function Login() {
 
   return (
     <div className="relative">
-      {loading ? (
-        <div className="absolute top-0 bottom-0 left-0 right-0 w-full h-full bg-secondary-color opacity-15"><span className="loading loading-infinity loading-lg text-primary-color"></span></div>
-      ) : (
-        <div
+     <div
           className={`card-body w-full hidden lg:w-9/12 mx-auto text-center  md:flex flex-col justify-center `}
         >
+          {loading && <Loading/>}
           {/* login top text */}
           <div>
             <div className="flex justify-center">
@@ -127,7 +130,6 @@ export default function Login() {
             </div>
           </form>
         </div>
-      )}
     </div>
   );
 }
