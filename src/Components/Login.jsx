@@ -43,13 +43,10 @@ export default function Login() {
 
       {/* button */}
       <div className="flex mt-3 items-center gap-2">
-        <Button className="rounded-full bg-primary-color border border-primary-color font-medium hover:bg-white hover:text-primary-color duration-400 hover:shadow-none">
+        <Button className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none">
           Login Now
         </Button>
-        <Button
-          variant="outlined"
-          className=" hover:bg-primary-color border  duration-400 rounded-full hover:text-white border-primary-color text-primary-color font-medium hover:shadow"
-        >
+        <Button className="bg-white  border  duration-400 hover:tracking-wider duration-200 rounded-full border-primary-color shadow-none text-primary-color font-medium hover:shadow-none">
           Create New Account
         </Button>
       </div>
