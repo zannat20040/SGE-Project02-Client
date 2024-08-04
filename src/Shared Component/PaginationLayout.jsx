@@ -18,7 +18,7 @@ export default function PaginationLayout({ prev, next, active, setActive, totalP
     <>
       <Button
         variant="text"
-        className="flex items-center  rounded-full font-medium text-xs"
+        className="flex items-center  rounded-full font-medium text-xs gap-1"
         onClick={prev}
         disabled={active === 1}
       >
@@ -35,7 +35,7 @@ export default function PaginationLayout({ prev, next, active, setActive, totalP
         variant="text"
         className="flex items-center gap-2 rounded-full font-medium text-xs "
         onClick={next}
-        disabled={active === 5}
+        disabled={active === totalPages}
       >
         Next
         <HiArrowLongRight strokeWidth={1} className="h-4 w-4 " />

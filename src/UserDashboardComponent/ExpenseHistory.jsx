@@ -1,13 +1,15 @@
-import React from "react";
-import { Button, Chip, IconButton } from "@material-tailwind/react";
-import { HiOutlineArrowLongLeft, HiArrowLongRight } from "react-icons/hi2";
+import React, { useState } from "react";
+import { Chip } from "@material-tailwind/react";
 import { TfiDownload } from "react-icons/tfi";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
-import PrimaryButton from "../Shared Component/PrimaryButton";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import PaginationLayout from "../Shared Component/PaginationLayout";
+import { CiCalendarDate } from "react-icons/ci";
 
 export default function ExpenseHistory() {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   // object
   const tableData = [
     {
@@ -37,12 +39,24 @@ export default function ExpenseHistory() {
   ];
 
   // pagination start from here
-  const [active, setActive] = React.useState(1);
-  const itemsPerPage = 1; // Show one item per page
-  const totalPages = Math.ceil(tableData.length / itemsPerPage);
+  const [active, setActive] = useState(1);
+
+  // date filter
+  const filteredData = tableData.filter((item) => {
+    const itemDate = new Date(item.date);
+    const fromDate = new Date(startDate);
+    const toDate = new Date(endDate);
+
+    return (
+      (!startDate || itemDate >= fromDate) && (!endDate || itemDate <= toDate)
+    );
+  });
+
+  const itemsPerPage = 2; // Show one item per page
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   // Calculate paginated data
-  const paginatedData = tableData.slice(
+  const paginatedData = filteredData.slice(
     (active - 1) * itemsPerPage,
     active * itemsPerPage
   );
@@ -60,6 +74,8 @@ export default function ExpenseHistory() {
     setActive(active - 1);
   };
 
+ 
+
   return (
     <div>
       {/* breadcrumbs add */}
@@ -67,6 +83,38 @@ export default function ExpenseHistory() {
 
       {/* table */}
       <div className="bg-white px-6 py-10 mt-6 ">
+        {/* filter by date */}
+        <form className="grid grid-cols-2 w-1/3 mb-6">
+          <div className="relative ">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+              <CiCalendarDate className="text-gray-400" />
+            </div>
+            <input
+              required
+              name="date"
+              id="default-datepicker"
+              type="date"
+              onChange={(e) => setStartDate(e.target.value)}
+              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border"
+              placeholder="From"
+            />
+          </div>
+
+          <div className="relative ">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+              <CiCalendarDate className="text-gray-400" />
+            </div>
+            <input
+              onChange={(e) => setEndDate(e.target.value)}
+              required
+              name="date"
+              id="default-datepicker"
+              type="date"
+              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border border-l-0"
+              placeholder="To"
+            />
+          </div>
+        </form>
         {/* table data */}
         <div className="overflow-x-auto">
           <table className="table table-xs text-center ">
