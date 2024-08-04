@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 
-export default function FileUpload() {
-  const [showName, setShowName] = useState({});
+export default function FileUpload({ setShowName, showName }) {
   const [showImagePreview, setShowImagePreview] = useState({});
   const fileInputRef = useRef();
   const handleClearFile = () => {
@@ -10,34 +9,40 @@ export default function FileUpload() {
     setShowImagePreview("");
     fileInputRef.current.value = "";
   };
+
   return (
-    <div className="  my-10 ">
+    <div className=" ">
+      {/* preview */}
       {showName?.name ? (
-        <div className="max-w-4xl mx-auto flex w-full items-center gap-x-6  rounded-lg border-2 border-dashed border-gray-400 p-3 bg-white">
+        <div className="max-w-4xl mx-auto flex w-full items-center gap-x-6  rounded border-2 border-dashed border-primary-color p-3 bg-white">
           <img
-            className="w-full max-w-[50px] rounded-lg object-cover"
+            className="w-full max-w-[50px] rounded object-cover"
             src={showImagePreview}
             alt={showName?.name}
           />
           <div className="flex-1 space-y-1.5 overflow-hidden">
-            <h5 className="text-sm font-medium tracking-tight truncate">
+            <h5 className="text-sm font-medium tracking-tight truncate text-primary-color">
               {showName?.name}
             </h5>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-400 text-xs">
               {(showName.size / 1024).toFixed(1)} KB
             </p>
           </div>
-          <div onClick={handleClearFile}>
-            <HiMiniXMark className="text-xl" />
+          <div
+            onClick={handleClearFile}
+            className="bg-primary-color p-1 rounded"
+          >
+            <HiMiniXMark className=" text-white cursor-pointer" />
           </div>
         </div>
       ) : (
+        // upload
         <label
-          className=" flex w-full flex-col items-center justify-center space-y-3 rounded-lg border-2 border-dashed border-gray-400 p-6 bg-white"
+          className=" flex w-full flex-col items-center justify-center space-y-3 rounded border-2 border-dashed border-primary-color p-6 bg-white"
           htmlFor="file5"
         >
           <svg
-            width={50}
+            width={40}
             version="1.1"
             id="Layer_1"
             xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +50,7 @@ export default function FileUpload() {
             viewBox="0 0 42 32"
             enableBackground="new 0 0 42 32"
             xmlSpace="preserve"
-            fill="#000000"
+            fill="#7B7C00"
           >
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
@@ -65,10 +70,10 @@ export default function FileUpload() {
             </g>
           </svg>
           <div className="space-y-1.5 text-center">
-            <h5 className="whitespace-nowrap text-lg font-medium tracking-tight ">
+            <h5 className="whitespace-nowrap text-sm font-medium tracking-tight text-primary-color">
               Upload your Expense Recipt
             </h5>
-            <p className="text-sm text-gray-500">
+            <p className="text-xs text-gray-400">
               File Should be in PNG, JPEG or JPG format
             </p>
           </div>
