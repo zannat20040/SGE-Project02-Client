@@ -3,12 +3,16 @@ import Root from "./Layout/Root";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import DashboardLayout from "./Layout/DashboardLayout";
-import ReportandInsights from "./UserDashboardComponent/ReportandInsights";
-import AddExpense from "./UserDashboardComponent/AddExpense";
+import ReportandInsights1 from "./UserDashboardComponent/ReportandInsights";
+import AddExpense1 from "./UserDashboardComponent/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
-import Reportandinsights from "./FinanceDashboardComponent/Reportandinsights";
+import Reportandinsights2 from "./FinanceDashboardComponent/Reportandinsights";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
 import IndividualExpensesHistory from "./FinanceDashboardComponent/IndividualExpensesHistory";
+import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
+import AddExpenses2 from "./CEODashboardComponent/AddExpenses";
+import AllExpensesHistory from "./CEODashboardComponent/AllExpensesHistory";
+import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 
 export const router = createBrowserRouter([
   {
@@ -32,11 +36,11 @@ export const router = createBrowserRouter([
       // employee routes
       {
         path: "employee/reports",
-        element: <ReportandInsights />,
+        element: <ReportandInsights1 />,
       },
       {
         path: "employee/addexpense",
-        element: <AddExpense />,
+        element: <AddExpense1 />,
       },
       {
         path: "employee/history",
@@ -45,7 +49,7 @@ export const router = createBrowserRouter([
       // finance route
       {
         path: "finance/reports",
-        element: <Reportandinsights />,
+        element: <Reportandinsights2 />,
       },
       {
         path: "finance/allexpenses",
@@ -54,6 +58,23 @@ export const router = createBrowserRouter([
       {
         path: "finance/allHistory",
         element: <IndividualExpensesHistory />,
+      },
+      // CEO route
+      {
+        path: "ceo/reports",
+        element: <Reportandinsights3 />,
+      },
+      {
+        path: "ceo/addexpenses",
+        element: <AddExpenses2 />,
+      },
+      {
+        path: "ceo/allHistory",
+        element: <AllExpensesHistory />,
+      },
+      {
+        path: "ceo/addnewfinance",
+        element: <AddNewFinance />,
       },
     ],
   },
