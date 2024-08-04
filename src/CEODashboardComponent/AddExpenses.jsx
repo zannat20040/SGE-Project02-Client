@@ -7,7 +7,6 @@ import {
   Select,
   Textarea,
 } from "@material-tailwind/react";
-import Breadcrumbs from "../Shared Component/Breadcrumbs";
 
 export default function AddExpenses() {
   const [value, setValue] = React.useState("react");
@@ -16,10 +15,7 @@ export default function AddExpenses() {
   return (
     <div>
       {/* breadcrumbs add */}
-      <Breadcrumbs
-        routeLabel={"Add Expense"}
-        routePath={"dashbaord / employee / addexpense"}
-      />
+      
 
       {/* FORM */}
       <form

@@ -1,5 +1,4 @@
 import React from "react";
-import Breadcrumbs from "../Shared Component/Breadcrumbs";
 import {
   Button,
   Input,
@@ -8,6 +7,8 @@ import {
   Textarea,
 } from "@material-tailwind/react";
 import FileUpload from "../Shared Component/FileUpload";
+import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
+import PrimaryButton from "../Shared Component/PrimaryButton";
 
 export default function AddExpense() {
   const [value, setValue] = React.useState("react");
@@ -16,16 +17,10 @@ export default function AddExpense() {
   return (
     <div>
       {/* breadcrumbs add */}
-      <Breadcrumbs
-        routeLabel={"Add Expense"}
-        routePath={"dashbaord / employee / addexpense"}
-      />
+      <BreadcrumsLayout route1={"employee"} activeroute2={"addexpense"} />
 
       {/* FORM */}
-      <form
-        onSubmit={HandleExpenseAdd}
-        className="bg-white px-10 py-14 mt-4 "
-      >
+      <form onSubmit={HandleExpenseAdd} className="bg-white px-10 py-14 mt-4 ">
         {/* title & amount */}
         <div className="grid grid-cols-2 gap-3 ">
           <div className="mb-4">
@@ -106,12 +101,7 @@ export default function AddExpense() {
         {/* FILE UPLOAD */}
         <FileUpload />
 
-        <Button
-          type="submit"
-          className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full sm:w-fit  "
-        >
-          Add this
-        </Button>
+        <PrimaryButton label={"Add this"} />
       </form>
     </div>
   );

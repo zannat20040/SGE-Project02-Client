@@ -2,7 +2,6 @@ import React from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { TfiDownload } from "react-icons/tfi";
-import Breadcrumbs from "../Shared Component/Breadcrumbs";
 
 export default function AllExpensesHistory() {
   const [active, setActive] = React.useState(1);
@@ -30,10 +29,7 @@ export default function AllExpensesHistory() {
     <div>
       <div>
         {/* breadcrumbs add */}
-        <Breadcrumbs
-          routeLabel={"Individuals Expenses History"}
-          routePath={"dashbaord / ceo / allhistory"}
-        />
+      
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-6 ">

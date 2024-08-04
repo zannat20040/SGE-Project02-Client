@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Breadcrumbs from "../Shared Component/Breadcrumbs";
 import { Button } from "@material-tailwind/react";
 
 export default function AddNewFinance() {
@@ -19,10 +18,7 @@ export default function AddNewFinance() {
   return (
     <div className="">
       {/* breadcrumbs add */}
-      <Breadcrumbs
-        routeLabel={"Add a new Finance"}
-        routePath={"dashbaord / ceo / addnewfinance"}
-      />
+     
 
       <form onSubmit={HandleNewFinanceAdd} className="bg-white px-6 py-12 mt-6">
         <div className="mb-4">

@@ -1,5 +1,4 @@
 import React from "react";
-import Breadcrumbs from "../Shared Component/Breadcrumbs";
 import { Button, IconButton, Tooltip } from "@material-tailwind/react";
 import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { FaCheck } from "react-icons/fa";
@@ -32,10 +31,7 @@ export default function AllExpenses() {
     <div>
       <div>
         {/* breadcrumbs add */}
-        <Breadcrumbs
-          routeLabel={"All Expenses History"}
-          routePath={"dashbaord / finance / allexpenses"}
-        />
+       
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-6 ">
