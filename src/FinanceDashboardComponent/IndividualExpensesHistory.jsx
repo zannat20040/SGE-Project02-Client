@@ -2,9 +2,7 @@ import React from "react";
 import Breadcrumbs from "../Shared Component/Breadcrumbs";
 import { Button, IconButton, Tooltip } from "@material-tailwind/react";
 import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
-import { FaCheck } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
-import { CiStickyNote } from "react-icons/ci";
 
 export default function IndividualExpensesHistory() {
   const [active, setActive] = React.useState(1);
