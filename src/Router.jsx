@@ -27,15 +27,15 @@ export const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-        path: "member/reports",
+        path: "employee/reports",
         element: <ReportandInsights />,
       },
       {
-        path: "member/addexpense",
+        path: "employee/addexpense",
         element: <AddExpense />,
       },
       {
-        path: "member/history",
+        path: "employee/history",
         element: <ExpenseHistory />,
       },
     ],

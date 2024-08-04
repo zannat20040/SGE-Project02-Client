@@ -15,21 +15,21 @@ export default function NavlistForUser() {
   return (
     <div>
       <NavLink
-        to="/dashboard/member/reports"
+        to="/dashboard/employee/reports"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
         Reports & Insights
       </NavLink>
       <NavLink
-        to="/dashboard/member/addexpense"
+        to="/dashboard/employee/addexpense"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
         Add Expense
       </NavLink>
       <NavLink
-        to="/dashboard/member/history"
+        to="/dashboard/employee/history"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
