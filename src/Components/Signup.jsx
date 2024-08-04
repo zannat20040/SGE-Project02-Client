@@ -14,11 +14,23 @@ import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
 
 export default function Signup() {
+  // states
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isPassSame, setIsPassSame] = useState(true);
   const { createWithPass, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // select branch option
+  const options = [
+    "Uk",
+    "USA",
+    "Canada",
+    "New Zealand",
+    "Netherlands",
+    "Ireland",
+    "Australia",
+  ];
 
   // signup function
   const HandleSignup = async (e) => {
@@ -28,6 +40,7 @@ export default function Signup() {
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
     const email = form.email.value;
+    const branchName = form.branch.value;
     const password = form.password.value;
     const confirmpass = form.confirmpass.value;
 
@@ -35,6 +48,14 @@ export default function Signup() {
       setIsPassSame(false);
       return;
     }
+
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      password,
+      branchName,
+    };
 
     // firebase function call
     createWithPass(email, password)
@@ -47,7 +68,7 @@ export default function Signup() {
             setLoading(false);
             toast.success("Signup successful! Welcome To Shabuj Global!");
             form.reset();
-            navigate("/dashboar/member");
+            navigate("/dashboard/employee/reports");
           })
           .catch((error) => {
             setLoading(false);
@@ -83,12 +104,12 @@ export default function Signup() {
           {/* name */}
           <div className="grid grid-cols-2">
             <label className="p-2 py-3 rounded-none rounded-tl outline-none flex items-center gap-2 hover:bg-gray-100 border">
-              <IoPersonOutline className="text-2xl  text-gray-300 " />
+              <IoPersonOutline className="text-2xl  text-gray-300  " />
               <input
                 name="firstName"
                 required
                 type="text"
-                className="grow text-sm  hover:bg-gray-100  outline-0"
+                className="grow text-sm  hover:bg-gray-100  outline-0 text-gray-400"
                 placeholder="John"
                 o
               />
@@ -99,7 +120,7 @@ export default function Signup() {
                 name="lastName"
                 required
                 type="text"
-                className="grow text-sm  hover:bg-gray-100  outline-0"
+                className="grow text-sm  hover:bg-gray-100  outline-0 text-gray-400"
                 placeholder="Doe"
               />
             </label>
@@ -111,23 +132,27 @@ export default function Signup() {
               name="email"
               required
               type="email"
-              className="grow text-sm  hover:bg-gray-100  outline-0"
+              className="grow text-sm  hover:bg-gray-100  outline-0 text-gray-400"
               placeholder="example@gmail.com"
             />
           </label>
           {/* branch */}
-          <label className="p-2 py-3 rounded-none outline-none flex items-center gap-2 hover:bg-gray-100 border border-t-0">
+          <label className="w-full p-2 py-3 rounded-none outline-none flex items-center gap-2 hover:bg-gray-100 border border-t-0">
             <CiLocationOn className=" text-gray-300 " />
             <select
-              className="w-full border-0 outline-none text-sm text-gray-400"
               name="branch"
+              required
+              className="grow text-sm hover:bg-gray-100  outline-0 text-gray-400 focus:bg-transparent"
             >
               <option disabled selected>
-                Pick one
+                Select your branch
               </option>
-              <option>Uk</option>
-              <option>USA</option>
-              <option>Bangladesh</option>
+
+              {options?.map((option, index) => (
+                <option key={index} className="text-black">
+                  {option}
+                </option>
+              ))}
             </select>
           </label>
           {/* pass & confirm pass*/}
@@ -138,7 +163,7 @@ export default function Signup() {
                 name="password"
                 required
                 type={passwordVisible ? "text" : "password"}
-                className="grow text-sm hover:bg-gray-100  outline-0"
+                className="grow text-sm hover:bg-gray-100  outline-0 focus:bg-transparent text-gray-400"
                 placeholder="••••••••"
               />
               {/* Show/Hide Button */}
@@ -160,7 +185,7 @@ export default function Signup() {
                 name="confirmpass"
                 required
                 type={confirmPasswordVisible ? "text" : "password"}
-                className="grow text-sm hover:bg-gray-100 outline-0"
+                className="grow text-sm hover:bg-gray-100 outline-0 text-gray-400"
                 placeholder="••••••••"
               />
               {/* Show/Hide Button */}
