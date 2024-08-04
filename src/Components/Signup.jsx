@@ -11,6 +11,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
 import toast from "react-hot-toast";
+import { CiLocationOn } from "react-icons/ci";
 
 export default function Signup() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -61,7 +62,7 @@ export default function Signup() {
   return (
     <div className="relative">
       <div className=" card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center ">
-       {/* loading */}
+        {/* loading */}
         {loading && <Loading />}
         {/* login top text */}
         <div>
@@ -113,6 +114,21 @@ export default function Signup() {
               className="grow text-sm  hover:bg-gray-100  outline-0"
               placeholder="example@gmail.com"
             />
+          </label>
+          {/* branch */}
+          <label className="p-2 py-3 rounded-none outline-none flex items-center gap-2 hover:bg-gray-100 border border-t-0">
+            <CiLocationOn className=" text-gray-300 " />
+            <select
+              className="w-full border-0 outline-none text-sm text-gray-400"
+              name="branch"
+            >
+              <option disabled selected>
+                Pick one
+              </option>
+              <option>Uk</option>
+              <option>USA</option>
+              <option>Bangladesh</option>
+            </select>
           </label>
           {/* pass & confirm pass*/}
           <div className="grid grid-cols-2">
