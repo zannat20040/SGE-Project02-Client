@@ -5,7 +5,7 @@ import PrimaryButton from "../Shared Component/PrimaryButton";
 import { PiSubtitlesThin } from "react-icons/pi";
 import { MdAttachMoney } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
-import { CiCalendarDate } from "react-icons/ci";
+import { CiCalendarDate, CiLocationOn } from "react-icons/ci";
 import Loading from "../Shared Component/Loading";
 
 export default function AddExpense() {
@@ -143,7 +143,7 @@ export default function AddExpense() {
           {/* BRANCH */}
           <div className="relative ">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <BiCategory className="text-gray-400" />
+              <CiLocationOn className="text-gray-400" />
             </div>
             <select
               required
