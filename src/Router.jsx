@@ -4,7 +4,7 @@ import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import DashboardLayout from "./Layout/DashboardLayout";
 import ReportandInsights1 from "./UserDashboardComponent/ReportandInsights";
-import AddExpense1 from "./Shared Component/AddExpense";
+import AddExpense1 from "./Shared Dashboard Component/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
 import Reportandinsights2 from "./FinanceDashboardComponent/Reportandinsights";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";

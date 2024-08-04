@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import FileUpload from "./FileUpload";
-import BreadcrumsLayout from "./BreadcrumsLayout";
-import PrimaryButton from "./PrimaryButton";
+import FileUpload from "../Shared Component/FileUpload";
+import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
+import PrimaryButton from "../Shared Component/PrimaryButton";
 import { PiSubtitlesThin } from "react-icons/pi";
 import { MdAttachMoney } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { CiCalendarDate } from "react-icons/ci";
-import Loading from "./Loading";
+import Loading from "../Shared Component/Loading";
 
 export default function AddExpense() {
   const [showName, setShowName] = useState({});
