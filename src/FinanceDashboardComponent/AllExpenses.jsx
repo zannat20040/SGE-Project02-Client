@@ -72,10 +72,11 @@ export default function AllExpenses() {
                         className="w-full border-gray-200 rounded bg-white focus:outline-0"
                         name="status"
                       >
-                        <option value="" selected>
+                        <option value="" selected disabled>
                           Pending
                         </option>
                         <option value="">Added</option>
+                        <option value="">Declined</option>
                       </select>
                       <button
                         type="button"

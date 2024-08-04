@@ -24,7 +24,7 @@ export default function AddExpense() {
       {/* FORM */}
       <form
         onSubmit={HandleExpenseAdd}
-        className="bg-white px-10 py-14 mt-4 shadow-md"
+        className="bg-white px-10 py-14 mt-4 "
       >
         {/* title & amount */}
         <div className="grid grid-cols-2 gap-3 ">
