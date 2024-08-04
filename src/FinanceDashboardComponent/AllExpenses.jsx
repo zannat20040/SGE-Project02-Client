@@ -1,6 +1,6 @@
 import React from "react";
 import Breadcrumbs from "../Shared Component/Breadcrumbs";
-import { Button, IconButton } from "@material-tailwind/react";
+import { Button, IconButton, Tooltip } from "@material-tailwind/react";
 import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { FaCheck } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
@@ -88,9 +88,12 @@ export default function AllExpenses() {
                   <td>Employee</td>
                   <td>12/16/2020</td>
                   <td className="flex gap-2 justify-center">
-                    <Button>
-                      <CiStickyNote />
-                    </Button>
+                    <Tooltip content="Note will be shown here">
+                      <Button>
+                        <CiStickyNote />
+                      </Button>
+                    </Tooltip>
+
                     <Button>
                       <TfiDownload />
                     </Button>
@@ -112,9 +115,11 @@ export default function AllExpenses() {
                   <td>CEO</td>
                   <td>12/16/2020</td>
                   <td className="flex gap-2 justify-center">
-                    <Button>
-                      <CiStickyNote />
-                    </Button>
+                    <Tooltip content="Note will be shown here">
+                      <Button>
+                        <CiStickyNote />
+                      </Button>
+                    </Tooltip>
                     <Button>
                       <TfiDownload />
                     </Button>
@@ -136,9 +141,11 @@ export default function AllExpenses() {
                   <td>Employee</td>
                   <td>12/16/2020</td>
                   <td className="flex gap-2 justify-center">
-                    <Button>
-                      <CiStickyNote />
-                    </Button>
+                    <Tooltip content="Note will be shown here">
+                      <Button>
+                        <CiStickyNote />
+                      </Button>
+                    </Tooltip>
                     <Button>
                       <TfiDownload />
                     </Button>
@@ -148,37 +155,33 @@ export default function AllExpenses() {
             </table>
           </div>
 
-          <div className="flex justify-between items-center mt-9">
-            <Button>Download All History</Button>
-
-            {/* pagination */}
-            <div className="flex items-center gap-4">
-              <Button
-                variant="text"
-                className="flex items-center gap-2 rounded-full"
-                onClick={prev}
-                disabled={active === 1}
-              >
-                <HiOutlineArrowLongLeft strokeWidth={2} className="h-4 w-4" />{" "}
-                Previous
-              </Button>
-              <div className="flex items-center gap-2">
-                <IconButton {...getItemProps(1)}>1</IconButton>
-                <IconButton {...getItemProps(2)}>2</IconButton>
-                <IconButton {...getItemProps(3)}>3</IconButton>
-                <IconButton {...getItemProps(4)}>4</IconButton>
-                <IconButton {...getItemProps(5)}>5</IconButton>
-              </div>
-              <Button
-                variant="text"
-                className="flex items-center gap-2 rounded-full"
-                onClick={next}
-                disabled={active === 5}
-              >
-                Next
-                <HiArrowLongRight strokeWidth={2} className="h-4 w-4" />
-              </Button>
+          {/* pagination */}
+          <div className="flex items-center gap-4 mt-12 justify-end">
+            <Button
+              variant="text"
+              className="flex items-center gap-2 rounded-full"
+              onClick={prev}
+              disabled={active === 1}
+            >
+              <HiOutlineArrowLongLeft strokeWidth={2} className="h-4 w-4" />{" "}
+              Previous
+            </Button>
+            <div className="flex items-center gap-2">
+              <IconButton {...getItemProps(1)}>1</IconButton>
+              <IconButton {...getItemProps(2)}>2</IconButton>
+              <IconButton {...getItemProps(3)}>3</IconButton>
+              <IconButton {...getItemProps(4)}>4</IconButton>
+              <IconButton {...getItemProps(5)}>5</IconButton>
             </div>
+            <Button
+              variant="text"
+              className="flex items-center gap-2 rounded-full"
+              onClick={next}
+              disabled={active === 5}
+            >
+              Next
+              <HiArrowLongRight strokeWidth={2} className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>

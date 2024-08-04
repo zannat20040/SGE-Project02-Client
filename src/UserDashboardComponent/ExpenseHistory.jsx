@@ -2,6 +2,7 @@ import React from "react";
 import Breadcrumbs from "../Shared Component/Breadcrumbs";
 import { Button, IconButton } from "@material-tailwind/react";
 import { HiOutlineArrowLongLeft, HiArrowLongRight } from "react-icons/hi2";
+import { TfiDownload } from "react-icons/tfi";
 
 export default function ExpenseHistory() {
   const [active, setActive] = React.useState(1);
@@ -60,7 +61,9 @@ export default function ExpenseHistory() {
                 </td>
                 <td>12/16/2020</td>
                 <td>
-                  <Button>Download</Button>
+                  <Button>
+                    <TfiDownload />
+                  </Button>{" "}
                 </td>
               </tr>
               <tr>
@@ -73,7 +76,9 @@ export default function ExpenseHistory() {
                 </td>
                 <td>12/5/2020</td>
                 <td>
-                  <Button>Download</Button>
+                  <Button>
+                    <TfiDownload />
+                  </Button>{" "}
                 </td>
               </tr>
               <tr>
@@ -86,7 +91,9 @@ export default function ExpenseHistory() {
                 </td>
                 <td>8/15/2020</td>
                 <td>
-                  <Button>Download</Button>
+                  <Button>
+                    <TfiDownload />
+                  </Button>{" "}
                 </td>
               </tr>
             </tbody>
