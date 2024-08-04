@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Input, MenuItem, Select, Textarea } from "@material-tailwind/react";
 import FileUpload from "../Shared Component/FileUpload";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import PrimaryButton from "../Shared Component/PrimaryButton";
@@ -7,9 +6,11 @@ import { PiSubtitlesThin } from "react-icons/pi";
 import { MdAttachMoney } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { CiCalendarDate } from "react-icons/ci";
+import Loading from "../Shared Component/Loading";
 
 export default function AddExpense() {
   const [showName, setShowName] = useState({});
+  const [loading, setLoading] = useState(false);
 
   // select category option
   const categoryoptions = [
@@ -64,8 +65,9 @@ export default function AddExpense() {
   };
 
   return (
-    <div>
+    <div className="">
       {/* breadcrumbs add */}
+      {loading && <Loading />}
       <BreadcrumsLayout route1={"employee"} activeroute2={"addexpense"} />
 
       {/* FORM */}
@@ -115,9 +117,7 @@ export default function AddExpense() {
               defaultValue={"Others"}
               className="hover:bg-gray-100  rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400  border-l h-full  "
             >
-              <option selected disabled>
-                Choose a your expense category
-              </option>
+              <option disabled>Choose a your expense category</option>
               {categoryoptions?.map((option, i) => (
                 <option key={i} className="text-black">
                   {option}

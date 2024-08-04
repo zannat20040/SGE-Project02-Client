@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 export default function Root() {
   return (
-    <div className="hero bg-white  min-h-screen">
+    <div className="hero bg-white  min-h-screen overflow-hidden">
       <div className="grid md:grid-cols-2 grid-cols-1  justify-between w-full ">
         <div className="text-center min-h-screen">
           <LoginLeftSide />

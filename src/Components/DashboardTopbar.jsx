@@ -7,7 +7,7 @@ export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="bg-white  w-full h-fit p-4 flex justify-between items-center">
+    <div className="bg-white  w-full h-fit p-4 flex justify-between items-center sticky top-0 left-0 z-20">
       {/* role & branch */}
       <div>
         <p className="font-medium text-sm text-primary-color ">Employee</p>

@@ -29,14 +29,15 @@ export default function DashboardSidebar() {
         <ul className="menu bg-white text-base-content min-h-full w-60 shadow-xl p-0 flex flex-col justify-between">
           <div>
             {/* logo */}
-            <div className="flex justify-center gap-2 items-center  p-4">
-              <Link to={"/"}>
-                <AiOutlineGlobal className="bg-primary-color text-white border border-gray-200 text-2xl rounded-full h-8 w-8" />
-              </Link>
+            <Link
+              to={"/"}
+              className="flex justify-center gap-2 items-center  p-4"
+            >
+              <AiOutlineGlobal className="bg-primary-color text-white border border-gray-200 text-2xl rounded-full h-8 w-8" />
               <h1 className="font-bold  tracking-widest uppercase text-primary-color">
                 Shabuj Global
               </h1>
-            </div>
+            </Link>
 
             {/* nav menu */}
             <div className="pl-5 mt-14 ">

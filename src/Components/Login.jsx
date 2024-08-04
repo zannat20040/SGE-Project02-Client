@@ -43,10 +43,11 @@ export default function Login() {
 
   return (
     <div className="relative">
+      {loading && <Loading />}
+
       <div
         className={`card-body w-full hidden lg:w-9/12 mx-auto text-center  md:flex flex-col justify-center `}
       >
-        {loading && <Loading />}
         {/* login top text */}
         <div>
           <div className="flex justify-center">

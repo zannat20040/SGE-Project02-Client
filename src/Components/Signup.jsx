@@ -81,8 +81,8 @@ export default function Signup() {
       });
   };
   return (
-    <div className="relative">
-      <div className=" card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center ">
+    <div className="">
+      <div className=" card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center relative ">
         {/* loading */}
         {loading && <Loading />}
         {/* login top text */}
@@ -213,6 +213,7 @@ export default function Signup() {
           <div className="form-control mt-3 ">
             <label className="label cursor-pointer justify-start items-start gap-3 text-start ">
               <input
+              required
                 type="checkbox"
                 defaultChecked
                 className="checkbox checkbox-sm  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
