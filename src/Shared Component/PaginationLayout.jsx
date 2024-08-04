@@ -1,8 +1,17 @@
 import { Button, IconButton } from "@material-tailwind/react";
 import React from "react";
-import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
+import {
+  HiOutlineArrowLongLeft,
+  HiOutlineArrowLongRight,
+} from "react-icons/hi2";
 
-export default function PaginationLayout({ prev, next, active, setActive, totalPages }) {
+export default function PaginationLayout({
+  prev,
+  next,
+  active,
+  setActive,
+  totalPages,
+}) {
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
     color: "gray",
@@ -38,7 +47,7 @@ export default function PaginationLayout({ prev, next, active, setActive, totalP
         disabled={active === totalPages}
       >
         Next
-        <HiArrowLongRight strokeWidth={1} className="h-4 w-4 " />
+        <HiOutlineArrowLongRight strokeWidth={1} className="h-4 w-4 " />
       </Button>
     </>
   );
