@@ -94,6 +94,7 @@ export default function AllExpenses() {
     setActive(active - 1);
   };
 
+  // status form
   const HandleReciptStatus = (e) => {
     e.preventDefault();
     const expenseStatus = e.target.status.value;
@@ -123,7 +124,6 @@ export default function AllExpenses() {
                 placeholder="From"
               />
             </div>
-
             <div className="relative ">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                 <CiCalendarDate className="text-gray-400" />
@@ -157,7 +157,7 @@ export default function AllExpenses() {
               </thead>
               <tbody>
                 {paginatedData?.map((data) => (
-                  <tr>
+                  <tr className="hover">
                     <td>{data?.id}</td>
                     <td className="text-start">
                       <p>{data?.memberName}</p>
@@ -222,20 +222,19 @@ export default function AllExpenses() {
                     <td>{data?.role}</td>
                     <td>{data?.date}</td>
                     <td className="flex gap-2 justify-center">
-                      {data?.receipt && (
-                        <ButtonOutlined
-                          label={<TfiDownload />}
-                          style={"w-fit"}
-                        />
-                      )}
-
                       {data?.note !== "" && (
                         <div>
-                          <PrimaryButton
+                          <ButtonOutlined
                             label={<CiStickyNote />}
-                            style={"w-fit group"}
+                            style={"w-fit"}
                           />
                         </div>
+                      )}
+                      {data?.receipt && (
+                        <PrimaryButton
+                          label={<TfiDownload />}
+                          style={"w-fit group"}
+                        />
                       )}
                     </td>
                   </tr>
@@ -243,7 +242,6 @@ export default function AllExpenses() {
               </tbody>
             </table>
           </div>
-
           {/* pagination */}
           <div className="flex items-center mt-10 justify-end">
             <PaginationLayout
