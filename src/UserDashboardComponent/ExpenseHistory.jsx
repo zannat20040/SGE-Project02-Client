@@ -1,20 +1,55 @@
 import React from "react";
-import { Button, IconButton } from "@material-tailwind/react";
+import { Button, Chip, IconButton } from "@material-tailwind/react";
 import { HiOutlineArrowLongLeft, HiArrowLongRight } from "react-icons/hi2";
 import { TfiDownload } from "react-icons/tfi";
+import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
+import PrimaryButton from "../Shared Component/PrimaryButton";
+import ButtonOutlined from "../Shared Component/ButtonOutlined";
+import PaginationLayout from "../Shared Component/PaginationLayout";
 
 export default function ExpenseHistory() {
+  // object
+  const tableData = [
+    {
+      id: 1,
+      name: "Cy Ganderton",
+      amount: "$500.00",
+      position: "Quality Control Specialist",
+      status: "Added",
+      date: "12/16/2020",
+    },
+    {
+      id: 2,
+      name: "Hart Hagerty",
+      amount: "$750.00",
+      position: "Desktop Support Technician",
+      status: "Decline",
+      date: "12/5/2020",
+    },
+    {
+      id: 3,
+      name: "Brice Swyre",
+      amount: "$300.00",
+      position: "Tax Accountant",
+      status: "Pending",
+      date: "8/15/2020",
+    },
+  ];
+
+  // pagination start from here
   const [active, setActive] = React.useState(1);
+  const itemsPerPage = 1; // Show one item per page
+  const totalPages = Math.ceil(tableData.length / itemsPerPage);
 
-  const getItemProps = (index) => ({
-    variant: active === index ? "filled" : "text",
-    color: "gray",
-    onClick: () => setActive(index),
-    className: "rounded-full",
-  });
+  // Calculate paginated data
+  const paginatedData = tableData.slice(
+    (active - 1) * itemsPerPage,
+    active * itemsPerPage
+  );
 
+  // pagination function
   const next = () => {
-    if (active === 5) return;
+    if (active === totalPages) return;
 
     setActive(active + 1);
   };
@@ -28,105 +63,74 @@ export default function ExpenseHistory() {
   return (
     <div>
       {/* breadcrumbs add */}
-    
+      <BreadcrumsLayout route1={"employee"} activeroute2={"history"} />
 
       {/* table */}
       <div className="bg-white px-6 py-10 mt-6 ">
         {/* table data */}
         <div className="overflow-x-auto">
-          <table className="table table-xs">
+          <table className="table table-xs text-center ">
             <thead>
-              <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Amount</th>
-                <th>Catagory</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Recipt</th>
+              <tr className="text-primary-color  ">
+                <th className="pb-4">No.</th>
+                <th className="pb-4">Title</th>
+                <th className="pb-4">Amount</th>
+                <th className="pb-4">Catagory</th>
+                <th className="pb-4">Status</th>
+                <th className="pb-4">Date</th>
+                <th className="pb-4">Recipt</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Cy Ganderton</td>
-                <td>$500.00</td>
-                <td>Quality Control Specialist</td>
-                <td className="bg-[#27b72734] text-green-600 font-semibold w-fit text-center rounded">
-                  Added
-                </td>
-                <td>12/16/2020</td>
-                <td>
-                  <Button>
-                    <TfiDownload />
-                  </Button>{" "}
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Hart Hagerty</td>
-                <td>$750.00</td>
-                <td>Desktop Support Technician</td>
-                <td className="bg-[#27b72734] text-green-600 font-semibold w-fit text-center rounded">
-                  Added
-                </td>
-                <td>12/5/2020</td>
-                <td>
-                  <Button>
-                    <TfiDownload />
-                  </Button>{" "}
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Brice Swyre</td>
-                <td>$300.00</td>
-                <td>Tax Accountant</td>
-                <td className="bg-[#b7312734] text-red-600 font-semibold w-fit text-center rounded">
-                  Pending
-                </td>
-                <td>8/15/2020</td>
-                <td>
-                  <Button>
-                    <TfiDownload />
-                  </Button>{" "}
-                </td>
-              </tr>
+              {/* tr-1 */}
+              {paginatedData?.map((data) => (
+                <tr className="hover">
+                  <td>{data?.id}</td>
+                  <td>{data?.name}</td>
+                  <td>{data?.amount}</td>
+                  <td>{data?.position}</td>
+                  {/* status */}
+                  <td className="">
+                    <Chip
+                      variant="ghost"
+                      color={
+                        data.status === "Added"
+                          ? "green"
+                          : data.status === "Decline"
+                          ? "red"
+                          : "orange"
+                      }
+                      size="sm"
+                      value={data?.status}
+                      className={`font-bold text-xs  rounded  !capitalize ${
+                        data.status === "Added"
+                          ? "text-green-600"
+                          : data.status === "Decline"
+                          ? "text-red-600"
+                          : "text-orange-800"
+                      } `}
+                    />
+                  </td>
+                  <td>{data?.date}</td>
+                  {/* downlaod */}
+                  <td>
+                    <ButtonOutlined label={<TfiDownload />} style={"w-fit"} />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
 
-        <div className="flex justify-between items-center mt-9">
-          <Button>Download All History</Button>
-
-          {/* pagination */}
-          <div className="flex items-center gap-4">
-            <Button
-              variant="text"
-              className="flex items-center gap-2 rounded-full"
-              onClick={prev}
-              disabled={active === 1}
-            >
-              <HiOutlineArrowLongLeft strokeWidth={2} className="h-4 w-4" />{" "}
-              Previous
-            </Button>
-            <div className="flex items-center gap-2">
-              <IconButton {...getItemProps(1)}>1</IconButton>
-              <IconButton {...getItemProps(2)}>2</IconButton>
-              <IconButton {...getItemProps(3)}>3</IconButton>
-              <IconButton {...getItemProps(4)}>4</IconButton>
-              <IconButton {...getItemProps(5)}>5</IconButton>
-            </div>
-            <Button
-              variant="text"
-              className="flex items-center gap-2 rounded-full"
-              onClick={next}
-              disabled={active === 5}
-            >
-              Next
-              <HiArrowLongRight strokeWidth={2} className="h-4 w-4" />
-            </Button>
-          </div>
+        {/* pagination */}
+        <div className="flex items-center mt-10 justify-end">
+          <PaginationLayout
+            prev={prev}
+            next={next}
+            active={active}
+            setActive={setActive}
+            totalPages={totalPages}
+          />
         </div>
       </div>
     </div>

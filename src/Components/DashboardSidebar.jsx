@@ -1,4 +1,4 @@
-import { Avatar, Badge, Chip } from "@material-tailwind/react";
+import { Avatar, Badge, Button, Chip } from "@material-tailwind/react";
 import React from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -46,7 +46,13 @@ export default function DashboardSidebar() {
           </div>
 
           {/* logout btn */}
-          <div className="p-4">
+          <div className="p-4 flex flex-col gap-1">
+            <Button
+              type="submit"
+              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full  "
+            >
+              Download All History
+            </Button>
             <ButtonOutlined label={"Logout"} />
           </div>
         </ul>
