@@ -4,14 +4,14 @@ import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import DashboardLayout from "./Layout/DashboardLayout";
 import ReportandInsights1 from "./UserDashboardComponent/ReportandInsights";
-import AddExpense1 from "./UserDashboardComponent/AddExpense";
+import AddExpense1 from "./Shared Component/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
 import Reportandinsights2 from "./FinanceDashboardComponent/Reportandinsights";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
 import IndividualExpensesHistory from "./FinanceDashboardComponent/IndividualExpensesHistory";
 import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
-import AddExpenses2 from "./CEODashboardComponent/AddExpenses";
-import AllExpensesHistory from "./CEODashboardComponent/AllExpensesHistory";
+// import AddExpenses2 from "./CEODashboardComponent/AddExpenses";
+// import AllExpensesHistory from "./CEODashboardComponent/AllExpensesHistory";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 
 export const router = createBrowserRouter([
@@ -66,11 +66,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "ceo/addexpenses",
-        element: <AddExpenses2 />,
+        element: <AddExpense1 />,
       },
       {
         path: "ceo/allHistory",
-        element: <AllExpensesHistory />,
+        element: <IndividualExpensesHistory />,
       },
       {
         path: "ceo/addnewfinance",
