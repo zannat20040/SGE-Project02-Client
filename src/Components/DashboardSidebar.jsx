@@ -7,7 +7,7 @@ import ButtonOutlined from "../Shared Component/ButtonOutlined";
 
 export default function DashboardSidebar() {
   return (
-    <div className="drawer lg:drawer-open w-fit">
+    <div className="drawer lg:drawer-open w-fit ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-start">
         {/* Page content here */}
@@ -18,7 +18,7 @@ export default function DashboardSidebar() {
           Open drawer
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side sticky left-0 top-0 ">
         <label
           htmlFor="my-drawer-2"
           aria-label="close sidebar"
