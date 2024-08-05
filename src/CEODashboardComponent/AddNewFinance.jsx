@@ -8,6 +8,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
+import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3"; 
 
 export default function AddNewFinance() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -51,7 +52,9 @@ export default function AddNewFinance() {
       branchName,
     };
 
-    console.log(userData);
+    const audio = new Audio(successSound);
+    audio.play();
+
     // firebase function call
     createWithPass(email, password)
       .then((userCredential) => {

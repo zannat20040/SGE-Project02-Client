@@ -19,9 +19,9 @@ export default function DashboardTopbar() {
        <div className="">
         <Badge
           content={
-            <CiDollar  className="h-4 w-4 text-yellow-700 text-2xl p-0" strokeWidth={1.5}  />
+            <CiDollar  className="h-4 w-4 text-white text-2xl p-0" strokeWidth={1.5}  />
           }
-          className=" bg-white "
+          className=" bg-yellow-800"
         >
           <button className="bg-primary-color p-2 rounded text-white font-medium text-xs">100</button>
         </Badge>
