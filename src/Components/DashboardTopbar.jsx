@@ -7,16 +7,16 @@ export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="bg-white  w-full h-fit p-4 flex justify-between items-center sticky top-0 left-0 z-20">
+    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-20 ">
       {/* role & branch */}
       <div>
         <p className="font-medium text-sm text-primary-color ">Employee</p>
         <p className="text-xs text-gray-400">Branch name</p>
       </div>
 
-     <div className="flex gap-6 justify-between  items-center">
+     <div className="flex  sm:gap-6 gap-3 justify-between  items-center ">
        {/* total expense */}
-       <div>
+       <div className="">
         <Badge
           content={
             <CiDollar  className="h-4 w-4 text-yellow-700 text-2xl p-0" strokeWidth={1.5}  />

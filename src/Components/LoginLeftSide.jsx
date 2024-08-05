@@ -1,8 +1,8 @@
 import { Carousel } from "@material-tailwind/react";
 import React from "react";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
-import { Link, useLocation } from "react-router-dom";
-import { IoIosArrowRoundDown } from "react-icons/io";
+import { useLocation } from "react-router-dom";
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function LoginLeftSide() {
   const location = useLocation();
@@ -78,11 +78,11 @@ export default function LoginLeftSide() {
       <div className="absolute bottom-5 md:hidden flex  ">
         {location.pathname === "/signup" ? (
           <a href={"#signup"}>
-            <ButtonOutlined label={"lets explore"} />
+            <ButtonOutlined label={<IoIosArrowDown />} />
           </a>
         ) : (
           <a href={"#login"}>
-            <ButtonOutlined label={"lets explore"} />
+            <ButtonOutlined label={<IoIosArrowDown />} />
           </a>
         )}
       </div>

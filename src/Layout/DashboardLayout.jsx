@@ -9,7 +9,7 @@ export default function DashboardLayout() {
       <DashboardSidebar />
       <div className="flex flex-col w-full">
         <DashboardTopbar />
-        <div className="p-5">
+        <div className="p-5 min-h-screen h-full">
           <Outlet />
         </div>
       </div>

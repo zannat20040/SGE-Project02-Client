@@ -4,21 +4,22 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import NavlistForUser from "../Navlist/NavlistForUser";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
+import { FaBars } from "react-icons/fa";
 
 export default function DashboardSidebar() {
   return (
-    <div className="drawer lg:drawer-open w-fit ">
+    <div className="drawer lg:drawer-open w-fit relative ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-start">
+      <div className="drawer-content flex flex-col items-center justify-start fixed bottom-4 left-4">
         {/* Page content here */}
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          className="bg-primary-color text-white p-3 rounded-full drawer-button lg:hidden"
         >
-          Open drawer
+          <FaBars  />
         </label>
       </div>
-      <div className="drawer-side sticky left-0 top-0 ">
+      <div className="drawer-side fixed left-0 top-0 z-40">
         <label
           htmlFor="my-drawer-2"
           aria-label="close sidebar"

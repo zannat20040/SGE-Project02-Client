@@ -30,10 +30,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "/login",
-  //   element: <MobileLogin />,
-  // },
+ 
   {
     path: "/dashboard",
     element: <DashboardLayout />,
