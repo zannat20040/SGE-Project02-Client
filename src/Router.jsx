@@ -13,6 +13,7 @@ import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
 // import AddExpenses2 from "./CEODashboardComponent/AddExpenses";
 // import AllExpensesHistory from "./CEODashboardComponent/AllExpensesHistory";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
+import MobileLogin from "./Layout/MobileLogin";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   path: "/login",
+  //   element: <MobileLogin />,
+  // },
   {
     path: "/dashboard",
     element: <DashboardLayout />,

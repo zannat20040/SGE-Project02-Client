@@ -81,21 +81,21 @@ export default function Signup() {
       });
   };
   return (
-    <div className="">
-      <div className=" card-body w-full lg:w-9/12 mx-auto text-center hidden md:flex flex-col justify-center relative ">
+    <div className="" id="signup">
+      <div className=" card-body w-11/12 mx-auto text-center relative ">
         {/* loading */}
         {loading && <Loading />}
         {/* login top text */}
-        <div>
+        <div className="">
           <div className="flex justify-center">
             <Link to={"/"}>
               <AiOutlineGlobal className="bg-primary-color text-white border border-gray-200 text-5xl rounded-full h-15 w-15 p-3 " />
             </Link>
           </div>
-          <h1 className="text-3xl my-2 mb-3 font-medium text-primary-color ">
+          <h1 className="md:text-2xl text-xl my-2 mb-3 font-medium text-primary-color ">
             Join Us!
           </h1>
-          <p className="text-gray-500 mb-6">
+          <p className="text-gray-500 mb-6 text-sm">
             Create your account to effortlessly manage and track your office
             expenses..
           </p>
@@ -230,9 +230,9 @@ export default function Signup() {
                 required
                 type="checkbox"
                 defaultChecked
-                className="checkbox checkbox-sm  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
+                className="checkbox checkbox-xs  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
               />
-              <span className="label-text text-sm">
+              <span className="label-text text-xs">
                 By signing up, I accept the Terms and Conditions and Privacy
                 Policy.
               </span>
@@ -240,14 +240,14 @@ export default function Signup() {
           </div>
 
           {/* button */}
-          <div className="flex mt-4 items-center  gap-2">
+          <div className="flex mt-4 items-center  gap-2 md:flex-row flex-col">
             <Button
               type="submit"
-              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none"
+              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full md:w-fit"
             >
               Create New Account
             </Button>
-            <Link to={"/"}>
+            <Link to={"/"} className="w-full md:w-fit">
               <ButtonOutlined label={"Login Now"} />
             </Link>
           </div>

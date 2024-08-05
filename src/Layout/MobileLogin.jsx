@@ -8,7 +8,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import Loading from "../Shared Component/Loading";
 
-export default function Login() {
+export default function MobileLogin() {
   // states
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loginWithPass, loading, setLoading } = useContext(AuthContext);
@@ -42,12 +42,10 @@ export default function Login() {
   };
 
   return (
-    <div id="login">
-      {loading && <Loading />}
-
-      <div
-        className={`card-body bg-white  mx-auto right-0 left-0 md:static w-11/12  text-center  flex flex-col justify-center  `}
-      >
+    <div
+      className={`py-4 md:hidden min-h-screen  mx-auto text-center  bg-primary-color `}
+    >
+      <div className="flex flex-col  justify-center rounded-lg sm:w-4/5 w-5/6 mx-auto bg-white card-body">
         {/* login top text */}
         <div>
           <div className="flex justify-center">
@@ -55,10 +53,10 @@ export default function Login() {
               <AiOutlineGlobal className="bg-primary-color text-white border border-gray-200 text-5xl rounded-full h-15 w-15 p-3 " />
             </Link>
           </div>
-          <h1 className="md:text-2xl text-xl my-2 mb-3 font-medium text-primary-color ">
+          <h1 className="sm:text-3xl text-xl my-2 mb-3 font-medium text-primary-color ">
             Hello Again!
           </h1>
-          <p className="text-gray-500 mb-6 text-sm ">
+          <p className="text-gray-500 mb-6 sm:text-base text-sm">
             It’s time to dive back into your journey. Enter your details to
             continue.
           </p>
@@ -100,21 +98,19 @@ export default function Login() {
             </button>
           </label>
           {/* remember checkbox & forget pass */}
-          <div className="mt-4 flex sm:flex-row flex-col gap-3 justify-between sm:items-center items-start">
-            <div className="form-control">
-              <label className="label cursor-pointer justify-start items-center gap-3 text-start ">
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="checkbox checkbox-xs  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
-                />
-                <span className="label-text text-xs">Remember me</span>
-              </label>
-            </div>
+          <div className="form-control mt-4 ">
+            <label className="label cursor-pointer justify-start items-center gap-3 text-start ">
+              <input
+                type="checkbox"
+                defaultChecked
+                className="checkbox checkbox-sm  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
+              />
+              <span className="label-text text-sm">Remember me</span>
+            </label>
           </div>
 
           {/* button */}
-          <div className="flex mt-4 items-center gap-2 md:flex-row flex-col">
+          <div className="flex mt-4 items-center flex-wrap gap-2 sm:flex-row flex-col">
             <Button
               type="submit"
               className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full md:w-fit  "
