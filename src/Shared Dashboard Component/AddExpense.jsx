@@ -72,7 +72,7 @@ export default function AddExpense() {
 
       {/* FORM */}
       <form onSubmit={HandleExpenseAdd} className="bg-white px-10 py-10 mt-4 ">
-        <h1 className="text-lg font-semibold capitalize mb-4 text-primary-color tracking-wider">
+        <h1 className="md:text-lg text-base font-semibold capitalize mb-4 text-primary-color tracking-wider">
           Share you Expense details
         </h1>
         {/* title & amount */}
@@ -105,9 +105,9 @@ export default function AddExpense() {
           </div>
         </div>
         {/* category,date,branch */}
-        <div className="grid grid-cols-3">
+        <div className="grid sm:grid-cols-3 grid-cols-1">
           {/* CATEGORY  */}
-          <div className="relative ">
+          <div className="relative sm:col-span-3 md:col-span-1 ">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
               <BiCategory className="text-gray-400" />
             </div>
@@ -115,7 +115,7 @@ export default function AddExpense() {
               name="expenseCategory"
               id="category"
               defaultValue={"Others"}
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400  border-l h-full  "
+              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400  border-l h-full  md:border-r-0 border-r border-b md:border-b-0 "
             >
               <option disabled>Choose a your expense category</option>
               {categoryoptions?.map((option, i) => (
@@ -136,12 +136,12 @@ export default function AddExpense() {
               name="date"
               id="default-datepicker"
               type="date"
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border-l"
+              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border-l sm:border-r-0  border-r border-b sm:border-b-0"
               placeholder="Select expense date"
             />
           </div>
           {/* BRANCH */}
-          <div className="relative ">
+          <div className="relative sm:col-span-2 md:col-span-1 ">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
               <CiLocationOn className="text-gray-400" />
             </div>
@@ -173,12 +173,12 @@ export default function AddExpense() {
             name="notes"
             type="text"
             id="input-group-1"
-            className="hover:bg-gray-100 border  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400   focus:outline-none rounded-none h-full rounded-b  "
+            className="hover:bg-gray-100 border  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400   focus:outline-none rounded-none h-full rounded-b   "
             placeholder="Write here your aditional notes...(optional)"
           />
         </div>
 
-        <h1 className="text-lg font-semibold capitalize my-4 text-primary-color tracking-wider">
+        <h1 className="md:text-lg text-base font-semibold capitalize my-4 text-primary-color tracking-wider">
           Share you Expense Documents
         </h1>
         {/* FILE UPLOAD */}
