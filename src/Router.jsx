@@ -14,6 +14,7 @@ import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
 // import AllExpensesHistory from "./CEODashboardComponent/AllExpensesHistory";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 import MobileLogin from "./Layout/MobileLogin";
+import MemberHistoryDownload from "./Shared Dashboard Component/MemberHistoryDownload";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
- 
+
   {
     path: "/dashboard",
     element: <DashboardLayout />,
@@ -78,6 +79,11 @@ export const router = createBrowserRouter([
         path: "ceo/addnewfinance",
         element: <AddNewFinance />,
       },
+     
     ],
+  },
+  {
+    path: "download",
+    element: <MemberHistoryDownload />,
   },
 ]);
