@@ -108,11 +108,11 @@ export default function IndividualExpensesHistory() {
             </table>
           </div>
 
-          <div className="flex justify-between items-center mt-9">
-            <PrimaryButton label={"Print All History"} />
+          <div className="flex md:justify-between justify-end gap-5 items-center mt-10 flex-wrap">
+            <PrimaryButton label={"Print All History"} style={'w-fit'} />
 
             {/* pagination */}
-            <div className="flex items-center mt-10 justify-end">
+            <div className="flex items-center  justify-end flex-wrap">
               <PaginationLayout
                 prev={prev}
                 next={next}
