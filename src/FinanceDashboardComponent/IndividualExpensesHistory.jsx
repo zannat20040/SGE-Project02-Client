@@ -100,7 +100,7 @@ export default function IndividualExpensesHistory() {
                     <td>{data?.amount}</td>
                     <td>{data?.role}</td>
                     <td className="flex gap-2 justify-center">
-                      <PrimaryButton label={<TfiDownload />} />
+                      <PrimaryButton label={<TfiDownload /> } style={'w-fit'}/>
                     </td>
                   </tr>
                 ))}

@@ -92,7 +92,7 @@ export default function AddNewFinance() {
               name="firstName"
               required
               type="text"
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tl  text-sm block w-full ps-10 p-2.5 text-gray-400 focus:outline-none"
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tl  text-sm block w-full ps-10 p-2.5 text-gray-400 focus:outline-none"
               placeholder="John"
             />
           </div>
@@ -105,7 +105,7 @@ export default function AddNewFinance() {
               name="lastName"
               required
               type="text"
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-l-0 focus:outline-none"
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-l-0 focus:outline-none"
               placeholder="Doe"
             />
           </div>
@@ -119,7 +119,7 @@ export default function AddNewFinance() {
             name="email"
             required
             type="email"
-            className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-y-0 focus:outline-none"
+            className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-y-0 focus:outline-none"
             placeholder="example@gmail.com"
           />
         </div>
@@ -133,7 +133,7 @@ export default function AddNewFinance() {
             name="branch"
             id="branch"
             defaultValue={""}
-            className="hover:bg-gray-100  rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-400  border h-full   "
+            className="hover:bg-gray-100  rounded-none outline-0 border-gray-300 text-sm block w-full ps-10 p-2.5 text-gray-400  border h-full   "
           >
             <option value="" disabled>
               Select your branch
@@ -155,7 +155,7 @@ export default function AddNewFinance() {
               name="password"
               required
               type={passwordVisible ? "text" : "password"}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-t-0 border-r-0 rounded-bl focus:outline-none"
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-t-0 border-r-0 rounded-bl focus:outline-none"
               placeholder="••••••••"
             />
             {/* Show/Hide Button */}
@@ -179,7 +179,7 @@ export default function AddNewFinance() {
               name="confirmpass"
               required
               type={confirmPasswordVisible ? "text" : "password"}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-br  text-sm block w-full ps-10 p-2.5 text-gray-400  border-t-0 focus:outline-none"
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-br  text-sm block w-full ps-10 p-2.5 text-gray-400  border-t-0 focus:outline-none"
               placeholder="••••••••"
             />
             {/* Show/Hide Button */}
@@ -209,9 +209,9 @@ export default function AddNewFinance() {
               required
               type="checkbox"
               defaultChecked
-              className="checkbox checkbox-sm  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
+              className="checkbox checkbox-xs  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
             />
-            <span className="label-text text-sm">
+            <span className="label-text text-xs">
               By signing up, I accept the Terms and Conditions and Privacy
               Policy.
             </span>
