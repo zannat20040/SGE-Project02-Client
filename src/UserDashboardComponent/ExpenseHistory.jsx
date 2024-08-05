@@ -84,7 +84,7 @@ export default function ExpenseHistory() {
       {/* table */}
       <div className="bg-white px-6 py-10 mt-6 ">
         {/* filter by date */}
-        <form className="grid grid-cols-2 w-1/3 mb-6">
+        <form className="grid grid-cols-2 lg:w-1/3 sm:w-2/3 w-full mb-6">
           <div className="relative ">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
               <CiCalendarDate className="text-gray-400" />
@@ -171,7 +171,7 @@ export default function ExpenseHistory() {
         </div>
 
         {/* pagination */}
-        <div className="flex items-center mt-10 justify-end">
+        <div className="flex items-center mt-10 justify-end flex-wrap">
           <PaginationLayout
             prev={prev}
             next={next}
