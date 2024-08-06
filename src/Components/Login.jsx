@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import Loading from "../Shared Component/Loading";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 export default function Login() {
   // states
@@ -37,10 +37,11 @@ export default function Login() {
 
       console.log("response==> ", response.data.message);
       form.reset();
-      swal(response.data.message);
+      swal("Great!", response.data.message, "success");
       navigate("/dashboard/reports");
+      setLoading(false)
     } catch (error) {
-      swal(error);
+      swal("Ops!", error, "error");
       console.log(error);
     } finally {
       setLoading(false);

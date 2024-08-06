@@ -1,7 +1,7 @@
-import { Avatar, Badge, Button, Chip } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import React, { useContext, useRef } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavlistForUser from "../Navlist/NavlistForUser";
 import { FaBars } from "react-icons/fa";
 import { useReactToPrint } from "react-to-print";
@@ -11,13 +11,12 @@ import MemberHistoryDownload from "../UserDashboardComponent/MemberHistoryDownlo
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import NavlistForCEO from "../Navlist/NavlistForCEO";
 import NavlistForFinance from "../Navlist/NavlistForFinance";
+import swal from "sweetalert";
+
 
 export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);
-  // const { user } = useContext(AuthContext);
-  // const location = useLocation();
-  // const isCeoPath = location.pathname.includes("ceo");
-  // const isCeo = user?.email ===  "ceo@gmail.com" 
+
   const { userinfo } = useUserInfo();
 
   const componentRef = useRef();
@@ -30,10 +29,10 @@ export default function DashboardSidebar() {
     signOutProfile()
       .then(() => {
         navigate("/");
-        // swal("Good job!", "Logged out successfully!", "success");
+        swal("Sad!", "Come back soon.", "success");
       })
       .catch((error) => {
-        // console.log(error);
+        swal("Ops!", error, "error");
       });
   };
 
