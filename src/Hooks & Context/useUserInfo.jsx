@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function useUserInfo(email) {
   const axiosBase = useAxiosBase();
-  console.log(email);
+
   const {
     data: userinfo,
     refetch,

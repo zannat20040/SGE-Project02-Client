@@ -21,7 +21,7 @@ export default function NavlistForCEO() {
         Reports & Insights
       </NavLink>
       <NavLink
-        to="/dashboard/ceo/addexpenses"
+        to="/dashboard/ceo/addexpense"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >

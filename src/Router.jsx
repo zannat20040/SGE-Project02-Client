@@ -12,6 +12,7 @@ import IndividualExpensesHistory from "./FinanceDashboardComponent/IndividualExp
 import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
+import { ExpenseProvider } from "./Hooks & Context/ExpenseContext";
 
 export const router = createBrowserRouter([
   {
@@ -65,7 +66,7 @@ export const router = createBrowserRouter([
         element: <Reportandinsights3 />,
       },
       {
-        path: "ceo/addexpenses",
+        path: "ceo/addexpense",
         element: <AddExpense1 />,
       },
       {

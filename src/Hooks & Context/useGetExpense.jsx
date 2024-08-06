@@ -2,11 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useAxiosBase from "./useAxiosBase";
-import { useLocation } from "react-router-dom";
 
 export default function useGetExpense() {
-  const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
+  const axiosBase = useAxiosBase();
 
   const {
     data: tableData,

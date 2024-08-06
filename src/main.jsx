@@ -14,9 +14,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ExpenseProvider>
-          <RouterProvider router={router} />
+          <RouterProvider router={router}>
+            <Toaster />
+          </RouterProvider>
         </ExpenseProvider>
-        <Toaster />
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>

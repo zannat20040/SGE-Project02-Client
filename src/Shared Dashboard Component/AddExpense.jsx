@@ -29,8 +29,7 @@ export default function AddExpense() {
   const isCeoPath = location.pathname.includes("ceo");
   const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
   const { userinfo } = useUserInfo(userEmail);
-  const { refetch } = useGetExpenseContext(); //expense data refetch
-  console.log(userinfo);
+  const { refetch } = useGetExpenseContext(); //expense data fetch
 
   // select category option
   const categoryoptions = [
@@ -49,15 +48,15 @@ export default function AddExpense() {
   ];
 
   // select branch option
-  const branchoptions = [
-    "Uk",
-    "USA",
-    "Canada",
-    "New Zealand",
-    "Netherlands",
-    "Ireland",
-    "Australia",
-  ];
+  // const branchoptions = [
+  //   "Uk",
+  //   "USA",
+  //   "Canada",
+  //   "New Zealand",
+  //   "Netherlands",
+  //   "Ireland",
+  //   "Australia",
+  // ];
 
   // category as title change
   const HandleCategory = (e) => {
@@ -92,9 +91,7 @@ export default function AddExpense() {
     const purpose = form.purpose.value;
     const amount = form.amount.value;
     const category = form.category.value;
-    const branch = form.branch.value;
     const date = form.date.value;
-    const expenseCategory = form.expenseCategory.value;
     const notes = form.notes.value;
     const receipt = showName.name ? showName.name : null;
 
@@ -104,16 +101,15 @@ export default function AddExpense() {
       expenseTitle: currentExpenseTitle,
       receipt,
       amount,
-      branch,
+      branch: userinfo?.branch,
       date,
-      expenseCategory,
       notes,
     };
 
     axiosBase
       .post("/expense", expenseData, {
         headers: {
-          Authorization: `Bearer ${user?.email}`,
+          Authorization: `Bearer ${userEmail}`,
         },
       })
       .then((res) => {
@@ -123,13 +119,19 @@ export default function AddExpense() {
         refetch();
         setLoading(false);
         form.reset();
-        navigate("/dashboard/employee/history");
+        navigate(
+          userinfo?.role === "employee"
+            ? "/dashboard/employee/history"
+            : "/dashboard/ceo/allHistory"
+        );
       })
       .catch((err) => {
         console.log(err);
-        toast.success(err.message);
+        toast.success(err);
         setLoading(false);
       });
+
+    setLoading(false);
   };
 
   return (
@@ -205,7 +207,7 @@ export default function AddExpense() {
             />
           </div>
         </div>
-        {/* category,date,branch */}
+        {/* amount,date,branch */}
         <div className="grid sm:grid-cols-3 grid-cols-1">
           {/* AMOUNT */}
           <div className="relative sm:col-span-3 md:col-span-1 ">
@@ -215,10 +217,10 @@ export default function AddExpense() {
             <input
               name="amount"
               required
-              type="text"
+              type="number"
               id="input-group-1"
               className="hover:bg-gray-100  rounded-none  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400  border-l h-full  md:border-r-0 border-r border-b md:border-b-0 "
-              placeholder="Expense Amouny"
+              placeholder="Expense Amount"
             />
           </div>
           {/* DATE */}
@@ -241,7 +243,8 @@ export default function AddExpense() {
               <CiLocationOn className="text-gray-400" />
             </div>
             <input
-              name="amount"
+              disabled
+              name="branch"
               required
               type="text"
               id="input-group-1"

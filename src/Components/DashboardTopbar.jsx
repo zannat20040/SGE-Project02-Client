@@ -32,21 +32,24 @@ export default function DashboardTopbar() {
 
       <div className="flex  sm:gap-6 gap-3 justify-between  items-center ">
         {/* total expense */}
-        <div className="">
-          <Badge
-            content={
-              <CiDollar
-                className="h-4 w-4 text-white text-2xl p-0"
-                strokeWidth={1.5}
-              />
-            }
-            className=" bg-yellow-800"
-          >
-            <button className="bg-primary-color p-2 rounded text-white font-medium text-xs">
-              {totalAmount}
-            </button>
-          </Badge>
-        </div>
+        {userinfo?.role === "employee" && (
+          <div className="">
+            <Badge
+              content={
+                <CiDollar
+                  className="h-4 w-4 text-white text-2xl p-0"
+                  strokeWidth={1.5}
+                />
+              }
+              className=" bg-yellow-800"
+            >
+              <button className="bg-primary-color p-2 rounded text-white font-medium text-xs">
+                {totalAmount}
+              </button>
+            </Badge>
+          </div>
+        )}
+
         {/* user avatar */}
         <div className="flex gap-3 items-center border-l pl-3 ">
           <Avatar
