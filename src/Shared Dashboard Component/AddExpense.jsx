@@ -127,7 +127,7 @@ export default function AddExpense() {
       })
       .catch((err) => {
         console.log(err);
-        toast.success(err);
+        toast.error(err);
         setLoading(false);
       });
 

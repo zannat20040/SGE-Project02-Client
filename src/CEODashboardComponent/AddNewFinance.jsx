@@ -8,13 +8,17 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
-import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3"; 
+import { useNavigate } from "react-router-dom";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
 
 export default function AddNewFinance() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isPassSame, setIsPassSame] = useState(true);
-  const { createWithPass, loading, setLoading } = useContext(AuthContext);
+  const { createWithPass, loading, setLoading, signOutProfile } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+  const axiosBase = useAxiosBase();
 
   // select branch option
   const branchoptions = [
@@ -35,7 +39,7 @@ export default function AddNewFinance() {
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
     const email = form.email.value;
-    const branchName = form.branch.value;
+    const branch = form.branch.value;
     const password = form.password.value;
     const confirmpass = form.confirmpass.value;
 
@@ -44,48 +48,44 @@ export default function AddNewFinance() {
       return;
     }
 
-    const userData = {
+    const financeData = {
       firstName,
       lastName,
       email,
       password,
-      branchName,
-      role: "employee",
+      branch,
+      role: "finance",
     };
 
-    const audio = new Audio(successSound);
-    audio.play();
+    // try catch function call
+    try {
+      setLoading(true);
 
-    // firebase function call
-    createWithPass(email, password)
-    .then((userCredential) => {
+      // Create user
+      const userCredential = await createWithPass(email, password);
       const user = userCredential.user;
-      updateProfile(user, {
+
+      // Update user profile
+      await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
-      })
-        .then(() => {
-          axiosBase
-            .post("/signup", userData)
-            .then((res) => {
-              setLoading(false);
-              toast.success(res.data.message);
-              form.reset();
-              navigate("/dashboard/ceo/reports");
-            })
-            .catch((err) => {
-              toast.error(err.message);
-              console.log(err.message);
-            });
-        })
-        .catch((error) => {
-          setLoading(false);
-          toast.error(error.message);
-        });
-    })
-    .catch((error) => {
-      setLoading(false);
+      });
+
+      // Send data to the server
+      const response = await axiosBase.post("/signup", financeData);
+      console.log(response.data);
+
+      // Sign out profile
+      await signOutProfile();
+      
+      toast.success("Finance added successfully");
+      form.reset();
+      navigate("/dashboard/ceo/allHistory");
+    } catch (error) {
+      console.error(error.message);
       toast.error(error.message);
-    });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

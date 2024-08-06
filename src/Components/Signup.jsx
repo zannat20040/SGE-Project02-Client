@@ -42,7 +42,7 @@ export default function Signup() {
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
     const email = form.email.value;
-    const branchName = form.branch.value;
+    const branch = form.branch.value;
     const password = form.password.value;
     const confirmpass = form.confirmpass.value;
 
@@ -56,7 +56,7 @@ export default function Signup() {
       lastName,
       email,
       password,
-      branchName,
+      branch,
       role: "employee",
     };
 
