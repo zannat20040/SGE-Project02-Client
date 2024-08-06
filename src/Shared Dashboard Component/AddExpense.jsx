@@ -14,6 +14,8 @@ import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3";
 import useUserInfo from "../Hooks & Context/useUserInfo";
+import swal from "sweetalert";
+
 
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
@@ -114,7 +116,7 @@ export default function AddExpense() {
       })
       .then((res) => {
         const audio = new Audio(successSound);
-        toast.success(res.data.message);
+        swal("Great!", res.data.message, "Success");
         audio.play();
         refetch();
         setLoading(false);

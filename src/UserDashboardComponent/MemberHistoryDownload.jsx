@@ -3,10 +3,12 @@ import { Chip } from "@material-tailwind/react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import useGetExpense from "../Hooks & Context/useGetExpense";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import useUserInfo from "../Hooks & Context/useUserInfo";
 
 const MemberHistoryDownload = forwardRef((props, ref) => {
   const { tableData, isLoading } = useGetExpense();
   const { user } = useContext(AuthContext);
+  const { userinfo } = useUserInfo();
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>
@@ -69,9 +71,7 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
               </p>
               <p className="text-gray-600 text-xs">{user?.displayName}</p>
               <p className="text-gray-600 text-xs">{user?.email}</p>
-              <p className="text-gray-600 text-xs">
-                London E1 7RA United Kingdom.
-              </p>
+              <p className="text-gray-600 text-xs">{userinfo?.branch}</p>
             </div>
             <div>
               <p className="text-sm font-semibold text-gray-700 mb-1">From</p>
