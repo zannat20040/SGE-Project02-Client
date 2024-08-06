@@ -10,13 +10,14 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../Shared Component/Loading";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
+import useGetExpense from "../Hooks & Context/useGetExpense";
 
 export default function ExpenseHistory() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [active, setActive] = useState(1);
-  const itemsPerPage = 5; 
-  const { tableData,isLoading } = useGetExpenseContext(); //expense data fetch  
+  const itemsPerPage = 5;
+  const { tableData, refetch, isLoading } = useGetExpence();
 
   // date filter
   const filteredData = tableData?.filter((item) => {
@@ -108,9 +109,9 @@ export default function ExpenseHistory() {
               </thead>
               <tbody>
                 {/* tr-1 */}
-                {paginatedData?.map((data,index) => (
+                {paginatedData?.map((data, index) => (
                   <tr className="hover">
-                    <td>{index+1}</td>
+                    <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.amount}</td>
                     {/* status */}
@@ -135,7 +136,7 @@ export default function ExpenseHistory() {
                         } `}
                       />
                     </td>
-                    <td>{data?.date?.split('T')[0]}</td>
+                    <td>{data?.date?.split("T")[0]}</td>
                     {/* downlaod */}
                     <td>
                       <ButtonOutlined label={<TfiDownload />} style={"w-fit"} />

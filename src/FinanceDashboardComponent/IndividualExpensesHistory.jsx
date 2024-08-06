@@ -4,10 +4,13 @@ import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { TfiDownload } from "react-icons/tfi";
 import PrimaryButton from "../Shared Component/PrimaryButton";
 import PaginationLayout from "../Shared Component/PaginationLayout";
+import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 
 export default function IndividualExpensesHistory() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [active, setActive] = useState(1);
+  const itemsPerPage = 5;
 
   // tabledata
   const tableData = [
@@ -35,10 +38,9 @@ export default function IndividualExpensesHistory() {
   ];
 
   // pagination start from here
-  const [active, setActive] = useState(1);
 
   // date filter
-  const filteredData = tableData.filter((item) => {
+  const filteredData = tableData?.filter((item) => {
     const itemDate = new Date(item.date);
     const fromDate = new Date(startDate);
     const toDate = new Date(endDate);
@@ -48,7 +50,6 @@ export default function IndividualExpensesHistory() {
     );
   });
 
-  const itemsPerPage = 2; // Show one item per page
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   // Calculate paginated data
@@ -74,6 +75,7 @@ export default function IndividualExpensesHistory() {
     <div>
       <div>
         {/* breadcrumbs add */}
+        <BreadcrumsLayout route1={"ceo"} activeroute2={"allhistory"} />
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-6 ">
@@ -100,7 +102,7 @@ export default function IndividualExpensesHistory() {
                     <td>{data?.amount}</td>
                     <td>{data?.role}</td>
                     <td className="flex gap-2 justify-center">
-                      <PrimaryButton label={<TfiDownload /> } style={'w-fit'}/>
+                      <PrimaryButton label={<TfiDownload />} style={"w-fit"} />
                     </td>
                   </tr>
                 ))}
@@ -109,10 +111,10 @@ export default function IndividualExpensesHistory() {
           </div>
 
           <div className="flex md:justify-between justify-end gap-5 items-center mt-10 flex-wrap">
-            <PrimaryButton label={"Print All History"} style={'w-fit'} />
+            <PrimaryButton label={"Print All History"} style={"w-fit"} />
 
-            {/* pagination */}
-            <div className="flex items-center  justify-end flex-wrap">
+            {/*pagination */}
+           <div className="flex items-center  justify-end flex-wrap">
               <PaginationLayout
                 prev={prev}
                 next={next}

@@ -2,6 +2,8 @@ import React from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { TfiDownload } from "react-icons/tfi";
+import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
+import Loading from "../Shared Component/Loading";
 
 export default function AllExpensesHistory() {
   const [active, setActive] = React.useState(1);
@@ -29,7 +31,8 @@ export default function AllExpensesHistory() {
     <div>
       <div>
         {/* breadcrumbs add */}
-      
+        <BreadcrumsLayout route1={"ceo"} activeroute2={"allhistory"} />
+        {/* {loading && <Loading />} */}
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-6 ">
