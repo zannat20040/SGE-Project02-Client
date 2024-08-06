@@ -98,7 +98,7 @@ export default function AllExpenses() {
   const HandleReciptStatus = (e) => {
     e.preventDefault();
     const expenseStatus = e.target.status.value;
-    console.log(expenseStatus);
+
   };
 
   return (

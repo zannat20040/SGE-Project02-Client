@@ -22,7 +22,6 @@ export default function useGetExpense() {
           Authorization: `Bearer ${user?.email}`,
         },
       });
-      console.log(user.email);
       const data = response.data.data || [];
       const reversedData = data?.slice().reverse();
       return reversedData;

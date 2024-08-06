@@ -5,7 +5,7 @@ import useGetExpense from "../Hooks & Context/useGetExpense";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const MemberHistoryDownload = forwardRef((props, ref) => {
-  const { tableData, refetch, isLoading } = useGetExpense();
+  const { tableData, isLoading } = useGetExpense();
   const { user } = useContext(AuthContext);
 
   // object
@@ -35,12 +35,11 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
   //     date: "8/15/2020",
   //   },
   // ];
-  console.log(tableData);
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>
       {isLoading ? (
-        "Loading"
+        "Loading...."
       ) : (
         <div className="p-10 w-full">
           <div className="grid grid-cols-2 justify-between ">

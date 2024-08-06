@@ -59,8 +59,6 @@ export default function Signup() {
       role: "employee",
     };
 
-    console.log(userData);
-
     // firebase function call
     createWithPass(email, password)
       .then((userCredential) => {
@@ -69,17 +67,18 @@ export default function Signup() {
           displayName: `${firstName} ${lastName}`,
         })
           .then(() => {
-            axiosBase.post("/signup", userData).then((res) => {
-              setLoading(false);
-              toast.success(res.data.message);
-              console.log(res.data.message)
-              form.reset();
-              navigate("/dashboard/employee/reports");
-            })
-            .catch(err=>{
-              toast.error(err.message);
-              console.log(err.message)
-            })
+            axiosBase
+              .post("/signup", userData)
+              .then((res) => {
+                setLoading(false);
+                toast.success(res.data.message);
+                form.reset();
+                navigate("/dashboard/employee/reports");
+              })
+              .catch((err) => {
+                toast.error(err.message);
+                console.log(err.message);
+              });
           })
           .catch((error) => {
             setLoading(false);

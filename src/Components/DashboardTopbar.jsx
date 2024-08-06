@@ -9,17 +9,23 @@ import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { CiDollar } from "react-icons/ci";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
+import useUserInfo from "../Hooks & Context/useUserInfo";
 
 export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
   const { totalAmount } = useGetExpenseContext();
+  const { userinfo } = useUserInfo();
+  console.log(userinfo);
+ 
 
   return (
     <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-20 ">
       {/* role & branch */}
       <div>
-        <p className="font-medium text-sm text-primary-color ">Employee</p>
-        <p className="text-xs text-gray-400">Branch name</p>
+        <p className="font-medium text-sm text-primary-color capitalize">
+          {userinfo?.role}
+        </p>
+        <p className="text-xs text-gray-400 capitalize">{userinfo?.branch}</p>
       </div>
 
       <div className="flex  sm:gap-6 gap-3 justify-between  items-center ">

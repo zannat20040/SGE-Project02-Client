@@ -76,7 +76,6 @@ export const router = createBrowserRouter([
         path: "ceo/addnewfinance",
         element: <AddNewFinance />,
       },
-     
     ],
   },
   {

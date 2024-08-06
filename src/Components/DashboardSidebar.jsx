@@ -1,16 +1,25 @@
 import { Avatar, Badge, Button, Chip } from "@material-tailwind/react";
 import React, { useContext, useRef } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavlistForUser from "../Navlist/NavlistForUser";
 import { FaBars } from "react-icons/fa";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import Loading from "../Shared Component/Loading";
 import MemberHistoryDownload from "../UserDashboardComponent/MemberHistoryDownload";
+import useUserInfo from "../Hooks & Context/useUserInfo";
+import NavlistForCEO from "../Navlist/NavlistForCEO";
+import NavlistForFinance from "../Navlist/NavlistForFinance";
 
 export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const isCeoPath = location.pathname.includes("ceo");
+  const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
+  const { userinfo } = useUserInfo(userEmail);
+
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -30,7 +39,7 @@ export default function DashboardSidebar() {
 
   return (
     <div className="drawer lg:drawer-open w-fit relative ">
-      {loading&& <Loading style={'z-50'}/>}
+      {loading && <Loading style={"z-50"} />}
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-start fixed bottom-4 left-4 z-20">
         {/* Page content here */}
@@ -64,7 +73,13 @@ export default function DashboardSidebar() {
 
             {/* nav menu */}
             <div className="pl-5 mt-14 ">
-              <NavlistForUser />
+              {userinfo?.role === "employee" ? (
+                <NavlistForUser />
+              ) : userinfo?.role === "ceo" ? (
+                <NavlistForCEO />
+              ) : (
+                <NavlistForFinance />
+              )}
             </div>
           </div>
 

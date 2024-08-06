@@ -124,7 +124,6 @@ export default function AddExpense() {
         setLoading(false);
       });
 
-    console.log(expenseData);
   };
 
   return (
