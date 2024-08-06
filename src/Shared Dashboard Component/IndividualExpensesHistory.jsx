@@ -4,6 +4,7 @@ import PrimaryButton from "../Shared Component/PrimaryButton";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import Loading from "../Shared Component/Loading";
 
 export default function IndividualExpensesHistory() {
   const [startDate, setStartDate] = useState("");
@@ -75,7 +76,7 @@ export default function IndividualExpensesHistory() {
       <div>
         {/* breadcrumbs add */}
         <BreadcrumsLayout route1={"ceo"} activeroute2={"allhistory"} />
-
+        {/* {loading && <Loading />} */}
         {/* table */}
         <div className="bg-white px-6 py-10 mt-6 ">
           {/* table data */}

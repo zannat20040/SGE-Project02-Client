@@ -116,7 +116,7 @@ export default function AddExpense() {
       })
       .then((res) => {
         const audio = new Audio(successSound);
-        swal("Great!", res.data.message, "Success");
+        swal("Great!", res.data.message, "success");
         audio.play();
         refetch();
         setLoading(false);

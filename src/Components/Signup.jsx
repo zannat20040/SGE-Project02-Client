@@ -76,7 +76,7 @@ export default function Signup() {
       // Send data to the server
       const response = await axiosBase.post("/signup", userData);
 
-      swal("Great!", response.data.message, "Success");
+      swal("Great!", response.data.message, "success");
       form.reset();
       navigate("/dashboard/reports");
     } catch (error) {
