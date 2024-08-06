@@ -9,33 +9,14 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../Shared Component/Loading";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 
 export default function ExpenseHistory() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [active, setActive] = useState(1);
-  const { user } = useContext(AuthContext);
-  const axiosBase = useAxiosBase();
-  const itemsPerPage = 5; // Show one item per page
-
-  // expense data fetch
-  const {
-    data: tableData,
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["expenses", user?.email, active, itemsPerPage],
-    queryFn: async () => {
-      const response = await axiosBase.get(`/expense/${user?.email}`, {
-        headers: {
-          Authorization: `Bearer ${user?.email}`,
-        },
-      });
-      return response.data.data;
-    },
-  });
-
-  console.log(tableData);
+  const itemsPerPage = 5; 
+  const { tableData,isLoading } = useGetExpenseContext(); //expense data fetch  
 
   // date filter
   const filteredData = tableData?.filter((item) => {

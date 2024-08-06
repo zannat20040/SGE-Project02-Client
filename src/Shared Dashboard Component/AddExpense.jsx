@@ -11,6 +11,8 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
+import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3";
 
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
@@ -22,6 +24,7 @@ export default function AddExpense() {
   const [category, setCategory] = useState("");
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
+  const { refetch } = useGetExpenseContext(); //expense data refetch
 
   // select category option
   const categoryoptions = [
@@ -107,8 +110,10 @@ export default function AddExpense() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        const audio = new Audio(successSound);
         toast.success(res.data.message);
+        audio.play();
+        refetch();
         setLoading(false);
         form.reset();
         navigate("/dashboard/employee/history");
@@ -205,7 +210,7 @@ export default function AddExpense() {
             <input
               name="amount"
               required
-              type="number"
+              type="text"
               id="input-group-1"
               className="hover:bg-gray-100  rounded-none  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400  border-l h-full  md:border-r-0 border-r border-b md:border-b-0 "
               placeholder="Expense Amouny"
