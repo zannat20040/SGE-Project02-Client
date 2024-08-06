@@ -23,7 +23,7 @@ export default function DashboardTopbar() {
 console.log(userinfo)
 
   return (
-    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-20 ">
+    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-10 ">
       {/* role & branch */}
       <div>
         <p className="font-medium text-sm text-primary-color capitalize">

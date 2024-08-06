@@ -5,16 +5,16 @@ import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import toast from "react-hot-toast";
 import Loading from "../Shared Component/Loading";
-import useUserInfo from "../Hooks & Context/useUserInfo";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import swal from 'sweetalert';
 
 export default function Login() {
   // states
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loginWithPass, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { userinfo } = useUserInfo();
+  const axiosBase = useAxiosBase();
 
   // login function
   const HandleSignin = async (e) => {
@@ -24,21 +24,24 @@ export default function Login() {
     const email = form.email.value;
     const password = form.password.value;
 
-    const userdata = {
-      email,
-      password,
-    };
-
     try {
-      await loginWithPass(email, password);
-      form.reset();
-      toast.success("Login successful");
-      setLoading(false);
-      navigate(`/dashboard/reports`);
+      setLoading(true);
+      const userCredential = await loginWithPass(email, password);
+      console.log(userCredential);
+      const username = userCredential?.user?.displayName || "";
 
+      const response = await axiosBase.post("/login", {
+        email,
+        username,
+      });
+
+      console.log("response==> ", response.data.message);
+      form.reset();
+      swal(response.data.message);
+      navigate("/dashboard/reports");
     } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
+      swal(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
