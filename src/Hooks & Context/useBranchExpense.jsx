@@ -30,5 +30,7 @@ export default function useBranchExpense(branch) {
     },
   });
 
+  console.log(branchExpenses)
+
   return { branchExpenses, refetch, isLoading, error };
 }

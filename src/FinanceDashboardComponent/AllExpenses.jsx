@@ -68,7 +68,6 @@ export default function AllExpenses() {
     e.preventDefault();
     setLoading(true);
     const expenseStatus = e.target.status.value;
-    console.log(expenseStatus);
 
     const response = axiosBase.patch(
       `/finance/changeExpenseStatus/${id}`,
@@ -79,7 +78,6 @@ export default function AllExpenses() {
         },
       }
     );
-    console.log(response.data);
     toast(response.data);
     refetch();
     setLoading(false);

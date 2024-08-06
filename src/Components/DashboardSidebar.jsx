@@ -12,11 +12,10 @@ import useUserInfo from "../Hooks & Context/useUserInfo";
 import NavlistForCEO from "../Navlist/NavlistForCEO";
 import NavlistForFinance from "../Navlist/NavlistForFinance";
 import swal from "sweetalert";
-
+import PrintAllEmployExpenses from "../FinanceDashboardComponent/PrintAllEmployExpenses";
 
 export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);
-
   const { userinfo } = useUserInfo();
 
   const componentRef = useRef();
@@ -89,7 +88,11 @@ export default function DashboardSidebar() {
               type="submit"
               className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full  "
             >
-              Download All History
+              {userinfo?.role === "employee"
+                ? "Download All History"
+                : userinfo?.role === "finance"
+                ? "Download All Expenses"
+                : "Download All"}
             </Button>
             <Button
               onClick={HandleLogout}
@@ -99,7 +102,11 @@ export default function DashboardSidebar() {
               Logout
             </Button>
 
-            <MemberHistoryDownload ref={componentRef} />
+            {userinfo?.role === "employee" ? (
+              <MemberHistoryDownload ref={componentRef} />
+            ) : (
+              <PrintAllEmployExpenses ref={componentRef} />
+            )}
           </div>
         </ul>
       </div>

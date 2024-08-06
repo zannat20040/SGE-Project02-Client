@@ -8,34 +8,6 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
   const { tableData, isLoading } = useGetExpense();
   const { user } = useContext(AuthContext);
 
-  // object
-  // const tableData = [
-  //   {
-  //     id: 1,
-  //     name: "Cy Ganderton",
-  //     amount: "$500.00",
-  //     position: "Quality Control Specialist",
-  //     status: "Added",
-  //     date: "12/16/2020",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Hart Hagerty",
-  //     amount: "$750.00",
-  //     position: "Desktop Support Technician",
-  //     status: "Decline",
-  //     date: "12/5/2020",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Brice Swyre",
-  //     amount: "$300.00",
-  //     position: "Tax Accountant",
-  //     status: "Pending",
-  //     date: "8/15/2020",
-  //   },
-  // ];
-
   return (
     <div className="hidden print:flex w-full" ref={ref}>
       {isLoading ? (
