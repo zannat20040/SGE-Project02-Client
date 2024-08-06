@@ -72,7 +72,6 @@ export default function AddNewFinance() {
 
       // Send data to the server
       const response = await axiosBase.post("/signup", financeData);
-      // console.log(response.data);
 
       // Sign out profile
       await signOutProfile();
