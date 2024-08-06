@@ -17,14 +17,19 @@ export default function useGetExpense() {
       if (!user?.email) {
         return [];
       }
-      const response = await axiosBase.get(`/expense/${user?.email}`, {
-        headers: {
-          Authorization: `Bearer ${user?.email}`,
-        },
-      });
-      const data = response.data.data || [];
-      const reversedData = data?.slice().reverse();
-      return reversedData;
+      try {
+        const response = await axiosBase.get(`/expense/${user?.email}`, {
+          headers: {
+            Authorization: `Bearer ${user?.email}`,
+          },
+        });
+        const data = response.data.data || [];
+        const reversedData = data?.slice().reverse();
+        return reversedData;
+      } catch (err) {
+        console.error("Error fetching expenses:", err.response.data.message); // Log error
+        return []; 
+      }
     },
   });
 

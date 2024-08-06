@@ -10,10 +10,9 @@ import { CiWarning } from "react-icons/ci";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
-import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
-import useUserInfo from "../Hooks & Context/useUserInfo";
+import swal from "sweetalert";
 
 export default function Signup() {
   // states
@@ -23,8 +22,6 @@ export default function Signup() {
   const { createWithPass, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const axiosBase = useAxiosBase();
-  const { userinfo } = useUserInfo();
-
 
   // select branch option
   const branchoptions = [
@@ -64,35 +61,30 @@ export default function Signup() {
     };
 
     // firebase function call
-    createWithPass(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        updateProfile(user, {
-          displayName: `${firstName} ${lastName}`,
-        })
-          .then(() => {
-            axiosBase
-              .post("/signup", userData)
-              .then((res) => {
-                setLoading(false);
-                toast.success(res.data.message);
-                form.reset();
-                navigate(`/dashboard/${userinfo?.role}/reports`);
-              })
-              .catch((err) => {
-                toast.error(err.message);
-                console.log(err.message);
-              });
-          })
-          .catch((error) => {
-            setLoading(false);
-            toast.error(error.message);
-          });
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error.message);
+    try {
+      setLoading(true);
+
+      // Create user
+      const userCredential = await createWithPass(email, password);
+      const user = userCredential.user;
+
+      // Update user profile
+      await updateProfile(user, {
+        displayName: `${firstName} ${lastName}`,
       });
+
+      // Send data to the server
+      const response = await axiosBase.post("/signup", userData);
+
+      swal("Great!", response.data.message, "Success");
+      form.reset();
+      navigate("/dashboard/reports");
+    } catch (error) {
+      console.error(error.message);
+      swal("Ops!", error.message, "error");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="" id="signup">

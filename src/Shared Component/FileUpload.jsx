@@ -9,17 +9,14 @@ export default function FileUpload({ setShowName, showName }) {
     setShowImagePreview("");
     fileInputRef.current.value = "";
   };
-  // const [file, setFile] = useState(null);
-
- 
+  const [file, setFile] = useState(null);
   
   // const HandleUpload = async (e) => {
-  //   e.preventDefault();
   //   setFile(e.target.files[0]);
   //   const formData = new FormData();
   //   formData.append("file", file);
 
-  //   // setLoading(true);
+  //   setLoading(true);
 
   //   try {
   //     const res = await axiosPublic.post(
@@ -42,6 +39,7 @@ export default function FileUpload({ setShowName, showName }) {
   //     setLoading(false); // Set loading to false in case of error
   //   }
   // };
+  
   return (
     <div className=" ">
       {/* preview */}

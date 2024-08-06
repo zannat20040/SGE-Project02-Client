@@ -15,7 +15,14 @@ export default function useUserInfo() {
   } = useQuery({
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
-      const response = await axiosBase.get(`/getRole/${user?.email}`);
+      if (!user?.email) {
+        return null; // Return null or an empty object if email is undefined
+      }
+      const response = await axiosBase.get(`/getRole/${user?.email}`, {
+        headers: {
+          Authorization: `Bearer ${user?.email}`,
+        },
+      });
       return response.data;
     },
   });

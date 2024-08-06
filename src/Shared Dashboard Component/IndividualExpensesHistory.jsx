@@ -94,7 +94,7 @@ export default function IndividualExpensesHistory() {
               </thead>
               <tbody>
                 {paginatedData?.map((data) => (
-                  <tr className="hover">
+                  <tr className="hover" key={data?._id}>
                     <td>{data?.id}</td>
                     <td>{data?.memberName}</td>
                     <td>{data?.memberEmail}</td>
