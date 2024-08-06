@@ -9,12 +9,44 @@ export default function FileUpload({ setShowName, showName }) {
     setShowImagePreview("");
     fileInputRef.current.value = "";
   };
+  // const [file, setFile] = useState(null);
 
+ 
+  
+  // const HandleUpload = async (e) => {
+  //   e.preventDefault();
+  //   setFile(e.target.files[0]);
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+
+  //   // setLoading(true);
+
+  //   try {
+  //     const res = await axiosPublic.post(
+  //       `/mco/upload/${studentDetails?._id}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     // console.log("File uploaded successfully: ", res.data);
+  //     swal("Good job!", "File uploaded successfully", "success");
+  //     setLoading(false); // Set loading to false when upload is complete
+  //     e.target.reset(); // Reset the form input
+  //     refetch();
+  //   } catch (error) {
+  //     console.error("Error uploading file: ", error);
+  //     swal("Opps!", "Error uploading file", "error");
+  //     setLoading(false); // Set loading to false in case of error
+  //   }
+  // };
   return (
     <div className=" ">
       {/* preview */}
       {showName?.name ? (
-        <div className="max-w-4xl mx-auto flex w-full items-center gap-x-6  rounded border-2 border-dashed border-primary-color p-3 bg-white">
+        <div className="w-full min-w-4xl mx-auto flex items-center gap-x-6  rounded border-2 border-dashed border-primary-color p-3 bg-white">
           <img
             className="w-full max-w-[50px] rounded object-cover"
             src={showImagePreview}
@@ -89,6 +121,7 @@ export default function FileUpload({ setShowName, showName }) {
             setShowImagePreview(URL.createObjectURL(imageFile));
           }
         }}
+        // onChange={HandleUpload}
         className="hidden"
         id="file5"
         type="file"
