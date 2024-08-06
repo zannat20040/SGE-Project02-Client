@@ -3,12 +3,11 @@ import React, { useContext, useRef } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import NavlistForUser from "../Navlist/NavlistForUser";
-import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import { FaBars } from "react-icons/fa";
 import { useReactToPrint } from "react-to-print";
-import MemberHistoryDownload from "../Shared Dashboard Component/MemberHistoryDownload";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import Loading from "../Shared Component/Loading";
+import MemberHistoryDownload from "../UserDashboardComponent/MemberHistoryDownload";
 
 export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);

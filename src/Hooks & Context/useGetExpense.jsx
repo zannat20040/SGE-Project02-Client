@@ -14,12 +14,17 @@ export default function useGetExpense() {
   } = useQuery({
     queryKey: ["expenses", user?.email],
     queryFn: async () => {
+      if (!user?.email) {
+        return [];
+      }
       const response = await axiosBase.get(`/expense/${user?.email}`, {
         headers: {
           Authorization: `Bearer ${user?.email}`,
         },
       });
-      const reversedData = response.data.data?.slice().reverse()
+      console.log(user.email);
+      const data = response.data.data || [];
+      const reversedData = data?.slice().reverse();
       return reversedData;
     },
   });

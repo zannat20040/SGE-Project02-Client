@@ -11,7 +11,7 @@ import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
 import IndividualExpensesHistory from "./FinanceDashboardComponent/IndividualExpensesHistory";
 import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
-import MemberHistoryDownload from "./Shared Dashboard Component/MemberHistoryDownload";
+import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
 
 export const router = createBrowserRouter([
   {
