@@ -50,6 +50,7 @@ export default function AddNewFinance() {
       email,
       password,
       branchName,
+      role: "employee",
     };
 
     const audio = new Audio(successSound);
@@ -57,26 +58,34 @@ export default function AddNewFinance() {
 
     // firebase function call
     createWithPass(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        updateProfile(user, {
-          displayName: `${firstName} ${lastName}`,
-        })
-          .then(() => {
-            setLoading(false);
-            toast.success("Signup successful! Welcome To Shabuj Global!");
-            form.reset();
-            // navigate("/dashboard/employee/reports");
-          })
-          .catch((error) => {
-            setLoading(false);
-            toast.error(error.message);
-          });
+    .then((userCredential) => {
+      const user = userCredential.user;
+      updateProfile(user, {
+        displayName: `${firstName} ${lastName}`,
       })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error.message);
-      });
+        .then(() => {
+          axiosBase
+            .post("/signup", userData)
+            .then((res) => {
+              setLoading(false);
+              toast.success(res.data.message);
+              form.reset();
+              navigate("/dashboard/ceo/reports");
+            })
+            .catch((err) => {
+              toast.error(err.message);
+              console.log(err.message);
+            });
+        })
+        .catch((error) => {
+          setLoading(false);
+          toast.error(error.message);
+        });
+    })
+    .catch((error) => {
+      setLoading(false);
+      toast.error(error.message);
+    });
   };
 
   return (

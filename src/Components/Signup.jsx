@@ -56,6 +56,7 @@ export default function Signup() {
       lastName,
       email,
       password,
+      branchName,
       role: "employee",
     };
 

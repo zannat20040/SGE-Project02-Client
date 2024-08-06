@@ -10,13 +10,15 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { CiDollar } from "react-icons/ci";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import useUserInfo from "../Hooks & Context/useUserInfo";
+import { useLocation } from "react-router-dom";
 
 export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
   const { totalAmount } = useGetExpenseContext();
-  const { userinfo } = useUserInfo();
-  console.log(userinfo);
- 
+  const location = useLocation();
+  const isCeoPath = location.pathname.includes("ceo");
+  const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
+  const { userinfo } = useUserInfo(userEmail);
 
   return (
     <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-20 ">
@@ -53,9 +55,12 @@ export default function DashboardTopbar() {
           />
           <div>
             <h1 className="font-medium text-sm text-primary-color ">
-              {user?.displayName}
+              {isCeoPath ? "CEO NAME" : user?.displayName}
             </h1>
-            <p className="text-xs text-gray-400">{user?.email}</p>
+            <p className="text-xs text-gray-400">
+              {" "}
+              {isCeoPath ? "ceo@gmail.com" : user?.email}
+            </p>
           </div>
         </div>
       </div>

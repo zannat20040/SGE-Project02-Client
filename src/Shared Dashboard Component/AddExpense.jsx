@@ -9,10 +9,11 @@ import Loading from "../Shared Component/Loading";
 import { Button } from "@material-tailwind/react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3";
+import useUserInfo from "../Hooks & Context/useUserInfo";
 
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
@@ -24,7 +25,12 @@ export default function AddExpense() {
   const [category, setCategory] = useState("");
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isCeoPath = location.pathname.includes("ceo");
+  const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
+  const { userinfo } = useUserInfo(userEmail);
   const { refetch } = useGetExpenseContext(); //expense data refetch
+  console.log(userinfo);
 
   // select category option
   const categoryoptions = [
@@ -39,6 +45,7 @@ export default function AddExpense() {
     "Health and Safety",
     "Transportation and Parking",
     "Marketing and Advertising",
+    "Salary",
   ];
 
   // select branch option
@@ -123,7 +130,6 @@ export default function AddExpense() {
         toast.success(err.message);
         setLoading(false);
       });
-
   };
 
   return (
@@ -234,22 +240,15 @@ export default function AddExpense() {
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
               <CiLocationOn className="text-gray-400" />
             </div>
-            <select
+            <input
+              name="amount"
               required
-              name="branch"
-              id="branch"
-              defaultValue={""}
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-400  border-x h-full   "
-            >
-              <option value="" disabled>
-                Select your branch
-              </option>
-              {branchoptions?.map((option, i) => (
-                <option key={i} className="text-black ">
-                  {option}
-                </option>
-              ))}
-            </select>
+              type="text"
+              id="input-group-1"
+              value={userinfo?.branch}
+              className="capitalize hover:bg-gray-100  rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-400  border-x h-full   "
+              placeholder="Expense Amouny"
+            />
           </div>
         </div>
 
