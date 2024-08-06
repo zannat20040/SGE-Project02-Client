@@ -15,12 +15,8 @@ import { useLocation } from "react-router-dom";
 export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
   const { totalAmount } = useGetExpenseContext();
-  // const location = useLocation();
-  // const isCeoPath = location.pathname.includes("ceo");
-  // const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
-  // const { userinfo } = useUserInfo(userEmail);
   const { userinfo } = useUserInfo();
-console.log(userinfo)
+// console.log(userinfo)
 
   return (
     <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-10 ">

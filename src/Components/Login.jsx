@@ -27,7 +27,7 @@ export default function Login() {
     try {
       setLoading(true);
       const userCredential = await loginWithPass(email, password);
-      console.log(userCredential);
+      // console.log(userCredential);
       const username = userCredential?.user?.displayName || "";
 
       const response = await axiosBase.post("/login", {
@@ -35,7 +35,7 @@ export default function Login() {
         username,
       });
 
-      console.log("response==> ", response.data.message);
+      // console.log("response==> ", response.data.message);
       form.reset();
       swal("Great!", response.data.message, "success");
       navigate("/dashboard/reports");

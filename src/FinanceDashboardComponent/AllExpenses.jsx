@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Button, IconButton, Tooltip } from "@material-tailwind/react";
-import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { FaCheck } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
 import { CiStickyNote } from "react-icons/ci";
@@ -10,59 +8,24 @@ import { Chip } from "@material-tailwind/react";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import PrimaryButton from "../Shared Component/PrimaryButton";
+import useUserInfo from "../Hooks & Context/useUserInfo";
+import useBranchExpense from "../Hooks & Context/useBranchExpense";
+import ImageModal from "../Shared Component/ImageModal";
+import NotesModal from "../Shared Component/NotesModal";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
-
-  // object
-  const tableData = [
-    {
-      id: 1,
-      memberName: "Member Name",
-      memberEmail: "memberemail@gmail.com",
-      purpose: "Expense Purpose",
-      amount: "$500.00",
-      category: "Category",
-      status: "Pending",
-      role: "Employee",
-      date: "12/16/2020",
-      note: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, facilis! Aliquid eos, libero possimus tempore temporibus sapiente? Sint esse omnis eum aliquam maxime vitae nihil consectetur veritatis itaque, corporis adipisci, atque accusantium voluptatibus nobis unde mollitia libero facere. Dolores molestias magnam omnis voluptas molestiae aperiam incidunt reprehenderit ipsum obcaecati corrupti.",
-      receipt: null,
-    },
-    {
-      id: 2,
-      memberName: "Cy Ganderton",
-      memberEmail: "memberemail@gmail.com",
-      purpose: "Expense Purpose",
-      amount: "$500.00",
-      category: "Category",
-      status: "Decline",
-      role: "CEO",
-      date: "12/16/2020",
-      note: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, facilis! Aliquid eos, libero possimus tempore temporibus sapiente? Sint esse omnis eum aliquam maxime vitae nihil consectetur veritatis itaque, corporis adipisci, atque accusantium voluptatibus nobis unde mollitia libero facere. Dolores molestias magnam omnis voluptas molestiae aperiam incidunt reprehenderit ipsum obcaecati corrupti.",
-      receipt: "null",
-    },
-    {
-      id: 3,
-      memberName: "Cy Ganderton",
-      memberEmail: "memberemail@gmail.com",
-      purpose: "Expense Purpose",
-      amount: "$500.00",
-      category: "Category",
-      status: "Added",
-      role: "Employee",
-      date: "12/16/2020",
-      note: "",
-      receipt: "recipet",
-    },
-  ];
+  const { userinfo } = useUserInfo();
+  const { branchExpenses, refetch, isLoading, error } = useBranchExpense(
+    userinfo?.branch
+  );
 
   // pagination start from here
   const [active, setActive] = useState(1);
 
   // date filter
-  const filteredData = tableData.filter((item) => {
+  const filteredData = branchExpenses?.filter((item) => {
     const itemDate = new Date(item.date);
     const fromDate = new Date(startDate);
     const toDate = new Date(endDate);
@@ -73,10 +36,10 @@ export default function AllExpenses() {
   });
 
   const itemsPerPage = 2; // Show one item per page
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
 
   // Calculate paginated data
-  const paginatedData = filteredData.slice(
+  const paginatedData = filteredData?.slice(
     (active - 1) * itemsPerPage,
     active * itemsPerPage
   );
@@ -98,9 +61,9 @@ export default function AllExpenses() {
   const HandleReciptStatus = (e) => {
     e.preventDefault();
     const expenseStatus = e.target.status.value;
-
   };
 
+  console.log(paginatedData);
   return (
     <div>
       <div>
@@ -148,26 +111,23 @@ export default function AllExpenses() {
                   <th className="pb-4 text-start">Details</th>
                   <th className="pb-4">Title</th>
                   <th className="pb-4">Amount</th>
-                  <th className="pb-4">Catagory</th>
                   <th className="pb-4">Status</th>
                   <th className="pb-4">Role</th>
                   <th className="pb-4">Date</th>
-                  <th className="pb-4">Recipt/Note</th>
+                  <th className="pb-4">Note</th>
+                  <th className="pb-4">See Recipt</th>
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.map((data) => (
+                {paginatedData?.map((data, idx) => (
                   <tr className="hover">
-                    <td>{data?.id}</td>
+                    <td>{idx + 1}</td>
                     <td className="text-start">
-                      <p>{data?.memberName}</p>
-                      <p className="text-xs text-gray-500">
-                        {data?.memberEmail}
-                      </p>
+                      <p>memberName</p>
+                      <p className="text-xs text-gray-500">{data?.email}</p>
                     </td>
-                    <td>{data?.purpose}</td>
+                    <td>{data?.expenseTitle}</td>
                     <td>{data?.amount}</td>
-                    <td>{data?.category}</td>
                     {/* status change form */}
                     <td>
                       {data?.status === "Pending" ? (
@@ -220,23 +180,11 @@ export default function AllExpenses() {
                       )}
                     </td>
                     <td>{data?.role}</td>
-                    <td>{data?.date}</td>
-                    <td className="flex gap-2 justify-center">
-                      {data?.note !== "" && (
-                        <div>
-                          <ButtonOutlined
-                            label={<CiStickyNote />}
-                            style={"w-fit"}
-                          />
-                        </div>
-                      )}
-                      {data?.receipt && (
-                        <PrimaryButton
-                          label={<TfiDownload />}
-                          style={"w-fit group"}
-                        />
-                      )}
+                    <td>{data?.date?.split("T")[0]}</td>
+                    <td className="flex gap-2 justify-center ">
+                      {data?.note !== "" ? <NotesModal notes={data?.notes} /> : "Not added"}
                     </td>
+                    <td>{data?.receipt ? <ImageModal /> : "Not available"}</td>
                   </tr>
                 ))}
               </tbody>
