@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
 import { CiStickyNote } from "react-icons/ci";
@@ -12,14 +12,20 @@ import useUserInfo from "../Hooks & Context/useUserInfo";
 import useBranchExpense from "../Hooks & Context/useBranchExpense";
 import ImageModal from "../Shared Component/ImageModal";
 import NotesModal from "../Shared Component/NotesModal";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const { userinfo } = useUserInfo();
+  const [loading, setLoading] = useState(false);
   const { branchExpenses, refetch, isLoading, error } = useBranchExpense(
     userinfo?.branch
   );
+  const axiosBase = useAxiosBase();
+  const { user } = useContext(AuthContext);
 
   // pagination start from here
   const [active, setActive] = useState(1);
@@ -58,12 +64,27 @@ export default function AllExpenses() {
   };
 
   // status form
-  const HandleReciptStatus = (e) => {
+  const HandleReciptStatus = (e, id) => {
     e.preventDefault();
+    setLoading(true);
     const expenseStatus = e.target.status.value;
+    console.log(expenseStatus);
+
+    const response = axiosBase.patch(
+      `/finance/changeExpenseStatus/${id}`,
+      { status: expenseStatus },
+      {
+        headers: {
+          Authorization: `Bearer ${user?.email}`,
+        },
+      }
+    );
+    console.log(response.data);
+    toast(response.data);
+    refetch();
+    setLoading(false);
   };
 
-  console.log(paginatedData);
   return (
     <div>
       <div>
@@ -120,20 +141,20 @@ export default function AllExpenses() {
               </thead>
               <tbody>
                 {paginatedData?.map((data, idx) => (
-                  <tr className="hover">
+                  <tr className="hover" key={data?._id}>
                     <td>{idx + 1}</td>
                     <td className="text-start">
-                      <p>memberName</p>
+                      <p>{data?.username}</p>
                       <p className="text-xs text-gray-500">{data?.email}</p>
                     </td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.amount}</td>
                     {/* status change form */}
                     <td>
-                      {data?.status === "Pending" ? (
+                      {data?.status === "pending" ? (
                         <form
-                          className=" border rounded flex "
-                          onSubmit={HandleReciptStatus}
+                          className=" border rounded flex   w-fit mx-auto"
+                          onSubmit={(e) => HandleReciptStatus(e, data?._id)}
                         >
                           <select
                             required
@@ -146,33 +167,38 @@ export default function AllExpenses() {
                               Pending
                             </option>
                             <option
-                              className="text-black text-xs "
-                              value={"Added"}
+                              className="text-black text-xs  capitalize"
+                              value={"granted"}
                             >
-                              Added
+                              Granted
                             </option>
                             <option
                               className="text-black text-xs "
-                              value={"Declined"}
+                              value={"rejected"}
                             >
-                              Declined
+                              Rejected
                             </option>
                           </select>
+
                           <button
                             type="submit"
                             class="text-white  top-0 bottom-0 my-auto bg-primary-color p-2 rounded  outline-none focus:border-0 focus:!outline-none h-fit"
                           >
-                            <FaCheck className="text-xs" />
+                            {loading ? (
+                              <span className="loading loading-spinner loading-xs"></span>
+                            ) : (
+                              <FaCheck className="text-xs" />
+                            )}
                           </button>
                         </form>
                       ) : (
                         <Chip
                           variant="ghost"
-                          color={data.status === "Added" ? "green" : "red"}
+                          color={data.status === "granted" ? "green" : "red"}
                           size="sm"
                           value={data?.status}
                           className={`font-bold text-xs  rounded  !capitalize ${
-                            data.status === "Added"
+                            data.status === "granted"
                               ? "text-green-600"
                               : "text-red-600"
                           } `}
@@ -182,7 +208,11 @@ export default function AllExpenses() {
                     <td>{data?.role}</td>
                     <td>{data?.date?.split("T")[0]}</td>
                     <td className="flex gap-2 justify-center ">
-                      {data?.note !== "" ? <NotesModal notes={data?.notes} /> : "Not added"}
+                      {data?.note !== "" ? (
+                        <NotesModal notes={data?.notes} />
+                      ) : (
+                        "Not added"
+                      )}
                     </td>
                     <td>{data?.receipt ? <ImageModal /> : "Not available"}</td>
                   </tr>
