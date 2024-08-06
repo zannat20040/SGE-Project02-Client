@@ -7,12 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import Loading from "../Shared Component/Loading";
+import useUserInfo from "../Hooks & Context/useUserInfo";
 
 export default function Login() {
   // states
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loginWithPass, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { userinfo } = useUserInfo();
 
   // login function
   const HandleSignin = async (e) => {
@@ -32,7 +34,8 @@ export default function Login() {
       form.reset();
       toast.success("Login successful");
       setLoading(false);
-      navigate("/dashboard/employee/reports");
+      navigate(`/dashboard/reports`);
+
     } catch (error) {
       setLoading(false);
       toast.error(error.message);

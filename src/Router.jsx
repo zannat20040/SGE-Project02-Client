@@ -8,7 +8,7 @@ import AddExpense1 from "./Shared Dashboard Component/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
 import Reportandinsights2 from "./FinanceDashboardComponent/Reportandinsights";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
-import IndividualExpensesHistory from "./FinanceDashboardComponent/IndividualExpensesHistory";
+import IndividualExpensesHistory from "./Shared Dashboard Component/IndividualExpensesHistory";
 import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
     children: [
       // employee routes
       {
-        path: "employee/reports",
+        path: "reports",
         element: <ReportandInsights1 />,
       },
       {
@@ -48,10 +48,10 @@ export const router = createBrowserRouter([
         element: <ExpenseHistory />,
       },
       // finance route
-      {
-        path: "finance/reports",
-        element: <Reportandinsights2 />,
-      },
+      // {
+      //   path: "finance/reports",
+      //   element: <Reportandinsights2 />,
+      // },
       {
         path: "finance/allexpenses",
         element: <AllExpenses />,
@@ -61,10 +61,10 @@ export const router = createBrowserRouter([
         element: <IndividualExpensesHistory />,
       },
       // CEO route
-      {
-        path: "ceo/reports",
-        element: <Reportandinsights3 />,
-      },
+      // {
+      //   path: "ceo/reports",
+      //   element: <Reportandinsights3 />,
+      // },
       {
         path: "ceo/addexpense",
         element: <AddExpense1 />,

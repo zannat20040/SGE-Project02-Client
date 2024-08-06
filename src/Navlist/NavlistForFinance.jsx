@@ -16,7 +16,7 @@ export default function NavlistForFinance() {
   return (
     <div>
       <NavLink
-        to="/dashboard/finance/reports"
+        to="/dashboard/reports"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
@@ -27,14 +27,14 @@ export default function NavlistForFinance() {
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
-        Add Expense
+        All Expense
       </NavLink>
       <NavLink
         to="/dashboard/finance/allHistory"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
-        Expense History
+        Employee History
       </NavLink>
     </div>
   );

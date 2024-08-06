@@ -3,8 +3,9 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import useAxiosBase from "./useAxiosBase";
 import { useQuery } from "@tanstack/react-query";
 
-export default function useUserInfo(email) {
+export default function useUserInfo() {
   const axiosBase = useAxiosBase();
+  const { user } = useContext(AuthContext);
 
   const {
     data: userinfo,
@@ -12,9 +13,9 @@ export default function useUserInfo(email) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["userInfo", email],
+    queryKey: ["userInfo", user?.email],
     queryFn: async () => {
-      const response = await axiosBase.get(`/getRole/${email}`);
+      const response = await axiosBase.get(`/getRole/${user?.email}`);
       return response.data;
     },
   });

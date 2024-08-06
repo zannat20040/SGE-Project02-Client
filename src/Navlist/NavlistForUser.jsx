@@ -15,7 +15,7 @@ export default function NavlistForUser() {
   return (
     <div>
       <NavLink
-        to="/dashboard/employee/reports"
+        to="/dashboard/reports"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >

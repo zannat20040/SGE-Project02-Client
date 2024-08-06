@@ -14,11 +14,11 @@ import NavlistForFinance from "../Navlist/NavlistForFinance";
 
 export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);
-  const { user } = useContext(AuthContext);
-  const location = useLocation();
-  const isCeoPath = location.pathname.includes("ceo");
-  const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
-  const { userinfo } = useUserInfo(userEmail);
+  // const { user } = useContext(AuthContext);
+  // const location = useLocation();
+  // const isCeoPath = location.pathname.includes("ceo");
+  // const isCeo = user?.email ===  "ceo@gmail.com" 
+  const { userinfo } = useUserInfo();
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -30,7 +30,7 @@ export default function DashboardSidebar() {
     signOutProfile()
       .then(() => {
         navigate("/");
-        swal("Good job!", "Logged out successfully!", "success");
+        // swal("Good job!", "Logged out successfully!", "success");
       })
       .catch((error) => {
         // console.log(error);

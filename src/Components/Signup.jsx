@@ -13,6 +13,7 @@ import Loading from "../Shared Component/Loading";
 import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import useUserInfo from "../Hooks & Context/useUserInfo";
 
 export default function Signup() {
   // states
@@ -22,6 +23,8 @@ export default function Signup() {
   const { createWithPass, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const axiosBase = useAxiosBase();
+  const { userinfo } = useUserInfo();
+
 
   // select branch option
   const branchoptions = [
@@ -74,7 +77,7 @@ export default function Signup() {
                 setLoading(false);
                 toast.success(res.data.message);
                 form.reset();
-                navigate("/dashboard/employee/reports");
+                navigate(`/dashboard/${userinfo?.role}/reports`);
               })
               .catch((err) => {
                 toast.error(err.message);

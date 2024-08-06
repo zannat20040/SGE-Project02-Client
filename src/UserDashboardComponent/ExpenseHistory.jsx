@@ -17,7 +17,7 @@ export default function ExpenseHistory() {
   const [endDate, setEndDate] = useState("");
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
-  const { tableData, refetch, isLoading } = useGetExpence();
+  const { tableData, refetch, isLoading } = useGetExpense();
 
   // date filter
   const filteredData = tableData?.filter((item) => {
