@@ -12,6 +12,7 @@ import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
 import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
+import useAxiosBase from "../Hooks/useAxiosBase";
 
 export default function Signup() {
   // states
@@ -20,6 +21,7 @@ export default function Signup() {
   const [isPassSame, setIsPassSame] = useState(true);
   const { createWithPass, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+  const axiosBase = useAxiosBase();
 
   // select branch option
   const branchoptions = [
@@ -54,8 +56,10 @@ export default function Signup() {
       lastName,
       email,
       password,
-      branchName,
+      role: "employee",
     };
+
+    console.log(userData);
 
     // firebase function call
     createWithPass(email, password)
@@ -65,10 +69,17 @@ export default function Signup() {
           displayName: `${firstName} ${lastName}`,
         })
           .then(() => {
-            setLoading(false);
-            toast.success("Signup successful! Welcome To Shabuj Global!");
-            form.reset();
-            navigate("/dashboard/employee/reports");
+            axiosBase.post("/signup", userData).then((res) => {
+              setLoading(false);
+              toast.success(res.data.message);
+              console.log(res.data.message)
+              form.reset();
+              navigate("/dashboard/employee/reports");
+            })
+            .catch(err=>{
+              toast.error(err.message);
+              console.log(err.message)
+            })
           })
           .catch((error) => {
             setLoading(false);

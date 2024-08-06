@@ -10,10 +10,7 @@ import Reportandinsights2 from "./FinanceDashboardComponent/Reportandinsights";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
 import IndividualExpensesHistory from "./FinanceDashboardComponent/IndividualExpensesHistory";
 import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
-// import AddExpenses2 from "./CEODashboardComponent/AddExpenses";
-// import AllExpensesHistory from "./CEODashboardComponent/AllExpensesHistory";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
-import MobileLogin from "./Layout/MobileLogin";
 import MemberHistoryDownload from "./Shared Dashboard Component/MemberHistoryDownload";
 
 export const router = createBrowserRouter([
