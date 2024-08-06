@@ -12,7 +12,7 @@ import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
 import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
-import useAxiosBase from "../Hooks/useAxiosBase";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
 
 export default function Signup() {
   // states

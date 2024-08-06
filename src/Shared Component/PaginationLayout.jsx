@@ -34,7 +34,7 @@ export default function PaginationLayout({
         <HiOutlineArrowLongLeft strokeWidth={1} className="h-4 w-4" /> Previous
       </Button>
       <div className="flex items-center ">
-        {[...Array(totalPages).keys()].map((page) => (
+        {[...Array(totalPages)?.keys()]?.map((page) => (
           <IconButton key={page + 1} {...getItemProps(page + 1)}>
             {page + 1}
           </IconButton>

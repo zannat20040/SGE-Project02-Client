@@ -4,14 +4,20 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import AuthProvider from "./AuthProvider/AuthProvider";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ExpenseProvider } from "./Hooks & Context/ExpenseContext";
 
-
+const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-         <AuthProvider>
-        <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ExpenseProvider>
+          <RouterProvider router={router} />
+        </ExpenseProvider>
         <Toaster />
       </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
