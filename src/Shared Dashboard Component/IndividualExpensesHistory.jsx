@@ -69,10 +69,19 @@ export default function IndividualExpensesHistory() {
       <div>
         {/* breadcrumbs add */}
         <BreadcrumsLayout route1={"ceo"} activeroute2={"allhistory"} />
+
         {/* table */}
-        <div className="bg-white px-6 py-10 mt-8 ">
+        <div className="bg-white px-6 py-10 m">
+          <Button
+            onClick={handlePrint}
+            type="submit"
+            className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
+          >
+            Print All Exployee History
+          </Button>
           {/* table data */}
-          <div className="overflow-x-auto">
+
+          <div className="overflow-x-auto mt-8 ">
             <table className="table table-xs text-center ">
               <thead>
                 <tr className="text-primary-color  ">
@@ -101,14 +110,7 @@ export default function IndividualExpensesHistory() {
             </table>
           </div>
 
-          <div className="flex md:justify-between justify-end gap-5 items-center mt-10 flex-wrap">
-            <Button
-              onClick={handlePrint}
-              type="submit"
-              className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
-            >
-              Print All Exployee History
-            </Button>
+          <div className="flex justify-end gap-5 items-center mt-10 flex-wrap">
             <PrintEmployeeHistory ref={componentRef} />
 
             {/*pagination */}

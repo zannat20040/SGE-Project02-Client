@@ -52,7 +52,11 @@ export default function DashboardTopbar() {
         )}
 
         {/* user avatar */}
-        <div className="flex gap-3 items-center border-l pl-3 ">
+        <div
+          className={`flex gap-3 items-center ${
+            userinfo?.role !== "finance" && "border-l"
+          } pl-3 `}
+        >
           <Avatar
             src="https://docs.material-tailwind.com/img/face-2.jpg"
             alt="avatar"
