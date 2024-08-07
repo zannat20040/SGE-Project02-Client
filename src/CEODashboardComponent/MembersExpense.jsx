@@ -40,7 +40,6 @@ export default function MembersExpense() {
     },
   });
 
-
   // pagination start from here
   const totalPages = Math.ceil(
     membersExpenseHistory?.result?.length / itemsPerPage
@@ -94,38 +93,43 @@ export default function MembersExpense() {
                 </tr>
               </thead>
               <tbody>
-                {
-                  paginatedData?.length<=0 ? <p>No data available</p> : <>
-                  {paginatedData && paginatedData?.map((data, idx) => (
-                  <tr className="hover" key={data._id}>
-                    <td>{idx + 1}</td>
-                    <td>{data?.username} </td>
-                    <td>{data?.email}</td>
-                    <td className="font-bold text-yellow-800">${data?.totalAmount}</td>
-                    <td>{data?.branch}</td>
-                    <td
-                      className={`font-bold text-xs  rounded  !capitalize ${
-                        data.status === "auto granted" ||
-                        data.status === "granted"
-                          ? "text-green-600"
-                          : data.status === "rejected"
-                          ? "text-red-600"
-                          : "text-orange-800"
-                      } `}
-                    >
-                      <Button
-                        type="submit"
-                        className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit
+                {paginatedData?.length <= 0 ? (
+                  <p>No data available</p>
+                ) : (
+                  <>
+                    {paginatedData &&
+                      paginatedData?.map((data, idx) => (
+                        <tr className="hover" key={data._id}>
+                          <td>{idx + 1}</td>
+                          <td>{data?.username} </td>
+                          <td>{data?.email}</td>
+                          <td className="font-bold text-yellow-800">
+                            ${parseFloat(data?.totalAmount).toFixed(2)}
+                          </td>
+                         
+                          <td>{data?.branch}</td>
+                          <td
+                            className={`font-bold text-xs  rounded  !capitalize ${
+                              data.status === "auto granted" ||
+                              data.status === "granted"
+                                ? "text-green-600"
+                                : data.status === "rejected"
+                                ? "text-red-600"
+                                : "text-orange-800"
+                            } `}
+                          >
+                            <Button
+                              type="submit"
+                              className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit
                         }`}
-                      >
-                        <IoIosPrint className="" />
-                      </Button>
-                    </td>
-                  </tr>
-                ))} 
-                  
+                            >
+                              <IoIosPrint className="" />
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
                   </>
-                }
+                )}
               </tbody>
             </table>
           </div>
