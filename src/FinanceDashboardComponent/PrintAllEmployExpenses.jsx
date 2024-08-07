@@ -11,7 +11,7 @@ const PrintAllEmployExpenses = forwardRef((props, ref) => {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="hidden print:flex w-full" ref={ref}>
+    <div className="hidden print:flex w-full " ref={ref}>
       {isLoading ? (
         "Loading...."
       ) : (

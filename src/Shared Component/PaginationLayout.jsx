@@ -22,7 +22,7 @@ export default function PaginationLayout({
         : "bg-white text-primary-color"
     }`,
   });
-
+  console.log("Generating buttons for pages:", [...Array(totalPages)?.keys()]);
   return (
     <>
       <Button
@@ -34,11 +34,12 @@ export default function PaginationLayout({
         <HiOutlineArrowLongLeft strokeWidth={1} className="h-4 w-4" /> Previous
       </Button>
       <div className="flex items-center ">
-        {totalPages > 0 && [...Array(totalPages)?.keys()]?.map((page) => (
-          <IconButton key={page + 1} {...getItemProps(page + 1)}>
-            {page + 1}
-          </IconButton>
-        ))}
+        {totalPages > 0 &&
+          [...Array(totalPages)?.keys()]?.map((page) => (
+            <IconButton key={page + 1} {...getItemProps(page + 1)}>
+              {page + 1}
+            </IconButton>
+          ))}
       </div>
       <Button
         variant="text"

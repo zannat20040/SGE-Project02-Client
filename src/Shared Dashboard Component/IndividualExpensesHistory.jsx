@@ -1,21 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { TfiDownload } from "react-icons/tfi";
 import PrimaryButton from "../Shared Component/PrimaryButton";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
-import Loading from "../Shared Component/Loading";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
+import { useReactToPrint } from "react-to-print";
+import PrintEmployeeHistory from "./PrintEmployeeHistory";
+import { Button } from "@material-tailwind/react";
 
 export default function IndividualExpensesHistory() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [active, setActive] = useState(1);
-  const itemsPerPage = 5;
-
+  const [active, setActive] = useState(2);
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
+
+  // print function
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const {
     data: allExpenseHistory,
@@ -25,24 +31,18 @@ export default function IndividualExpensesHistory() {
   } = useQuery({
     queryKey: ["allExpenseHistory", user?.email],
     queryFn: async () => {
-      const response = await axiosBase.get(
-        `/expenses/?page=${active}number=${itemsPerPage}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.email}`,
-          },
-        }
-      );
-      const data = response?.data?.expenses || [];
-      // console.log('=====>',data);
+      const response = await axiosBase.get(`/expenses/?page=${active}`, {
+        headers: {
+          Authorization: `Bearer ${user?.email}`,
+        },
+      });
+      const data = response?.data || [];
 
-      return {
-        expenses: data,
-        totalPages: data.totalPages ,
-      };
+      return data;
     },
   });
 
+  console.log(allExpenseHistory);
 
   // pagination start from here
 
@@ -61,23 +61,19 @@ export default function IndividualExpensesHistory() {
 
   // const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const totalPages = allExpenseHistory?.totalPages;
-
-  // Calculate paginated data
-  // const paginatedData = filteredData?.slice(
-  //   (active - 1) * itemsPerPage,
-  //   active * itemsPerPage
-  // );
+  console.log(totalPages);
 
   // pagination function
   const next = () => {
     if (active === totalPages) return;
-
     setActive(active + 1);
+    refetch();
   };
 
   const prev = () => {
     if (active === 1) return;
     setActive(active - 1);
+    refetch();
   };
 
   return (
@@ -120,7 +116,15 @@ export default function IndividualExpensesHistory() {
           </div>
 
           <div className="flex md:justify-between justify-end gap-5 items-center mt-10 flex-wrap">
-            <PrimaryButton label={"Print All History"} style={"w-fit"} />
+
+            <Button
+              onClick={handlePrint}
+              type="submit"
+              className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
+            >
+              Print All History
+            </Button>
+            <PrintEmployeeHistory ref={componentRef} />
 
             {/*pagination */}
             <div className="flex items-center  justify-end flex-wrap">
