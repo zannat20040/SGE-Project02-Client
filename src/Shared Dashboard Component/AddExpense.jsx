@@ -16,7 +16,6 @@ import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import swal from "sweetalert";
 
-
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
   const [showName, setShowName] = useState({});
@@ -103,9 +102,11 @@ export default function AddExpense() {
       expenseTitle: currentExpenseTitle,
       receipt,
       amount,
+      role: userinfo?.role,
       branch: userinfo?.branch,
       date,
       notes,
+      username: user?.displayName,
     };
 
     axiosBase

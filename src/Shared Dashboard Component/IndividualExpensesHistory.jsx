@@ -14,31 +14,6 @@ export default function IndividualExpensesHistory() {
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
-  // tabledata
-  const tableData = [
-    {
-      id: 1,
-      memberName: "Member Name",
-      memberEmail: "memberemail@gmail.com",
-      amount: "$500.00",
-      role: "Employee",
-    },
-    {
-      id: 2,
-      memberName: "Member Name",
-      memberEmail: "ceo@gmail.com",
-      amount: "$500.00",
-      role: "CEO",
-    },
-    {
-      id: 3,
-      memberName: "Member Name",
-      memberEmail: "memberemail@gmail.com",
-      amount: "$500.00",
-      role: "Employee",
-    },
-  ];
-
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
 
@@ -51,47 +26,47 @@ export default function IndividualExpensesHistory() {
     queryKey: ["allExpenseHistory", user?.email],
     queryFn: async () => {
       const response = await axiosBase.get(
-        `/expenses/?page=${active}number=${5}`,
+        `/expenses/?page=${active}number=${itemsPerPage}`,
         {
           headers: {
             Authorization: `Bearer ${user?.email}`,
           },
         }
       );
-      const data = response.data || [];
-      console.log(data);
+      const data = response?.data?.expenses || [];
+      // console.log('=====>',data);
 
-      const reversedData = data?.expenses|| [];
-    return {
-      expenses: reversedData,
-      totalPages: data.totalPages,
-    };
+      return {
+        expenses: data,
+        totalPages: data.totalPages ,
+      };
     },
   });
 
-  console.log(allExpenseHistory?.expenses);
 
   // pagination start from here
 
   // date filter
-  const filteredData = allExpenseHistory?.expenses?.filter((item) => {
-    const itemDate = new Date(item.date);
-    const fromDate = new Date(startDate);
-    const toDate = new Date(endDate);
+  const filteredData =
+    allExpenseHistory?.expenses &&
+    allExpenseHistory?.expenses?.filter((item) => {
+      const itemDate = new Date(item.date);
+      const fromDate = new Date(startDate);
+      const toDate = new Date(endDate);
 
-    return (
-      (!startDate || itemDate >= fromDate) && (!endDate || itemDate <= toDate)
-    );
-  });
+      return (
+        (!startDate || itemDate >= fromDate) && (!endDate || itemDate <= toDate)
+      );
+    });
 
   // const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const totalPages = allExpenseHistory?.totalPages;
 
   // Calculate paginated data
-  const paginatedData = filteredData?.slice(
-    (active - 1) * itemsPerPage,
-    active * itemsPerPage
-  );
+  // const paginatedData = filteredData?.slice(
+  //   (active - 1) * itemsPerPage,
+  //   active * itemsPerPage
+  // );
 
   // pagination function
   const next = () => {
@@ -128,9 +103,9 @@ export default function IndividualExpensesHistory() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.map((data,idx) => (
+                {filteredData?.map((data, idx) => (
                   <tr className="hover" key={data?._id}>
-                    <td>{idx+1}</td>
+                    <td>{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.email}</td>
                     <td>{data?.amount}</td>
