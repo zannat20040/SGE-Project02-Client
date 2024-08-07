@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 
-export default function ImageModal() {
+export default function ImageModal({imgsrc}) {
   const [openModal, setOpenModal] = useState(false);
+  console.log(imgsrc)
 
   return (
     <div className="flex items-center justify-center">
       <img
         onClick={() => setOpenModal(true)}
-        src="https://images.unsplash.com/photo-1719749990914-a3ba54e6343f?q=80&w=2072&auto=format&fit=crop"
+        src={imgsrc}
         className="w-12 h-12 bg-black/30 text-white rounded cursor-pointer"
         alt="modal navigate ui"
       />
@@ -29,7 +30,7 @@ export default function ImageModal() {
           <div className="relative w-2/3  mx-auto ">
             {/* image */}
             <img
-              src="https://images.unsplash.com/photo-1719749990914-a3ba54e6343f?q=80&w=2072&auto=format&fit=crop"
+              src={imgsrc}
               className=""
               alt="modal navigate ui"
             />

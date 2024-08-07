@@ -119,18 +119,20 @@ export default function ExpenseHistory() {
                       <Chip
                         variant="ghost"
                         color={
-                          data.status === "Added"
+                          data.status === "auto granted" ||
+                          data.status === "granted"
                             ? "green"
-                            : data.status === "Decline"
+                            : data.status === "rejected"
                             ? "red"
                             : "orange"
                         }
                         size="sm"
                         value={data?.status}
                         className={`font-bold text-xs  rounded  !capitalize ${
-                          data.status === "Added"
+                          data.status === "auto granted" ||
+                          data.status === "granted"
                             ? "text-green-600"
-                            : data.status === "Decline"
+                            : data.status === "rejected"
                             ? "text-red-600"
                             : "text-orange-800"
                         } `}

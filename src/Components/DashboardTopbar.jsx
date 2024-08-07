@@ -30,7 +30,11 @@ export default function DashboardTopbar() {
       <div className="flex  sm:gap-6 gap-3 justify-between  items-center ">
         {/* total expense */}
         {userinfo?.role !== "finance" && (
-          <div className="">
+          <div className="flex gap-3 items-center">
+            <p className="text-primary-color font-medium text-sx">
+              Total Expense:
+            </p>
+
             <Badge
               content={
                 <CiDollar
@@ -38,9 +42,9 @@ export default function DashboardTopbar() {
                   strokeWidth={1.5}
                 />
               }
-              className=" bg-yellow-800"
+              className=" bg-yellow-800 "
             >
-              <button className="bg-primary-color p-2 rounded text-white font-medium text-xs">
+              <button className="bg-yellow-800 p-2 rounded text-white font-medium text-xs">
                 {totalAmount}
               </button>
             </Badge>

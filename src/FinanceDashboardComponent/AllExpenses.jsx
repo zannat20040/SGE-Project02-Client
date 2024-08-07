@@ -41,7 +41,7 @@ export default function AllExpenses() {
     );
   });
 
-  const itemsPerPage = 2; // Show one item per page
+  const itemsPerPage = 10; // Show one item per page
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
 
   // Calculate paginated data
@@ -192,13 +192,23 @@ export default function AllExpenses() {
                       ) : (
                         <Chip
                           variant="ghost"
-                          color={data.status === "granted" ? "green" : "red"}
+                          color={
+                            data.status === "auto granted" ||
+                            data.status === "granted"
+                              ? "green"
+                              : data.status === "rejected"
+                              ? "red"
+                              : "orange"
+                          }
                           size="sm"
                           value={data?.status}
                           className={`font-bold text-xs  rounded  !capitalize ${
+                            data.status === "auto granted" ||
                             data.status === "granted"
                               ? "text-green-600"
-                              : "text-red-600"
+                              : data.status === "rejected"
+                              ? "text-red-600"
+                              : "text-orange-800"
                           } `}
                         />
                       )}
@@ -206,13 +216,13 @@ export default function AllExpenses() {
                     <td>{data?.role}</td>
                     <td>{data?.date?.split("T")[0]}</td>
                     <td className="flex gap-2 justify-center ">
-                      {data?.note !== "" ? (
+                      {data?.notes !== "" ? (
                         <NotesModal notes={data?.notes} />
                       ) : (
-                        "Not added"
+                        <p className="text-xs">No notes available</p>
                       )}
                     </td>
-                    <td>{data?.receipt ? <ImageModal /> : "Not available"}</td>
+                    <td>{data?.receipt ? <ImageModal imgsrc={data?.receipt}/> : <p className="text-xs">Not available</p>}</td>
                   </tr>
                 ))}
               </tbody>
