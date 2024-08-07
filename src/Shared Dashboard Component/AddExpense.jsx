@@ -28,7 +28,6 @@ export default function AddExpense() {
   const { userinfo } = useUserInfo();
   const { refetch } = useGetExpenseContext(); //expense data fetch
 
-  console.log(showName);
 
   // select category option
   const categoryoptions = [
@@ -82,7 +81,6 @@ export default function AddExpense() {
     const date = form.date.value;
     const notes = form.notes.value;
     const receipt = showName.name ? showName.name : null;
-    console.log(receipt);
 
     const currentExpenseTitle = category === "Others" ? purpose : category;
 
@@ -97,7 +95,6 @@ export default function AddExpense() {
       username: user?.displayName,
     };
 
-    // console.log(expenseData);
 
     const formData = new FormData();
     formData.append("receipt", showName);
@@ -128,7 +125,6 @@ export default function AddExpense() {
           ? "/dashboard/employee/history"
           : "/dashboard/ceo/allHistory"
       );
-      console.log(res.data);
     } catch (err) {
       console.error(err);
       swal("Great!", err.response.data.message, "error");

@@ -40,7 +40,6 @@ export default function MembersExpense() {
     },
   });
 
-  console.log(membersExpenseHistory)
 
   // pagination start from here
   const totalPages = Math.ceil(

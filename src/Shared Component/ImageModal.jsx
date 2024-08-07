@@ -3,7 +3,6 @@ import { IoIosClose } from "react-icons/io";
 
 export default function ImageModal({imgsrc}) {
   const [openModal, setOpenModal] = useState(false);
-  console.log(imgsrc)
 
   return (
     <div className="flex items-center justify-center">

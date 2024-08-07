@@ -41,12 +41,10 @@ export default function IndividualExpensesHistory() {
     },
   });
 
-  console.log(allExpenseHistory);
 
   // pagination start from here
 
   const totalPages = allExpenseHistory?.totalPages;
-  console.log(totalPages);
 
   // pagination function
   const next = () => {

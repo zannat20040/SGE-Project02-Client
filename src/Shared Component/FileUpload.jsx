@@ -17,7 +17,6 @@ export default function FileUpload({ setShowName, showName }) {
 
   const handleFileChange = async (e) => {
     const imageFile = e.target.files[0];
-    console.log(imageFile)
     if (e.target.files && imageFile) {
       setShowName(imageFile); // Set the file information
       setShowImagePreview(URL.createObjectURL(imageFile)); // Generate a URL for the image preview

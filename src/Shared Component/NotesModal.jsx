@@ -3,7 +3,6 @@ import { CiStickyNote } from "react-icons/ci";
 
 export default function NotesModal({ notes }) {
   const [openModal, setOpenModal] = useState(false);
-  console.log(notes)
   return (
     <div className="mx-auto w-fit">
       <button
