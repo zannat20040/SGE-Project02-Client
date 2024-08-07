@@ -8,8 +8,7 @@ import { CiCalendarDate, CiLocationOn } from "react-icons/ci";
 import Loading from "../Shared Component/Loading";
 import { Button } from "@material-tailwind/react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3";
@@ -26,11 +25,10 @@ export default function AddExpense() {
   const [category, setCategory] = useState("");
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
-  const location = useLocation();
-  const isCeoPath = location.pathname.includes("ceo");
-  const userEmail = isCeoPath ? "ceo@gmail.com" : user?.email;
-  const { userinfo } = useUserInfo(userEmail);
+  const { userinfo } = useUserInfo();
   const { refetch } = useGetExpenseContext(); //expense data fetch
+
+  console.log(showName);
 
   // select category option
   const categoryoptions = [
@@ -47,17 +45,6 @@ export default function AddExpense() {
     "Marketing and Advertising",
     "Salary",
   ];
-
-  // select branch option
-  // const branchoptions = [
-  //   "Uk",
-  //   "USA",
-  //   "Canada",
-  //   "New Zealand",
-  //   "Netherlands",
-  //   "Ireland",
-  //   "Australia",
-  // ];
 
   // category as title change
   const HandleCategory = (e) => {
@@ -84,7 +71,7 @@ export default function AddExpense() {
   };
 
   // expense added function
-  const HandleExpenseAdd = (e) => {
+  const HandleExpenseAdd = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -95,6 +82,7 @@ export default function AddExpense() {
     const date = form.date.value;
     const notes = form.notes.value;
     const receipt = showName.name ? showName.name : null;
+    console.log(receipt);
 
     const currentExpenseTitle = category === "Others" ? purpose : category;
 
@@ -109,10 +97,24 @@ export default function AddExpense() {
       username: user?.displayName,
     };
 
+    
+    console.log(expenseData);
+
+    //     const formData = new FormData();
+    //     formData.append("receipt", showName);
+    //     formData.append("expenseTitle", currentExpenseTitle);
+    //     formData.append("amount", amount);
+    //     formData.append("role", userinfo?.role);
+    //     formData.append("branch", userinfo?.branch);
+    //     formData.append("date", date);
+    //     formData.append("notes", notes);
+    //     formData.append("username", user?.displayName);
+    // console.log(formData)
+
     axiosBase
       .post("/expense", expenseData, {
         headers: {
-          Authorization: `Bearer ${userEmail}`,
+          Authorization: `Bearer ${user?.email}`,
         },
       })
       .then((res) => {
@@ -130,10 +132,36 @@ export default function AddExpense() {
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err);
+        swal("Ops!", err.message, "err");
         setLoading(false);
       });
 
+    // try {
+    //   const res = await axiosBase.post("/expense", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //       Authorization: `Bearer ${user?.email}`,
+    //     },
+    //   });
+
+    //   const audio = new Audio(successSound);
+    //   swal("Great!", res.data.message, "success");
+    //   audio.play();
+    //   refetch();
+    //   form.reset();
+    //   setShowName({});
+    //   navigate(
+    //     userinfo?.role === "employee"
+    //       ? "/dashboard/employee/history"
+    //       : "/dashboard/ceo/allHistory"
+    //   );
+    //   console.log(res.data);
+    // } catch (err) {
+    //   console.error(err);
+    //   swal("Great!", err.response.data.message, "error");
+    // } finally {
+    //   setLoading(false);
+    // }
     setLoading(false);
   };
 
@@ -169,7 +197,7 @@ export default function AddExpense() {
               name="expenseCategory"
               id="category"
               defaultValue={""}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tl  text-sm block w-full ps-10 p-[11px] text-gray-400  border-r-0 focus:outline-none"
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tl  text-sm block w-full ps-10 p-[11px] text-gray-800  border-r-0 focus:outline-none"
             >
               <option disabled value={""}>
                 Choose a your expense category
@@ -204,7 +232,7 @@ export default function AddExpense() {
               }
               type="text"
               id="input-group-1"
-              className={`focus:outline-none hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400 ${
+              className={`focus:outline-none hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800 ${
                 isLessThanFifty && category === "Others" && "border-red-700"
               }`}
             />
@@ -220,9 +248,9 @@ export default function AddExpense() {
             <input
               name="amount"
               required
-              type="number"
+              type="text"
               id="input-group-1"
-              className="hover:bg-gray-100  rounded-none  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400  border-l h-full  md:border-r-0 border-r border-b md:border-b-0 "
+              className="hover:bg-gray-100  rounded-none  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-l h-full  md:border-r-0 border-r border-b md:border-b-0 "
               placeholder="Expense Amount"
             />
           </div>
@@ -236,7 +264,7 @@ export default function AddExpense() {
               name="date"
               id="default-datepicker"
               type="date"
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border-l sm:border-r-0  border-r border-b sm:border-b-0"
+              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-800  border-l sm:border-r-0  border-r border-b sm:border-b-0"
               placeholder="Select expense date"
             />
           </div>
@@ -252,7 +280,7 @@ export default function AddExpense() {
               type="text"
               id="input-group-1"
               value={userinfo?.branch}
-              className="capitalize hover:bg-gray-100  rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-400  border-x h-full   "
+              className="capitalize hover:bg-gray-100  rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800  border-x h-full   "
               placeholder="Expense Amouny"
             />
           </div>
@@ -267,7 +295,7 @@ export default function AddExpense() {
             name="notes"
             type="text"
             id="input-group-1"
-            className="hover:bg-gray-100 border  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-400   focus:outline-none rounded-none h-full rounded-b   "
+            className="hover:bg-gray-100 border  outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800   focus:outline-none rounded-none h-full rounded-b   "
             placeholder="Write here your aditional notes...(optional)"
           />
         </div>

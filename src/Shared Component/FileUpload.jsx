@@ -1,45 +1,29 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
+import swal from "sweetalert";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 export default function FileUpload({ setShowName, showName }) {
   const [showImagePreview, setShowImagePreview] = useState({});
   const fileInputRef = useRef();
+  const [loading, setLoading] = useState(false);
+
   const handleClearFile = () => {
     setShowName("");
     setShowImagePreview("");
     fileInputRef.current.value = "";
   };
-  const [file, setFile] = useState(null);
-  
-  // const HandleUpload = async (e) => {
-  //   setFile(e.target.files[0]);
-  //   const formData = new FormData();
-  //   formData.append("file", file);
 
-  //   setLoading(true);
+  const handleFileChange = async (e) => {
+    const imageFile = e.target.files[0];
+    console.log(imageFile)
+    if (e.target.files && imageFile) {
+      setShowName(imageFile); // Set the file information
+      setShowImagePreview(URL.createObjectURL(imageFile)); // Generate a URL for the image preview
+    }
+  };
 
-  //   try {
-  //     const res = await axiosPublic.post(
-  //       `/mco/upload/${studentDetails?._id}`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     // console.log("File uploaded successfully: ", res.data);
-  //     swal("Good job!", "File uploaded successfully", "success");
-  //     setLoading(false); // Set loading to false when upload is complete
-  //     e.target.reset(); // Reset the form input
-  //     refetch();
-  //   } catch (error) {
-  //     console.error("Error uploading file: ", error);
-  //     swal("Opps!", "Error uploading file", "error");
-  //     setLoading(false); // Set loading to false in case of error
-  //   }
-  // };
-  
   return (
     <div className=" ">
       {/* preview */}
@@ -106,20 +90,14 @@ export default function FileUpload({ setShowName, showName }) {
             <p className="text-xs text-gray-400">
               File Should be in PNG, JPEG or JPG format
             </p>
+            <p>{loading && "Uploading.........."}</p>
           </div>
         </label>
       )}
 
       <input
         ref={fileInputRef}
-        onChange={(e) => {
-          if (e.target.files && e.target.files[0]) {
-            const imageFile = e.target.files[0];
-            setShowName(imageFile);
-            setShowImagePreview(URL.createObjectURL(imageFile));
-          }
-        }}
-        // onChange={HandleUpload}
+        onChange={handleFileChange}
         className="hidden"
         id="file5"
         type="file"

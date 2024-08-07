@@ -93,7 +93,7 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
               </thead>
               <tbody>
                 {tableData?.map((data, index) => (
-                  <tr className="hover">
+                  <tr className="hover" key={data?._id}>
                     <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.amount}</td>

@@ -79,7 +79,7 @@ export default function Login() {
               name="email"
               required
               type="email"
-              className="grow text-sm  hover:bg-gray-100  outline-0 text-gray-400"
+              className="grow text-sm  hover:bg-gray-100  outline-0 text-gray-800"
               placeholder="example@gmail.com"
             />
           </label>
@@ -90,7 +90,7 @@ export default function Login() {
               name="password"
               required
               type={passwordVisible ? "text" : "password"}
-              className="grow text-sm hover:bg-gray-100  outline-0 text-gray-400"
+              className="grow text-sm hover:bg-gray-100  outline-0 text-gray-800"
               placeholder="••••••••"
             />
             {/* Show/Hide Button */}
