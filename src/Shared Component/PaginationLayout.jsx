@@ -30,7 +30,6 @@ export default function PaginationLayout({
         variant="text"
         className="flex items-center  rounded-full font-medium text-xs gap-1"
         onClick={prev}
-        disabled={active === 1}
         disabled={active === 1 || isFetching}
       >
         <HiOutlineArrowLongLeft strokeWidth={1} className="h-4 w-4" /> Previous
