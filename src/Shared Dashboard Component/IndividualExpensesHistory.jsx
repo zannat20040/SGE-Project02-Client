@@ -95,7 +95,7 @@ export default function IndividualExpensesHistory() {
               </thead>
               <tbody>
                 {expenses?.map((data, idx) => (
-                  <tr className="hover">
+                  <tr className="hover" key={data?._id}>
                     <td>{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.email}</td>

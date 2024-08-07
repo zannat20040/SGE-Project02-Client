@@ -5,11 +5,7 @@ import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import { CiCalendarDate } from "react-icons/ci";
-import { AuthContext } from "../AuthProvider/AuthProvider";
-import { useQuery } from "@tanstack/react-query";
 import Loading from "../Shared Component/Loading";
-import useAxiosBase from "../Hooks & Context/useAxiosBase";
-import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import useGetExpense from "../Hooks & Context/useGetExpense";
 
 export default function ExpenseHistory() {

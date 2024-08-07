@@ -46,7 +46,14 @@ export default function NavlistForCEO() {
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
-        Member's Expenses
+        Individual Expenses
+      </NavLink>  
+      <NavLink
+        to="/dashboard/ceo/myExpenses"
+        className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
+        style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
+      >
+        My Expenses
       </NavLink>
     </div>
   );

@@ -94,7 +94,9 @@ export default function MembersExpense() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.map((data, idx) => (
+                {
+                  paginatedData?.length<=0 ? <p>No data available</p> : <>
+                  {paginatedData && paginatedData?.map((data, idx) => (
                   <tr className="hover" key={data._id}>
                     <td>{idx + 1}</td>
                     <td>{data?.username} </td>
@@ -120,7 +122,10 @@ export default function MembersExpense() {
                       </Button>
                     </td>
                   </tr>
-                ))}
+                ))} 
+                  
+                  </>
+                }
               </tbody>
             </table>
           </div>

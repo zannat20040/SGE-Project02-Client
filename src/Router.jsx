@@ -11,6 +11,7 @@ import IndividualExpensesHistory from "./Shared Dashboard Component/IndividualEx
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
 import MembersExpense from "./CEODashboardComponent/MembersExpense";
+import MyHistory from "./CEODashboardComponent/MyHistory";
 
 export const router = createBrowserRouter([
   {
@@ -71,7 +72,11 @@ export const router = createBrowserRouter([
       {
         path: "ceo/membersExpense",
         element: <MembersExpense />,
-      },
+      }, 
+      // {
+      //   path: "ceo/myExpenses",
+      //   element: <MyHistory />,
+      // },
     ],
   },
   {
