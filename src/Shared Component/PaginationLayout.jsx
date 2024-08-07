@@ -10,6 +10,7 @@ export default function PaginationLayout({
   next,
   active,
   setActive,
+  isFetching,
   totalPages,
 }) {
   const getItemProps = (index) => ({
@@ -30,13 +31,19 @@ export default function PaginationLayout({
         className="flex items-center  rounded-full font-medium text-xs gap-1"
         onClick={prev}
         disabled={active === 1}
+        disabled={active === 1 || isFetching}
       >
         <HiOutlineArrowLongLeft strokeWidth={1} className="h-4 w-4" /> Previous
       </Button>
       <div className="flex items-center ">
         {totalPages > 0 &&
           [...Array(totalPages)?.keys()]?.map((page) => (
-            <IconButton key={page + 1} {...getItemProps(page + 1)}>
+            <IconButton
+              key={page + 1}
+              {...getItemProps(page + 1)}
+              {...getItemProps(page + 1)}
+              disabled={isFetching}
+            >
               {page + 1}
             </IconButton>
           ))}
@@ -45,7 +52,7 @@ export default function PaginationLayout({
         variant="text"
         className="flex items-center gap-2 rounded-full font-medium text-xs "
         onClick={next}
-        disabled={active === totalPages}
+        disabled={active === totalPages || isFetching}
       >
         Next
         <HiOutlineArrowLongRight strokeWidth={1} className="h-4 w-4 " />

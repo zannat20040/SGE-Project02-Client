@@ -27,8 +27,9 @@ export default function IndividualExpensesHistory() {
     refetch,
     isLoading,
     error,
+    isFetching
   } = useQuery({
-    queryKey: ["allExpenseHistory", user?.email],
+    queryKey: ["allExpenseHistory", user?.email, active],
     queryFn: async () => {
       const response = await axiosBase.get(`/expenses/?page=${active}`, {
         headers: {
@@ -41,6 +42,7 @@ export default function IndividualExpensesHistory() {
     },
   });
 
+  console.log(allExpenseHistory)
 
   // pagination start from here
 
@@ -48,13 +50,13 @@ export default function IndividualExpensesHistory() {
 
   // pagination function
   const next = () => {
-    if (active === totalPages) return;
+    if (active === totalPages || isFetching) return;
     setActive(active + 1);
     refetch();
   };
 
   const prev = () => {
-    if (active === 1) return;
+    if (active === 1 || isFetching) return;
     setActive(active - 1);
     refetch();
   };
@@ -129,6 +131,7 @@ export default function IndividualExpensesHistory() {
                 active={active}
                 setActive={setActive}
                 totalPages={totalPages}
+                isFetching={isFetching}
               />
             </div>
           </div>
