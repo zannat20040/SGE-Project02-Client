@@ -100,6 +100,7 @@ export default function FileUpload({ setShowName, showName }) {
         onChange={handleFileChange}
         className="hidden"
         id="file5"
+        name="receipt"
         type="file"
       />
     </div>

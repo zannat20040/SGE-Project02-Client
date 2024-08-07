@@ -97,71 +97,71 @@ export default function AddExpense() {
       username: user?.displayName,
     };
 
-    
-    console.log(expenseData);
 
-    //     const formData = new FormData();
-    //     formData.append("receipt", showName);
-    //     formData.append("expenseTitle", currentExpenseTitle);
-    //     formData.append("amount", amount);
-    //     formData.append("role", userinfo?.role);
-    //     formData.append("branch", userinfo?.branch);
-    //     formData.append("date", date);
-    //     formData.append("notes", notes);
-    //     formData.append("username", user?.displayName);
+    // console.log(expenseData);
+
+        const formData = new FormData();
+        formData.append("receipt", showName);
+        formData.append("expenseTitle", currentExpenseTitle);
+        formData.append("amount", amount);
+        formData.append("role", userinfo?.role);
+        formData.append("branch", userinfo?.branch);
+        formData.append("date", date);
+        formData.append("notes", notes);
+        formData.append("username", user?.displayName);
     // console.log(formData)
 
-    axiosBase
-      .post("/expense", expenseData, {
-        headers: {
-          Authorization: `Bearer ${user?.email}`,
-        },
-      })
-      .then((res) => {
-        const audio = new Audio(successSound);
-        swal("Great!", res.data.message, "success");
-        audio.play();
-        refetch();
-        setLoading(false);
-        form.reset();
-        navigate(
-          userinfo?.role === "employee"
-            ? "/dashboard/employee/history"
-            : "/dashboard/ceo/allHistory"
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-        swal("Ops!", err.message, "err");
-        setLoading(false);
-      });
-
-    // try {
-    //   const res = await axiosBase.post("/expense", formData, {
+    // axiosBase
+    //   .post("/expense", expenseData, {
     //     headers: {
-    //       "Content-Type": "multipart/form-data",
     //       Authorization: `Bearer ${user?.email}`,
     //     },
+    //   })
+    //   .then((res) => {
+    //     const audio = new Audio(successSound);
+    //     swal("Great!", res.data.message, "success");
+    //     audio.play();
+    //     refetch();
+    //     setLoading(false);
+    //     form.reset();
+    //     navigate(
+    //       userinfo?.role === "employee"
+    //         ? "/dashboard/employee/history"
+    //         : "/dashboard/ceo/allHistory"
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     swal("Ops!", err.message, "err");
+    //     setLoading(false);
     //   });
 
-    //   const audio = new Audio(successSound);
-    //   swal("Great!", res.data.message, "success");
-    //   audio.play();
-    //   refetch();
-    //   form.reset();
-    //   setShowName({});
-    //   navigate(
-    //     userinfo?.role === "employee"
-    //       ? "/dashboard/employee/history"
-    //       : "/dashboard/ceo/allHistory"
-    //   );
-    //   console.log(res.data);
-    // } catch (err) {
-    //   console.error(err);
-    //   swal("Great!", err.response.data.message, "error");
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const res = await axiosBase.post("/expense", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user?.email}`,
+        },
+      });
+
+      const audio = new Audio(successSound);
+      swal("Great!", res.data.message, "success");
+      audio.play();
+      refetch();
+      form.reset();
+      setShowName({});
+      navigate(
+        userinfo?.role === "employee"
+          ? "/dashboard/employee/history"
+          : "/dashboard/ceo/allHistory"
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+      swal("Great!", err.response.data.message, "error");
+    } finally {
+      setLoading(false);
+    }
     setLoading(false);
   };
 
@@ -172,7 +172,7 @@ export default function AddExpense() {
       <BreadcrumsLayout route1={"employee"} activeroute2={"addexpense"} />
 
       {/* FORM */}
-      <form onSubmit={HandleExpenseAdd} className="bg-white px-10 py-10 mt-4 ">
+      <form onSubmit={HandleExpenseAdd} className="bg-white px-10 py-10 mt-4 " encType="multipart/form-data">
         <h1 className="md:text-lg text-base font-semibold capitalize mb-4 text-primary-color tracking-wider">
           Share you Expense details
         </h1>
