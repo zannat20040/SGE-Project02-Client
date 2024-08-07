@@ -1,20 +1,15 @@
 import React, { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
-import { TfiDownload } from "react-icons/tfi";
-import { CiStickyNote } from "react-icons/ci";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import { CiCalendarDate } from "react-icons/ci";
 import { Chip } from "@material-tailwind/react";
-import ButtonOutlined from "../Shared Component/ButtonOutlined";
 import PaginationLayout from "../Shared Component/PaginationLayout";
-import PrimaryButton from "../Shared Component/PrimaryButton";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import useBranchExpense from "../Hooks & Context/useBranchExpense";
 import ImageModal from "../Shared Component/ImageModal";
 import NotesModal from "../Shared Component/NotesModal";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import toast from "react-hot-toast";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
@@ -78,7 +73,7 @@ export default function AllExpenses() {
         },
       }
     );
-    toast(response.data);
+    swal("Great", response.data, "success");
     refetch();
     setLoading(false);
   };
@@ -146,7 +141,7 @@ export default function AllExpenses() {
                       <p className="text-xs text-gray-500">{data?.email}</p>
                     </td>
                     <td>{data?.expenseTitle}</td>
-                    <td>{data?.amount}</td>
+                    <td>${data?.amount}</td>
                     {/* status change form */}
                     <td>
                       {data?.status === "pending" ? (
@@ -222,7 +217,13 @@ export default function AllExpenses() {
                         <p className="text-xs">No notes available</p>
                       )}
                     </td>
-                    <td>{data?.receipt ? <ImageModal imgsrc={data?.receipt}/> : <p className="text-xs">Not available</p>}</td>
+                    <td>
+                      {data?.receipt ? (
+                        <ImageModal imgsrc={data?.receipt} />
+                      ) : (
+                        <p className="text-xs">Not available</p>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>

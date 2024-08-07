@@ -115,7 +115,7 @@ const PrintEmployeeHistory = forwardRef((props, ref) => {
                     <td>{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.email}</td>
-                    <td>{data?.amount}</td>
+                    <td>${data?.amount}</td>
                     <td>{data?.role}</td>
                   </tr>
                 ))}

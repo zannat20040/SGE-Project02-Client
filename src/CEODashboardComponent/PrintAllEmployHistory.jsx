@@ -124,7 +124,7 @@ const PrintAllEmployHistory = forwardRef((props,profile, ref) => {
                   <tr className="hover" key={data?._id}>
                     <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
-                    <td>{data?.amount}</td>
+                    <td>${data?.amount}</td>
                     {/* status */}
                     <td className="">
                       <p

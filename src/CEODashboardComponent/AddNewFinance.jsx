@@ -5,11 +5,11 @@ import { IoPersonOutline } from "react-icons/io5";
 import { GoEye, GoEyeClosed, GoMail, GoUnlock } from "react-icons/go";
 import { CiLocationOn, CiWarning } from "react-icons/ci";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
 import Loading from "../Shared Component/Loading";
 import { useNavigate } from "react-router-dom";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import swal from "sweetalert";
 
 export default function AddNewFinance() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -74,11 +74,11 @@ export default function AddNewFinance() {
       await signOutProfile();
       navigate("/dashboard/ceo/allHistory");
       await loginWithPass("ceo@gmail.com", "123456");
-      toast.success("Finance added successfully");
+      swal("Yes!", response.data.message, "success");
       form.reset();
     } catch (error) {
       console.error(error.message);
-      toast.error(error.message);
+      swal("Ops!", error, "error");
     } finally {
       setLoading(false);
     }

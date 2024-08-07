@@ -113,7 +113,7 @@ export default function ExpenseHistory() {
                   <tr className="hover">
                     <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
-                    <td>{data?.amount}</td>
+                    <td>${data?.amount}</td>
                     {/* status */}
                     <td className="">
                       <Chip

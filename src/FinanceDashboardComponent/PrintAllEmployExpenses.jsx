@@ -101,7 +101,7 @@ const PrintAllEmployExpenses = forwardRef((props, ref) => {
                       <p className="text-xs text-gray-500">{data?.email}</p>
                     </td>
                     <td>{data?.expenseTitle}</td>
-                    <td>{data?.amount}</td>
+                    <td>${data?.amount}</td>
                     {/* Status */}
                     <td>
                       <p
