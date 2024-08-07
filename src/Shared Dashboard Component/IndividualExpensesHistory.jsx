@@ -9,10 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
 import PrintEmployeeHistory from "./PrintEmployeeHistory";
 import { Button } from "@material-tailwind/react";
+import Loading from "../Shared Component/Loading";
+import { CiCalendarDate } from "react-icons/ci";
 
 export default function IndividualExpensesHistory() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [active, setActive] = useState(2);
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
@@ -46,20 +46,6 @@ export default function IndividualExpensesHistory() {
 
   // pagination start from here
 
-  // date filter
-  const filteredData =
-    allExpenseHistory?.expenses &&
-    allExpenseHistory?.expenses?.filter((item) => {
-      const itemDate = new Date(item.date);
-      const fromDate = new Date(startDate);
-      const toDate = new Date(endDate);
-
-      return (
-        (!startDate || itemDate >= fromDate) && (!endDate || itemDate <= toDate)
-      );
-    });
-
-  // const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const totalPages = allExpenseHistory?.totalPages;
   console.log(totalPages);
 
@@ -76,16 +62,16 @@ export default function IndividualExpensesHistory() {
     refetch();
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <div>
       <div>
         {/* breadcrumbs add */}
         <BreadcrumsLayout route1={"ceo"} activeroute2={"allhistory"} />
-        {/* {loading && <Loading />} */}
         {/* table */}
-        <div className="bg-white px-6 py-10 mt-6 ">
+        <div className="bg-white px-6 py-10 mt-8 ">
           {/* table data */}
-
           <div className="overflow-x-auto">
             <table className="table table-xs text-center ">
               <thead>
@@ -99,7 +85,7 @@ export default function IndividualExpensesHistory() {
                 </tr>
               </thead>
               <tbody>
-                {filteredData?.map((data, idx) => (
+                {allExpenseHistory?.expenses?.map((data, idx) => (
                   <tr className="hover" key={data?._id}>
                     <td>{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>
@@ -116,13 +102,12 @@ export default function IndividualExpensesHistory() {
           </div>
 
           <div className="flex md:justify-between justify-end gap-5 items-center mt-10 flex-wrap">
-
             <Button
               onClick={handlePrint}
               type="submit"
               className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
             >
-              Print All History
+              Print All Exployee History
             </Button>
             <PrintEmployeeHistory ref={componentRef} />
 

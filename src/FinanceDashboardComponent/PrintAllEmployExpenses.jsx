@@ -21,30 +21,53 @@ const PrintAllEmployExpenses = forwardRef((props, ref) => {
             {/* Company details */}
             <div>
               <AiOutlineGlobal className="bg-primary-color text-white border border-gray-200 text-3xl rounded-full h-10 w-10" />
-              <h1 className="font-bold text-2xl uppercase text-primary-color">SGE</h1>
+              <h1 className="font-bold text-2xl uppercase text-primary-color">
+                SGE
+              </h1>
               <div className="mt-1">
                 <p className="text-gray-600 text-xs">Shabuj Global Education</p>
-                <p className="text-gray-600 text-xs">1st Floor, 94A Whitechapel High Street</p>
-                <p className="text-gray-600 text-xs">London E1 7RA United Kingdom.</p>
+                <p className="text-gray-600 text-xs">
+                  1st Floor, 94A Whitechapel High Street
+                </p>
+                <p className="text-gray-600 text-xs">
+                  London E1 7RA United Kingdom.
+                </p>
                 <p className="text-gray-600 text-xs">Tel: (+44) 7404016346</p>
-                <p className="text-gray-600 text-xs">E-mail: info@shabujglobal.com</p>
+                <p className="text-gray-600 text-xs">
+                  E-mail: info@shabujglobal.com
+                </p>
               </div>
             </div>
             {/* Printing details */}
             <div className="text-end">
-              <h1 className="font-bold text-primary-color uppercase text-3xl">Reports</h1>
+              <h1 className="font-bold text-primary-color uppercase text-3xl">
+                Reports
+              </h1>
               <p className="text-gray-600 text-xs">
-                Date: {new Date().toLocaleString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                Date:{" "}
+                {new Date().toLocaleString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
               </p>
               <p className="text-gray-600 text-xs">
-                Time: {new Date().toLocaleString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+                Time:{" "}
+                {new Date().toLocaleString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
               </p>
             </div>
           </div>
           {/* Employee details */}
           <div className="grid grid-cols-2 gap-4 p-10 bg-[#7c7c004f] rounded-md mt-10">
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-1">Issued by</p>
+              <p className="text-sm font-semibold text-gray-700 mb-1">
+                Issued by
+              </p>
               <p className="text-gray-600 text-xs">{user?.displayName}</p>
               <p className="text-gray-600 text-xs">{user?.email}</p>
               <p className="text-gray-600 text-xs">{userinfo?.branch}</p>
@@ -81,25 +104,18 @@ const PrintAllEmployExpenses = forwardRef((props, ref) => {
                     <td>{data?.amount}</td>
                     {/* Status */}
                     <td>
-                      <Chip
-                        variant="ghost"
-                        color={
-                          data.status === "granted"
-                            ? "green"
-                            : data.status === "pending"
-                            ? "orange"
-                            : "red"
-                        }
-                        size="sm"
-                        value={data?.status}
+                      <p
                         className={`font-bold text-xs rounded !capitalize ${
+                          data.status === "auto granted" ||
                           data.status === "granted"
                             ? "text-green-600"
-                            : data.status === "pending"
-                            ? "text-orange-700"
-                            : "text-red-600"
+                            : data.status === "rejected"
+                            ? "text-red-600"
+                            : "text-orange-800"
                         }`}
-                      />
+                      >
+                        {data?.status}
+                      </p>
                     </td>
                     <td>{data?.role}</td>
                     <td>{data?.date?.split("T")[0]}</td>
