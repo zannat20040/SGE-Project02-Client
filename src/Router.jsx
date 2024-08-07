@@ -34,11 +34,12 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
-      // employee routes
+      // common route
       {
         path: "reports",
         element: <ReportandInsights1 />,
       },
+      // employee routes
       {
         path: "employee/addexpense",
         element: <AddExpense1 />,
@@ -48,10 +49,6 @@ export const router = createBrowserRouter([
         element: <ExpenseHistory />,
       },
       // finance route
-      // {
-      //   path: "finance/reports",
-      //   element: <Reportandinsights2 />,
-      // },
       {
         path: "finance/allexpenses",
         element: <AllExpenses />,
@@ -61,10 +58,6 @@ export const router = createBrowserRouter([
         element: <IndividualExpensesHistory />,
       },
       // CEO route
-      // {
-      //   path: "ceo/reports",
-      //   element: <Reportandinsights3 />,
-      // },
       {
         path: "ceo/addexpense",
         element: <AddExpense1 />,

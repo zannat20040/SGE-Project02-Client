@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TfiDownload } from "react-icons/tfi";
 import PrimaryButton from "../Shared Component/PrimaryButton";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import Loading from "../Shared Component/Loading";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 export default function IndividualExpensesHistory() {
   const [startDate, setStartDate] = useState("");
@@ -37,10 +39,42 @@ export default function IndividualExpensesHistory() {
     },
   ];
 
+  const axiosBase = useAxiosBase();
+  const { user } = useContext(AuthContext);
+
+  const {
+    data: allExpenseHistory,
+    refetch,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["allExpenseHistory", user?.email],
+    queryFn: async () => {
+      const response = await axiosBase.get(
+        `/expenses/?page=${active}number=${5}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.email}`,
+          },
+        }
+      );
+      const data = response.data || [];
+      console.log(data);
+
+      const reversedData = data?.expenses|| [];
+    return {
+      expenses: reversedData,
+      totalPages: data.totalPages,
+    };
+    },
+  });
+
+  console.log(allExpenseHistory?.expenses);
+
   // pagination start from here
 
   // date filter
-  const filteredData = tableData?.filter((item) => {
+  const filteredData = allExpenseHistory?.expenses?.filter((item) => {
     const itemDate = new Date(item.date);
     const fromDate = new Date(startDate);
     const toDate = new Date(endDate);
@@ -50,10 +84,11 @@ export default function IndividualExpensesHistory() {
     );
   });
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  // const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalPages = allExpenseHistory?.totalPages;
 
   // Calculate paginated data
-  const paginatedData = filteredData.slice(
+  const paginatedData = filteredData?.slice(
     (active - 1) * itemsPerPage,
     active * itemsPerPage
   );
@@ -67,7 +102,6 @@ export default function IndividualExpensesHistory() {
 
   const prev = () => {
     if (active === 1) return;
-
     setActive(active - 1);
   };
 
@@ -94,11 +128,11 @@ export default function IndividualExpensesHistory() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.map((data) => (
+                {paginatedData?.map((data,idx) => (
                   <tr className="hover" key={data?._id}>
-                    <td>{data?.id}</td>
-                    <td>{data?.memberName}</td>
-                    <td>{data?.memberEmail}</td>
+                    <td>{idx+1}</td>
+                    <td>{data?.expenseTitle}</td>
+                    <td>{data?.email}</td>
                     <td>{data?.amount}</td>
                     <td>{data?.role}</td>
                     <td className="flex gap-2 justify-center">

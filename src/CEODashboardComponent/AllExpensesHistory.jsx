@@ -4,9 +4,15 @@ import { HiArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { TfiDownload } from "react-icons/tfi";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import Loading from "../Shared Component/Loading";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 export default function AllExpensesHistory() {
   const [active, setActive] = React.useState(1);
+
+
+  // console.log(allExpenseHistory);
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
@@ -17,13 +23,11 @@ export default function AllExpensesHistory() {
 
   const next = () => {
     if (active === 5) return;
-
     setActive(active + 1);
   };
 
   const prev = () => {
     if (active === 1) return;
-
     setActive(active - 1);
   };
 
