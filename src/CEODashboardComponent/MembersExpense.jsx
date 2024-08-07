@@ -100,7 +100,7 @@ export default function MembersExpense() {
                     <td>{idx + 1}</td>
                     <td>{data?.username} </td>
                     <td>{data?.email}</td>
-                    <td>${data?.totalAmount}</td>
+                    <td className="font-bold text-yellow-800">${data?.totalAmount}</td>
                     <td>{data?.branch}</td>
                     <td
                       className={`font-bold text-xs  rounded  !capitalize ${

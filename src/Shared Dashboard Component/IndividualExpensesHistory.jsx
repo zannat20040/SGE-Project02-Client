@@ -90,9 +90,9 @@ export default function IndividualExpensesHistory() {
                   <th className="pb-4">No.</th>
                   <th className="pb-4">Name</th>
                   <th className="pb-4">Email</th>
-                  <th className="pb-4">Total Expenses</th>
-                  <th className="pb-4">Role</th>
                   <th className="pb-4">Status</th>
+                  <th className="pb-4">Role</th>
+                  <th className="pb-4">Total Expenses</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,10 +101,8 @@ export default function IndividualExpensesHistory() {
                     <td>{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.email}</td>
-                    <td>${data?.amount}</td>
-                    <td>{data?.role}</td>
                     <td
-                      className={`font-bold text-xs  rounded  !capitalize ${
+                      className={`font-medium text-xs  rounded  !capitalize ${
                         data.status === "auto granted" ||
                         data.status === "granted"
                           ? "text-green-600"
@@ -115,6 +113,9 @@ export default function IndividualExpensesHistory() {
                     >
                       {data?.status}
                     </td>
+                    <td>{data?.role}</td>
+                    <td className="font-bold text-yellow-800">${data?.amount}</td>
+                    
                   </tr>
                 ))}
               </tbody>
