@@ -63,7 +63,7 @@ export default function DashboardTopbar() {
           />
           <div>
             <h1 className="font-medium text-sm text-primary-color ">
-              {userinfo?.role === "ceo" ? "CEO NAME" : user?.displayName}
+              {userinfo?.role === "ceo" ? "Ceo" : user?.displayName}
             </h1>
             <p className="text-xs text-gray-400"> {user?.email}</p>
           </div>
