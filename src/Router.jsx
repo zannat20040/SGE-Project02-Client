@@ -13,6 +13,8 @@ import Reportandinsights3 from "./CEODashboardComponent/ReportandInsights";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
 import { ExpenseProvider } from "./Hooks & Context/ExpenseContext";
+import MembersExpense from "./CEODashboardComponent/MembersExpense";
+import BranceMemberExpence from "./FinanceDashboardComponent/BranceMemberExpence";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +57,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "finance/allHistory",
-        element: <IndividualExpensesHistory />,
+        // element: <IndividualExpensesHistory />,
+        element: <BranceMemberExpence />,
       },
       // CEO route
       {
@@ -69,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "ceo/addnewfinance",
         element: <AddNewFinance />,
+      },
+      {
+        path: "ceo/membersExpense",
+        element: <MembersExpense />,
       },
     ],
   },

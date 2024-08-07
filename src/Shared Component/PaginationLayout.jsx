@@ -22,7 +22,7 @@ export default function PaginationLayout({
         : "bg-white text-primary-color"
     }`,
   });
-  console.log("Generating buttons for pages:", [...Array(totalPages)?.keys()]);
+
   return (
     <>
       <Button

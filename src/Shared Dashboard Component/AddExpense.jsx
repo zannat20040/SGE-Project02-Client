@@ -97,44 +97,17 @@ export default function AddExpense() {
       username: user?.displayName,
     };
 
-
     // console.log(expenseData);
 
-        const formData = new FormData();
-        formData.append("receipt", showName);
-        formData.append("expenseTitle", currentExpenseTitle);
-        formData.append("amount", amount);
-        formData.append("role", userinfo?.role);
-        formData.append("branch", userinfo?.branch);
-        formData.append("date", date);
-        formData.append("notes", notes);
-        formData.append("username", user?.displayName);
-    // console.log(formData)
-
-    // axiosBase
-    //   .post("/expense", expenseData, {
-    //     headers: {
-    //       Authorization: `Bearer ${user?.email}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     const audio = new Audio(successSound);
-    //     swal("Great!", res.data.message, "success");
-    //     audio.play();
-    //     refetch();
-    //     setLoading(false);
-    //     form.reset();
-    //     navigate(
-    //       userinfo?.role === "employee"
-    //         ? "/dashboard/employee/history"
-    //         : "/dashboard/ceo/allHistory"
-    //     );
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     swal("Ops!", err.message, "err");
-    //     setLoading(false);
-    //   });
+    const formData = new FormData();
+    formData.append("receipt", showName);
+    formData.append("expenseTitle", currentExpenseTitle);
+    formData.append("amount", amount);
+    formData.append("role", userinfo?.role);
+    formData.append("branch", userinfo?.branch);
+    formData.append("date", date);
+    formData.append("notes", notes);
+    formData.append("username", user?.displayName);
 
     try {
       const res = await axiosBase.post("/expense", formData, {
@@ -169,10 +142,14 @@ export default function AddExpense() {
     <div className="">
       {/* breadcrumbs add */}
       {loading && <Loading />}
-      <BreadcrumsLayout route1={"employee"} activeroute2={"addexpense"} />
+      <BreadcrumsLayout route1={userinfo?.role} activeroute2={"addexpense"} />
 
       {/* FORM */}
-      <form onSubmit={HandleExpenseAdd} className="bg-white px-10 py-10 mt-4 " encType="multipart/form-data">
+      <form
+        onSubmit={HandleExpenseAdd}
+        className="bg-white px-10 py-10 mt-4 "
+        encType="multipart/form-data"
+      >
         <h1 className="md:text-lg text-base font-semibold capitalize mb-4 text-primary-color tracking-wider">
           Share you Expense details
         </h1>

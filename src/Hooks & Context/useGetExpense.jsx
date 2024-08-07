@@ -27,7 +27,7 @@ export default function useGetExpense() {
         const reversedData = data?.slice().reverse();
         return reversedData;
       } catch (err) {
-        console.error("Error fetching expenses:", err.response.data.message); // Log error
+        // console.error("Error fetching expenses:", err.response.data.message); // Log error
         return []; 
       }
     },
