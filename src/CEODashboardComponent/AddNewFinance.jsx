@@ -15,7 +15,7 @@ export default function AddNewFinance() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isPassSame, setIsPassSame] = useState(true);
-  const { createWithPass, loading, setLoading, signOutProfile } =
+  const { createWithPass, loading, setLoading, signOutProfile, loginWithPass } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const axiosBase = useAxiosBase();
@@ -70,15 +70,12 @@ export default function AddNewFinance() {
         displayName: `${firstName} ${lastName}`,
       });
 
-      // Send data to the server
       const response = await axiosBase.post("/signup", financeData);
-
-      // Sign out profile
       await signOutProfile();
-      
+      navigate("/dashboard/ceo/allHistory");
+      await loginWithPass("ceo@gmail.com", "123456");
       toast.success("Finance added successfully");
       form.reset();
-      navigate("/dashboard/ceo/allHistory");
     } catch (error) {
       console.error(error.message);
       toast.error(error.message);
