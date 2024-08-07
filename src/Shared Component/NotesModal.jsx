@@ -14,7 +14,7 @@ export default function NotesModal({ notes }) {
       </button>
       <div
         onClick={() => setOpenModal(false)}
-        className={`fixed z-[100] w-screen ${
+        className={`fixed z-[100] w-full ${
           openModal ? "visible opacity-100" : "invisible opacity-0"
         } inset-0 grid place-items-center bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
       >

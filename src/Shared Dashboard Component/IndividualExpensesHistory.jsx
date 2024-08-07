@@ -60,6 +60,7 @@ export default function IndividualExpensesHistory() {
     setActive(active - 1);
     refetch();
   };
+  const expenses = allExpenseHistory?.expenses?.slice().reverse() || [];
 
   if (isLoading) return <Loading />;
 
@@ -95,7 +96,7 @@ export default function IndividualExpensesHistory() {
                 </tr>
               </thead>
               <tbody>
-                {allExpenseHistory?.expenses?.map((data, idx) => (
+                {expenses?.map((data, idx) => (
                   <tr className="hover">
                     <td>{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>

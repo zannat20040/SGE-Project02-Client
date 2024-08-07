@@ -7,6 +7,7 @@ export default function ImageModal({imgsrc}) {
 
   return (
     <div className="flex items-center justify-center">
+      
       <img
         onClick={() => setOpenModal(true)}
         src={imgsrc}

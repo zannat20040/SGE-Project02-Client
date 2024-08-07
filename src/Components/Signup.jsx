@@ -60,27 +60,20 @@ export default function Signup() {
       role: "employee",
     };
 
-    // firebase function call
+    //  firebase function call
     try {
       setLoading(true);
-
-      // Create user
       const userCredential = await createWithPass(email, password);
       const user = userCredential.user;
-
-      // Update user profile
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
       });
-
-      // Send data to the server
       const response = await axiosBase.post("/signup", userData);
-
       swal("Great!", response.data.message, "success");
       form.reset();
       navigate("/dashboard/reports");
     } catch (error) {
-      console.error(error.message);
+      console.error("Signup error:", error.message);
       swal("Ops!", error.message, "error");
     } finally {
       setLoading(false);

@@ -74,7 +74,7 @@ export default function AddNewFinance() {
       await signOutProfile();
       navigate("/dashboard/ceo/allHistory");
       await loginWithPass("ceo@gmail.com", "123456");
-      swal("Yes!", response.data.message, "success");
+      swal("Yes!", 'Finance added successfully. Email will be sent.', "success");
       form.reset();
     } catch (error) {
       console.error(error.message);

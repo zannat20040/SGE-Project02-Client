@@ -27,7 +27,7 @@ export default function DashboardTopbar() {
         <p className="text-xs text-gray-400 capitalize">{userinfo?.branch}</p>
       </div>
 
-      <div className="flex  sm:gap-6 gap-3 justify-between  items-center ">
+      <div className="flex  sm:gap-6 gap-3  sm:justify-between justify-center flex-col-reverse sm:flex-row  items-center flex-wrap sm:flex-nowrap">
         {/* total expense */}
         {userinfo?.role !== "finance" && (
           <div className="flex gap-3 items-center">
@@ -45,7 +45,7 @@ export default function DashboardTopbar() {
               className=" bg-yellow-800 "
             >
               <button className="bg-yellow-800 p-2 rounded text-white font-medium text-xs">
-                {totalAmount}
+                ${totalAmount}
               </button>
             </Badge>
           </div>
@@ -54,7 +54,7 @@ export default function DashboardTopbar() {
         {/* user avatar */}
         <div
           className={`flex gap-3 items-center ${
-            userinfo?.role !== "finance" && "border-l"
+            userinfo?.role !== "finance" && "sm:border-l"
           } pl-3 `}
         >
           <Avatar

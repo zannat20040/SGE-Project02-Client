@@ -23,26 +23,17 @@ export default function Login() {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-
     try {
       setLoading(true);
       const userCredential = await loginWithPass(email, password);
-      // console.log(userCredential);
       const username = userCredential?.user?.displayName || "";
-
-      const response = await axiosBase.post("/login", {
-        email,
-        username,
-      });
-
-      // console.log("response==> ", response.data.message);
-      form.reset();
+      const response = await axiosBase.post("/login", { email, username });
       swal("Great!", response.data.message, "success");
+      form.reset();
       navigate("/dashboard/reports");
-      setLoading(false)
     } catch (error) {
-      swal("Ops!", error, "error");
-      console.log(error);
+      console.error("Login error:", error.message);
+      swal("Oops!", error.message || "An unexpected error occurred", "error");
     } finally {
       setLoading(false);
     }

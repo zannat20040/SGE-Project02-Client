@@ -219,7 +219,7 @@ export default function AllExpenses() {
                     </td>
                     <td>
                       {data?.receipt ? (
-                        <ImageModal imgsrc={data?.receipt} />
+                        <ImageModal imgsrc={data?.receipt}/>
                       ) : (
                         <p className="text-xs">Not available</p>
                       )}

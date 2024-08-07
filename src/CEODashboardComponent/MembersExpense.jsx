@@ -2,12 +2,10 @@ import React, { useContext, useRef, useState } from "react";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUserInfo from "../Hooks & Context/useUserInfo";
-import { useReactToPrint } from "react-to-print";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../Shared Component/Loading";
 import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import PaginationLayout from "../Shared Component/PaginationLayout";
-import PrintEmployeeHistory from "../Shared Dashboard Component/PrintEmployeeHistory";
 import { Button } from "@material-tailwind/react";
 import { IoIosPrint } from "react-icons/io";
 
@@ -16,6 +14,7 @@ export default function MembersExpense() {
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
   const itemsPerPage = 10;
+  const { userinfo } = useUserInfo();
 
   const {
     data: membersExpenseHistory,
@@ -25,7 +24,12 @@ export default function MembersExpense() {
   } = useQuery({
     queryKey: ["membersExpenseHistory", user?.email],
     queryFn: async () => {
-      const response = await axiosBase.get(`/ceo/getUsers`, {
+      const url =
+        userinfo.role === "ceo"
+          ? `/users/expenses`
+          : `/users/expenses?branch=${userinfo.branch}`;
+
+      const response = await axiosBase.get(url, {
         headers: {
           Authorization: `Bearer ${user?.email}`,
         },
@@ -36,15 +40,17 @@ export default function MembersExpense() {
     },
   });
 
+  console.log(membersExpenseHistory)
+
   // pagination start from here
   const totalPages = Math.ceil(
-    membersExpenseHistory?.users?.length / itemsPerPage
+    membersExpenseHistory?.result?.length / itemsPerPage
   );
 
   // Calculate paginated data
   const paginatedData =
-    membersExpenseHistory?.users?.length > 0 &&
-    [...membersExpenseHistory?.users]
+    membersExpenseHistory?.result?.length > 0 &&
+    [...membersExpenseHistory?.result]
       .reverse()
       .slice((active - 1) * itemsPerPage, active * itemsPerPage);
 
@@ -61,7 +67,6 @@ export default function MembersExpense() {
     setActive(active - 1);
   };
 
-  
   if (isLoading) return <Loading />;
 
   return (
@@ -74,15 +79,7 @@ export default function MembersExpense() {
         />
 
         {/* table */}
-        <div className="bg-white px-6 py-10 ">
-          <Button
-            type="submit"
-            className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
-          >
-            Print All Exployee History
-          </Button>
-          {/* <PrintEmployeeHistory ref={componentRef} /> */}
-
+        <div className="bg-white px-6 py-10 mt-3">
           {/* table data */}
 
           <div className="overflow-x-auto mt-8 ">
@@ -99,11 +96,11 @@ export default function MembersExpense() {
               </thead>
               <tbody>
                 {paginatedData?.map((data, idx) => (
-                  <tr className="hover">
+                  <tr className="hover" key={data._id}>
                     <td>{idx + 1}</td>
-                    <td>{data?.firstName + data?.lastName} </td>
+                    <td>{data?.username} </td>
                     <td>{data?.email}</td>
-                    <td>{data?.email}</td>
+                    <td>${data?.totalAmount}</td>
                     <td>{data?.branch}</td>
                     <td
                       className={`font-bold text-xs  rounded  !capitalize ${

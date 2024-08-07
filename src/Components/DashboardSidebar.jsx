@@ -48,7 +48,7 @@ export default function DashboardSidebar() {
           <FaBars />
         </label>
       </div>
-      <div className="drawer-side fixed left-0 top-0 z-40">
+      <div className="drawer-side fixed left-0 top-0 z-40 overflow-y-scroll">
         <label
           htmlFor="my-drawer-2"
           aria-label="close sidebar"
@@ -83,17 +83,17 @@ export default function DashboardSidebar() {
 
           {/* logout btn */}
           <div className="p-4 flex flex-col gap-1">
-            <Button
-              onClick={handlePrint}
-              type="submit"
-              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full  "
-            >
-              {userinfo?.role === "employee"
-                ? "Download All History"
-                : userinfo?.role === "finance"
-                ? "Download All Expenses"
-                : "Download All"}
-            </Button>
+            {userinfo?.role !== "ceo" && (
+              <Button
+                onClick={handlePrint}
+                type="submit"
+                className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full  "
+              >
+                {userinfo?.role === "employee"
+                  ? "Download All History"
+                  : "Download All Expenses"}
+              </Button>
+            )}
             <Button
               onClick={HandleLogout}
               className={`bg-white  border  duration-400 hover:tracking-wider duration-200 rounded-full border-primary-color shadow-none text-primary-color font-medium hover:shadow-none w-full 
