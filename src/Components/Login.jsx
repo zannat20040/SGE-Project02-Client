@@ -63,40 +63,44 @@ export default function Login() {
         </div>
         <form onSubmit={HandleSignin}>
           {/* email */}
-          <label className="p-2 py-3 rounded rounded-b-none outline-none flex items-center gap-2 hover:bg-gray-100 border">
-            <GoMail className=" text-gray-300 " />
-
+          <div className="relative ">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+              <GoMail className=" text-gray-300 " />
+            </div>
             <input
               name="email"
               required
               type="email"
-              className="grow text-sm  hover:bg-gray-100  outline-0 text-gray-800"
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tl rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
               placeholder="example@gmail.com"
             />
-          </label>
+          </div>
+
           {/* pass */}
-          <label className="relative p-2 py-3 rounded-t-none rounded hover:bg-gray-100 flex items-center gap-2  border-t-0 border">
-            <GoUnlock className="  text-gray-300" />
-            <input
-              name="password"
-              required
-              type={passwordVisible ? "text" : "password"}
-              className="grow text-sm hover:bg-gray-100  outline-0 text-gray-800"
-              placeholder="••••••••"
-            />
-            {/* Show/Hide Button */}
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-              className="absolute right-3"
-            >
-              {passwordVisible ? (
-                <GoEyeClosed className="text-gray-300" />
-              ) : (
-                <GoEye className="text-gray-300" />
-              )}
-            </button>
-          </label>
+          <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <GoUnlock className=" text-gray-300" />
+              </div>
+              <input
+                name="password"
+                required
+                type={passwordVisible ? "text" : "password"}
+                className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0  rounded-b  focus:outline-none"
+                placeholder="••••••••"
+              />
+              {/* Show/Hide Button */}
+              <button
+                type="button"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                className="absolute right-3 top-0 bottom-0 my-auto"
+              >
+                {passwordVisible ? (
+                  <GoEyeClosed className="text-gray-300" />
+                ) : (
+                  <GoEye className="text-gray-300" />
+                )}
+              </button>
+            </div>
           {/* remember checkbox & forget pass */}
           <div className="mt-4 flex sm:flex-row flex-col gap-3 justify-between sm:items-center items-start">
             <div className="form-control">
