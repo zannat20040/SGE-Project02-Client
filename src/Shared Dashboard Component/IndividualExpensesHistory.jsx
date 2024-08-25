@@ -42,7 +42,6 @@ export default function IndividualExpensesHistory() {
     },
   });
 
-  console.log(allExpenseHistory)
 
   // pagination start from here
 

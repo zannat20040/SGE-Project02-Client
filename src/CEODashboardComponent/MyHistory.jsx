@@ -11,7 +11,6 @@ export default function MyHistory() {
   const [startDate, setStartDate] = useState("");
   const [active, setActive] = useState(1);
   
-console.log(user.email)
     const {
     data: ceoHistory,
     refetch,
@@ -29,7 +28,6 @@ console.log(user.email)
           },
         });
         const data = response.data ;
-        console.log('====>',data)
         // const reversedData = data?.slice().reverse();
         return reversedData;
       } catch (err) {
@@ -39,7 +37,6 @@ console.log(user.email)
     },
   });
   
-  console.log('======>',ceoHistory)
 
   // date filter
   const filteredData = ceoHistory?.filter((item) => {

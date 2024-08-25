@@ -80,23 +80,22 @@ export default function AddExpense() {
     const category = form.category.value;
     const date = form.date.value;
     const notes = form.notes.value;
-    // const receipt = showName.name ? showName.name : null;
-    const receiptFilenames = showName.map(file => file.name);
-    const receipt = receiptFilenames.length > 0 ? receiptFilenames : null;
+    // // const receipt = showName.name ? showName.name : null;
+    // const receiptFilenames = showName.map(file => file.name);
+    const receipt = showName.length > 0 ? showName : null;
 
     const currentExpenseTitle = category === "Others" ? purpose : category;
 
-    const expenseData = {
-      expenseTitle: currentExpenseTitle,
-      receipt,
-      amount,
-      role: userinfo?.role,
-      branch: userinfo?.branch,
-      date,
-      notes,
-      username: user?.displayName,
-    };
-    console.log(expenseData);
+    // const expenseData = {
+    //   expenseTitle: currentExpenseTitle,
+    //   receipt,
+    //   amount,
+    //   role: userinfo?.role,
+    //   branch: userinfo?.branch,
+    //   date,
+    //   notes,
+    //   username: user?.displayName,
+    // };
 
     const formData = new FormData();
     if (showName.length > 0) {
@@ -104,14 +103,14 @@ export default function AddExpense() {
         formData.append("receipt", file); // Append each file to FormData
       });
     }
-    // formData.append("receipt", showName);
     formData.append("expenseTitle", currentExpenseTitle);
     formData.append("amount", amount);
     formData.append("role", userinfo?.role);
     formData.append("branch", userinfo?.branch);
     formData.append("date", date);
     formData.append("notes", notes);
-    formData.append("username", user?.displayName);
+    formData.append("username", user?.displayName ? user?.displayName : 'CEO');
+
 
     try {
       const res = await axiosBase.post("/expense", formData, {
@@ -120,7 +119,6 @@ export default function AddExpense() {
           Authorization: `Bearer ${user?.email}`,
         },
       });
-      console.log(res.data)
 
       const audio = new Audio(successSound);
       swal("Great!", res.data.message, "success");
@@ -139,7 +137,7 @@ export default function AddExpense() {
     } finally {
       setLoading(false);
     }
-    setLoading(false);
+    setLoading(false)
   };
 
   return (
