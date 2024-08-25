@@ -98,8 +98,8 @@ export default function AddExpense() {
     // };
 
     const formData = new FormData();
-    if (showName.length > 0) {
-      showName.forEach((file) => {
+    if (receipt.length > 0) {
+      receipt.forEach((file) => {
         formData.append("receipt", file); // Append each file to FormData
       });
     }

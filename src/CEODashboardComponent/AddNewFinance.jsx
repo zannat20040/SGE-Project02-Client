@@ -64,17 +64,20 @@ export default function AddNewFinance() {
       // Create user
       const userCredential = await createWithPass(email, password);
       const user = userCredential.user;
-
       // Update user profile
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
       });
 
+      await loginWithPass("ceo@gmail.com", "123456"); 
+
       const response = await axiosBase.post("/signup", financeData);
-      await signOutProfile();
+      swal(
+        "Yes!",
+        "Finance added successfully. Email will be sent.",
+        "success"
+      );
       navigate("/dashboard/ceo/allHistory");
-      await loginWithPass("ceo@gmail.com", "123456");
-      swal("Yes!", 'Finance added successfully. Email will be sent.', "success");
       form.reset();
     } catch (error) {
       console.error(error.message);
@@ -127,7 +130,7 @@ export default function AddNewFinance() {
             name="email"
             required
             type="email"
-            className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-400  border-y-0 focus:outline-none"
+            className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-y-0 focus:outline-none"
             placeholder="example@gmail.com"
           />
         </div>
@@ -220,8 +223,8 @@ export default function AddNewFinance() {
               className="checkbox checkbox-xs  rounded [--chkbg:theme(colors.primary-color)] [--chkfg:white] checked:border-0"
             />
             <span className="label-text text-xs">
-              By signing up, I accept the Terms and Conditions and Privacy
-              Policy.
+              By signing up, I accept the Terms and Conditions, Privacy Policy,
+              and New Finance Terms
             </span>
           </label>
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
 
 export default function FileUpload({ setShowName, showName }) {
-  const [files, setFiles] = useState([]);
+  // const [files, setFiles] = useState([]);
   const fileInputRef = useRef();
 
   // Handle file selection
@@ -47,7 +47,7 @@ export default function FileUpload({ setShowName, showName }) {
               </div>
             </div>
           ))}
-          <button
+          <button type='button'
             onClick={handleAddMore}
             className="mt-2 px-4 py-2 bg-primary-color text-white rounded"
           >
