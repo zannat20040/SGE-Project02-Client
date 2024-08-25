@@ -106,7 +106,7 @@ export default function ExpenseHistory() {
               <tbody>
                 {/* tr-1 */}
                 {paginatedData?.map((data, index) => (
-                  <tr className="hover">
+                  <tr className="hover" key={index}>
                     <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>${data?.amount}</td>

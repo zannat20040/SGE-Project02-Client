@@ -17,7 +17,8 @@ import swal from "sweetalert";
 
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
-  const [showName, setShowName] = useState({});
+  // const [showName, setShowName] = useState({});
+  const [showName, setShowName] = useState([]);
   const [loading, setLoading] = useState(false);
   const [enableTitle, setEnableTitle] = useState(false);
   const [expenseTitle, setExpenseTitle] = useState("");
@@ -27,7 +28,6 @@ export default function AddExpense() {
   const navigate = useNavigate();
   const { userinfo } = useUserInfo();
   const { refetch } = useGetExpenseContext(); //expense data fetch
-
 
   // select category option
   const categoryoptions = [
@@ -80,7 +80,9 @@ export default function AddExpense() {
     const category = form.category.value;
     const date = form.date.value;
     const notes = form.notes.value;
-    const receipt = showName.name ? showName.name : null;
+    // const receipt = showName.name ? showName.name : null;
+    const receiptFilenames = showName.map(file => file.name);
+    const receipt = receiptFilenames.length > 0 ? receiptFilenames : null;
 
     const currentExpenseTitle = category === "Others" ? purpose : category;
 
@@ -94,10 +96,15 @@ export default function AddExpense() {
       notes,
       username: user?.displayName,
     };
-
+    console.log(expenseData);
 
     const formData = new FormData();
-    formData.append("receipt", showName);
+    if (showName.length > 0) {
+      showName.forEach((file) => {
+        formData.append("receipt", file); // Append each file to FormData
+      });
+    }
+    // formData.append("receipt", showName);
     formData.append("expenseTitle", currentExpenseTitle);
     formData.append("amount", amount);
     formData.append("role", userinfo?.role);
@@ -113,6 +120,7 @@ export default function AddExpense() {
           Authorization: `Bearer ${user?.email}`,
         },
       });
+      console.log(res.data)
 
       const audio = new Audio(successSound);
       swal("Great!", res.data.message, "success");

@@ -8,6 +8,8 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import Loading from "../Shared Component/Loading";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import swal from "sweetalert";
+import ButtonLoading from "../Shared Component/ButtonLoading";
+import PrimaryButton from "../Shared Component/PrimaryButton";
 
 export default function Login() {
   // states
@@ -31,12 +33,12 @@ export default function Login() {
       swal("Great!", response.data.message, "success");
       form.reset();
       navigate("/dashboard/reports");
+      setLoading(false);
     } catch (error) {
       console.error("Login error:", error.message);
       swal("Oops!", error.message || "An unexpected error occurred", "error");
-    } finally {
       setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -78,29 +80,29 @@ export default function Login() {
 
           {/* pass */}
           <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <GoUnlock className=" text-gray-300" />
-              </div>
-              <input
-                name="password"
-                required
-                type={passwordVisible ? "text" : "password"}
-                className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0  rounded-b  focus:outline-none"
-                placeholder="••••••••"
-              />
-              {/* Show/Hide Button */}
-              <button
-                type="button"
-                onClick={() => setPasswordVisible(!passwordVisible)}
-                className="absolute right-3 top-0 bottom-0 my-auto"
-              >
-                {passwordVisible ? (
-                  <GoEyeClosed className="text-gray-300" />
-                ) : (
-                  <GoEye className="text-gray-300" />
-                )}
-              </button>
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+              <GoUnlock className=" text-gray-300" />
             </div>
+            <input
+              name="password"
+              required
+              type={passwordVisible ? "text" : "password"}
+              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0  rounded-b  focus:outline-none"
+              placeholder="••••••••"
+            />
+            {/* Show/Hide Button */}
+            <button
+              type="button"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              className="absolute right-3 top-0 bottom-0 my-auto"
+            >
+              {passwordVisible ? (
+                <GoEyeClosed className="text-gray-300" />
+              ) : (
+                <GoEye className="text-gray-300" />
+              )}
+            </button>
+          </div>
           {/* remember checkbox & forget pass */}
           <div className="mt-4 flex sm:flex-row flex-col gap-3 justify-between sm:items-center items-start">
             <div className="form-control">
@@ -117,12 +119,14 @@ export default function Login() {
 
           {/* button */}
           <div className="flex mt-4 items-center gap-2 md:flex-row flex-col">
-            <Button
+            {/* <Button
+              disabled={loading}
               type="submit"
-              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full md:w-fit  "
+              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full md:w-fit "
             >
-              Login Now
-            </Button>
+             
+            </Button> */}
+            <PrimaryButton label={"Login Now"} style={"md:w-fit w-full"} />
             <Link to={"/signup"} className="w-full md:w-fit">
               <ButtonOutlined label={"Create New Account"} />
             </Link>
