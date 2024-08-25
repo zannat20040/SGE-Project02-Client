@@ -18,9 +18,7 @@ export default function MembersExpense() {
 
   const {
     data: membersExpenseHistory,
-    refetch,
     isLoading,
-    isError,
   } = useQuery({
     queryKey: ["membersExpenseHistory", user?.email],
     queryFn: async () => {
@@ -112,10 +110,10 @@ export default function MembersExpense() {
                             className={`font-bold text-xs  rounded  !capitalize ${
                               data.status === "auto granted" ||
                               data.status === "granted"
-                                ? "text-green-600"
+                                ? "text-green-600 bg-green-300"
                                 : data.status === "rejected"
-                                ? "text-red-600"
-                                : "text-orange-800"
+                                ? "text-red-600 bg-red-300"
+                                : "text-orange-800 bg-orange-300"
                             } `}
                           >
                             <Button

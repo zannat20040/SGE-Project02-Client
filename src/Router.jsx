@@ -7,11 +7,10 @@ import ReportandInsights1 from "./UserDashboardComponent/ReportandInsights";
 import AddExpense1 from "./Shared Dashboard Component/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
-import IndividualExpensesHistory from "./Shared Dashboard Component/IndividualExpensesHistory";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
 import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
 import MembersExpense from "./CEODashboardComponent/MembersExpense";
-import MyHistory from "./CEODashboardComponent/MyHistory";
+import AllHistoryForCeo from "./CEODashboardComponent/AllHistoryForCeo";
 
 export const router = createBrowserRouter([
   {
@@ -63,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "ceo/allHistory",
-        element: <IndividualExpensesHistory />,
+        element: <AllHistoryForCeo />,
       },
       {
         path: "ceo/addnewfinance",
@@ -72,11 +71,7 @@ export const router = createBrowserRouter([
       {
         path: "ceo/membersExpense",
         element: <MembersExpense />,
-      }, 
-      // {
-      //   path: "ceo/myExpenses",
-      //   element: <MyHistory />,
-      // },
+      },
     ],
   },
   {
