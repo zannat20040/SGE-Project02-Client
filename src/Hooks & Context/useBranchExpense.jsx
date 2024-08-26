@@ -16,7 +16,7 @@ export default function useBranchExpense(branch) {
     queryKey: ["branchExpenses", branch],
     queryFn: async () => {
       try {
-        const response = await axiosBase.post(
+        const { data } = await axiosBase.post(
           `/expense/branch`,
           { branch },
           {
@@ -25,15 +25,15 @@ export default function useBranchExpense(branch) {
             },
           }
         );
-        return response.data || [];
+        return data;
       } catch (error) {
-        throw error;
       }
     },
+    enabled: !!branch,
   });
 
-  // Extract the data from the response
-  const branchExpenses = response?.data.slice().reverse() || [];
+  // Extract and reverse the data
+  const branchExpenses = response?.data?.slice().reverse() || [];
 
   return { branchExpenses, refetch, isLoading, error };
 }

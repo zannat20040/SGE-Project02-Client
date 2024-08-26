@@ -44,7 +44,6 @@ export default function AllHistoryForCeo() {
         ? response?.data?.data?.slice().reverse()
         : response?.data;
 
-    console.log(data);
     return data || [];
   };
 

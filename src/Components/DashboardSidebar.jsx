@@ -12,7 +12,7 @@ import useUserInfo from "../Hooks & Context/useUserInfo";
 import NavlistForCEO from "../Navlist/NavlistForCEO";
 import NavlistForFinance from "../Navlist/NavlistForFinance";
 import swal from "sweetalert";
-import PrintAllEmployExpenses from "../FinanceDashboardComponent/PrintAllEmployExpenses";
+import PrintAllEmployExpenses from "../PrintHistory/PrintAllEmployExpenses";
 
 export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);

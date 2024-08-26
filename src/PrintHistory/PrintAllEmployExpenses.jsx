@@ -13,7 +13,7 @@ const PrintAllEmployExpenses = forwardRef((props, ref) => {
   return (
     <div className="hidden print:flex w-full " ref={ref}>
       {isLoading ? (
-        "Loading...."
+        <p className="p-10">Loading....</p>
       ) : (
         <div className="p-10 w-full">
           {/* Your component content here */}
@@ -93,34 +93,42 @@ const PrintAllEmployExpenses = forwardRef((props, ref) => {
                 </tr>
               </thead>
               <tbody>
-                {branchExpenses?.map((data, idx) => (
-                  <tr className="hover" key={data?._id}>
-                    <td>{idx + 1}</td>
-                    <td className="text-start">
-                      <p>{data?.username}</p>
-                      <p className="text-xs text-gray-500">{data?.email}</p>
+                {branchExpenses && branchExpenses?.length <= 0 ? (
+                  <tr>
+                    <td colSpan="9">
+                      <p className="text-center p-5">No data found</p>
                     </td>
-                    <td>{data?.expenseTitle}</td>
-                    <td>${data?.amount}</td>
-                    {/* Status */}
-                    <td>
-                      <p
-                        className={`font-bold text-xs rounded !capitalize ${
-                          data.status === "auto granted" ||
-                          data.status === "granted"
-                            ? "text-green-600"
-                            : data.status === "rejected"
-                            ? "text-red-600"
-                            : "text-orange-800"
-                        }`}
-                      >
-                        {data?.status}
-                      </p>
-                    </td>
-                    <td>{data?.role}</td>
-                    <td>{data?.date?.split("T")[0]}</td>
                   </tr>
-                ))}
+                ) : (
+                  branchExpenses?.map((data, idx) => (
+                    <tr className="hover" key={data?._id}>
+                      <td>{idx + 1}</td>
+                      <td className="text-start">
+                        <p>{data?.username}</p>
+                        <p className="text-xs text-gray-500">{data?.email}</p>
+                      </td>
+                      <td>{data?.expenseTitle}</td>
+                      <td>${data?.amount}</td>
+                      {/* Status */}
+                      <td>
+                        <p
+                          className={`font-bold text-xs rounded !capitalize ${
+                            data.status === "auto granted" ||
+                            data.status === "granted"
+                              ? "text-green-600"
+                              : data.status === "rejected"
+                              ? "text-red-600"
+                              : "text-orange-800"
+                          }`}
+                        >
+                          {data?.status}
+                        </p>
+                      </td>
+                      <td>{data?.role}</td>
+                      <td>{data?.date?.split("T")[0]}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
