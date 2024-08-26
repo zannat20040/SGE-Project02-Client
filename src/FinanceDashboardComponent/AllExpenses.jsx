@@ -6,23 +6,21 @@ import { Chip } from "@material-tailwind/react";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import useBranchExpense from "../Hooks & Context/useBranchExpense";
-import ImageModal from "../Shared Component/ImageModal";
 import NotesModal from "../Shared Component/NotesModal";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import ButtonLoading from "../Shared Component/ButtonLoading";
+import swal from 'sweetalert';
 import FileDownload from "../Shared Dashboard Component/FileDownload";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const { userinfo } = useUserInfo();
-  const [loading, setLoading] = useState(false);
+  const [loadingItems, setLoadingItems] = useState({});
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
-  const { branchExpenses, refetch, isLoading, error } = useBranchExpense(
-    userinfo?.branch
-  );
+  const { branchExpenses, refetch, isLoading, error } = useBranchExpense(userinfo?.branch);
 
   // pagination start from here
   const [active, setActive] = useState(1);
@@ -61,23 +59,29 @@ export default function AllExpenses() {
   };
 
   // status form
-  const HandleReciptStatus = (e, id) => {
+  const HandleReciptStatus = async (e, id) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingItems(prev => ({ ...prev, [id]: true }));
     const expenseStatus = e.target.status.value;
 
-    const response = axiosBase.patch(
-      `/finance/changeExpenseStatus/${id}`,
-      { status: expenseStatus },
-      {
-        headers: {
-          Authorization: `Bearer ${user?.email}`,
-        },
-      }
-    );
-    swal("Great", response.data, "success");
-    refetch();
-    setLoading(false);
+    try {
+      const response = await axiosBase.patch(
+        `/finance/changeExpenseStatus/${id}`,
+        { status: expenseStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.email}`,
+          },
+        }
+      );
+      swal("Great", response.data.message, "success");
+      refetch();    
+    } catch (err) {
+      e.target.reset()
+      swal("Ops", "Something went wrong", "error");
+    } finally {
+      setLoadingItems(prev => ({ ...prev, [id]: false }));
+    }
   };
 
   return (
@@ -161,7 +165,7 @@ export default function AllExpenses() {
                       <td>
                         {data?.status === "pending" ? (
                           <form
-                            className="border rounded flex w-fit mx-auto"
+                            className="border rounded flex w-full justify-between mx-auto"
                             onSubmit={(e) => HandleReciptStatus(e, data?._id)}
                           >
                             <select
@@ -169,7 +173,7 @@ export default function AllExpenses() {
                               name="status"
                               id="status"
                               defaultValue=""
-                              className="hover:bg-gray-100 rounded-none outline-0 border-gray-200 block w p-2 text-gray-400 text-xs"
+                              className="w-full hover:bg-gray-100 rounded-none outline-0 border-gray-200 block w p-2 text-gray-400 text-xs"
                             >
                               <option value="" disabled hidden>
                                 Pending
@@ -191,7 +195,7 @@ export default function AllExpenses() {
                               type="submit"
                               className="text-white top-0 bottom-0 my-auto bg-primary-color p-2 rounded outline-none focus:border-0 focus:!outline-none h-fit"
                             >
-                              {loading ? (
+                              {loadingItems[data._id] ? (
                                 <span className="loading loading-spinner loading-xs"></span>
                               ) : (
                                 <FaCheck className="text-xs" />
