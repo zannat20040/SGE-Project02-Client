@@ -18,7 +18,7 @@ export default function DashboardTopbar() {
   const { userinfo } = useUserInfo();
 
   return (
-    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between  items-center sticky top-0 left-0 z-10 ">
+    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 sm:justify-between justify-end  items-center sticky top-0 left-0 z-10 ">
       {/* role & branch */}
       <div>
         <p className="font-medium text-sm text-primary-color capitalize">
@@ -27,11 +27,11 @@ export default function DashboardTopbar() {
         <p className="text-xs text-gray-400 capitalize">{userinfo?.branch}</p>
       </div>
 
-      <div className="flex  sm:gap-6 gap-3  sm:justify-between justify-center flex-col-reverse sm:flex-row  items-center flex-wrap sm:flex-nowrap">
+      <div className="flex  sm:gap-6 gap-3  sm:justify-between justify-center  items-center flex-nowrap">
         {/* total expense */}
         {userinfo?.role !== "finance" && (
           <div className="flex gap-3 items-center">
-            <p className="text-primary-color font-medium text-sx">
+            <p className="text-primary-color font-medium text-sx md:flex hidden">
               Total Expense:
             </p>
 
