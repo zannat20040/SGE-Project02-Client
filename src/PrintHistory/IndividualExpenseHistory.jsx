@@ -1,45 +1,26 @@
-import { forwardRef, useContext } from "react";
-import { AuthContext } from "../AuthProvider/AuthProvider";
-import useBranchExpense from "../Hooks & Context/useBranchExpense";
-import useUserInfo from "../Hooks & Context/useUserInfo";
-import useAxiosBase from "../Hooks & Context/useAxiosBase";
-import { useQuery } from "@tanstack/react-query";
+import React, { forwardRef, useContext } from "react";
+import { Chip } from "@material-tailwind/react";
 import { AiOutlineGlobal } from "react-icons/ai";
+import useGetExpense from "../Hooks & Context/useGetExpense";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import useUserInfo from "../Hooks & Context/useUserInfo";
 
-const PrintEmployeeHistory = forwardRef((props, ref, print) => {
-  const { userinfo } = useUserInfo();
+const IndividualExpenseHistory = forwardRef((props, ref) => {
+  const { tableData, isLoading } = useGetExpense();
   const { user } = useContext(AuthContext);
-  const axiosBase = useAxiosBase();
+  const { userinfo } = useUserInfo();
 
-  const {
-    data: allExpenseHistory,
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["allExpenseHistory", user?.email],
-    queryFn: async () => {
-      const response = await axiosBase.get(`/expenses/?page=${print}`, {
-        headers: {
-          Authorization: `Bearer ${user?.email}`,
-        },
-      });
-      const data = response?.data || [];
-      return data;
-    },
-  });
-  
   return (
-    <div className="hidden print:flex w-full " ref={ref}>
+    <div className="hidden print:flex w-full print-container" ref={ref}>
       {isLoading ? (
         "Loading...."
       ) : (
         <div className="p-10 w-full">
-          {/* Your component content here */}
-          <div className="grid grid-cols-2 justify-between">
-            {/* Company details */}
+          <div className="grid grid-cols-2 justify-between ">
+            {/* company details */}
             <div>
               <AiOutlineGlobal className="bg-primary-color text-white border border-gray-200 text-3xl rounded-full h-10 w-10" />
-              <h1 className="font-bold text-2xl uppercase text-primary-color">
+              <h1 className="font-bold text-2xl uppercase text-primary-color ">
                 SGE
               </h1>
               <div className="mt-1">
@@ -56,7 +37,8 @@ const PrintEmployeeHistory = forwardRef((props, ref, print) => {
                 </p>
               </div>
             </div>
-            {/* Printing details */}
+
+            {/* printing details */}
             <div className="text-end">
               <h1 className="font-bold text-primary-color uppercase text-3xl">
                 Reports
@@ -80,7 +62,8 @@ const PrintEmployeeHistory = forwardRef((props, ref, print) => {
               </p>
             </div>
           </div>
-          {/* Employee details */}
+
+          {/* employee details */}
           <div className="grid grid-cols-2 gap-4 p-10 bg-[#7c7c004f] rounded-md mt-10">
             <div>
               <p className="text-sm font-semibold text-gray-700 mb-1">
@@ -96,26 +79,40 @@ const PrintEmployeeHistory = forwardRef((props, ref, print) => {
               <p className="text-gray-600 text-xs">Branch Address</p>
             </div>
           </div>
-          {/* Table */}
+
           <div className="overflow-x-auto mt-20">
-            <table className="table table-xs text-center">
+            <table className="table table-xs text-center ">
               <thead>
-                <tr className="text-primary-color  ">
-                  <th className="pb-4">No.</th>
-                  <th className="pb-4">Name</th>
-                  <th className="pb-4">Email</th>
-                  <th className="pb-4">Total Expenses</th>
-                  <th className="pb-4">Role</th>
+                <tr className="text-primary-color ">
+                  <th className="pb-4">#No</th>
+                  <th className="pb-4">Title</th>
+                  <th className="pb-4">Amount</th>
+                  <th className="pb-4">Status</th>
+                  <th className="pb-4">Date</th>
                 </tr>
               </thead>
               <tbody>
-                {allExpenseHistory.expenses?.map((data, idx) => (
+                {tableData?.map((data, index) => (
                   <tr className="hover" key={data?._id}>
-                    <td>{idx + 1}</td>
+                    <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
-                    <td>{data?.email}</td>
                     <td>${data?.amount}</td>
-                    <td>{data?.role}</td>
+                    {/* status */}
+                    <td className="flex justify-center">
+                      <p
+                        className={`font-semibold text-xs rounded w-fit capitalize px-3 py-1 text-center ${
+                          data.status === "auto granted" ||
+                          data.status === "granted"
+                            ? "text-green-600 bg-green-100"
+                            : data.status === "rejected"
+                            ? "text-red-600 bg-red-100"
+                            : "text-orange-800 bg-orange-100"
+                        } `}
+                      >
+                        {data?.status}
+                      </p>
+                    </td>
+                    <td>{data?.date?.split("T")[0]}</td>
                   </tr>
                 ))}
               </tbody>
@@ -127,6 +124,6 @@ const PrintEmployeeHistory = forwardRef((props, ref, print) => {
   );
 });
 
-PrintEmployeeHistory.displayName = "PrintEmployeeHistory";
+IndividualExpenseHistory.displayName = "IndividualExpenseHistory";
 
-export default PrintEmployeeHistory;
+export default IndividualExpenseHistory;

@@ -7,8 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
 import { Button, Radio } from "@material-tailwind/react";
 import useUserInfo from "../Hooks & Context/useUserInfo";
-import PrintEmployeeHistory from "../Shared Dashboard Component/PrintEmployeeHistory";
 import ButtonLoading from "../Shared Component/ButtonLoading";
+import IndividualExpenseHistory from "../PrintHistory/IndividualExpenseHistory";
 
 export default function AllHistoryForCeo() {
   const [active, setActive] = useState(1);
@@ -19,11 +19,13 @@ export default function AllHistoryForCeo() {
   const componentRef = useRef();
   const itemsPerPage = 10;
 
+
+  // print function
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
-  // Function to fetch expenses based on the selected radio button
+  // Function to fetch expenses 
   const fetchExpenses = async () => {
     // end-point based on selected radio
     const url =
@@ -41,9 +43,8 @@ export default function AllHistoryForCeo() {
     const data =
       selectedRadio === "my-expenses"
         ? response?.data?.data?.slice().reverse()
-        : selectedRadio === "all-expenses"
-        ? response?.data
-        : response?.data?.expenses?.filter((data) => data.role === "employee");
+        :response?.data
+
     return data || [];
   };
 
@@ -61,13 +62,13 @@ export default function AllHistoryForCeo() {
 
   //   total page count base on selected radio
   const totalPages =
-    selectedRadio === "my-expenses" || selectedRadio === "employee-expenses"
+    selectedRadio === "my-expenses" 
       ? Math.ceil(allExpenseHistory?.length / itemsPerPage)
       : allExpenseHistory?.totalPages || 0;
 
   // Calculate paginated data base on selected data
   const paginatedData =
-    selectedRadio === "my-expenses" || selectedRadio === "employee-expenses"
+    selectedRadio === "my-expenses" 
       ? allExpenseHistory?.slice(
           (active - 1) * itemsPerPage,
           active * itemsPerPage
@@ -103,9 +104,10 @@ export default function AllHistoryForCeo() {
             type="submit"
             className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
           >
-            Print All Employee History
+            Print My History
           </Button>
-          <PrintEmployeeHistory ref={componentRef} />
+          {/* <PrintEmployeeHistory ref={componentRef} print={active} /> */}
+          <IndividualExpenseHistory ref={componentRef} />
           {/* expenses history type */}
           <div className="flex gap-5 text-sm">
             <Radio
@@ -122,13 +124,7 @@ export default function AllHistoryForCeo() {
               onChange={() => handleRadioChange("my-expenses")}
               color="amber"
             />
-            <Radio
-              name="type"
-              label="Employee Expenses"
-              checked={selectedRadio === "employee-expenses"}
-              onChange={() => handleRadioChange("employee-expenses")}
-              color="amber"
-            />
+     
           </div>
         </div>
 
