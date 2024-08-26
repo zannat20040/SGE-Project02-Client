@@ -68,10 +68,10 @@ export const router = createBrowserRouter([
         path: "ceo/addnewfinance",
         element: <AddNewFinance />,
       },
-      {
-        path: "ceo/membersExpense",
-        element: <MembersExpense />,
-      },
+      // {
+      //   path: "ceo/membersExpense",
+      //   element: <MembersExpense />,
+      // },
     ],
   },
   {

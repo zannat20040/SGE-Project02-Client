@@ -19,13 +19,12 @@ export default function AllHistoryForCeo() {
   const componentRef = useRef();
   const itemsPerPage = 10;
 
-
   // print function
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
-  // Function to fetch expenses 
+  // Function to fetch expenses
   const fetchExpenses = async () => {
     // end-point based on selected radio
     const url =
@@ -43,8 +42,9 @@ export default function AllHistoryForCeo() {
     const data =
       selectedRadio === "my-expenses"
         ? response?.data?.data?.slice().reverse()
-        :response?.data
+        : response?.data;
 
+    console.log(data);
     return data || [];
   };
 
@@ -62,18 +62,18 @@ export default function AllHistoryForCeo() {
 
   //   total page count base on selected radio
   const totalPages =
-    selectedRadio === "my-expenses" 
+    selectedRadio === "my-expenses"
       ? Math.ceil(allExpenseHistory?.length / itemsPerPage)
       : allExpenseHistory?.totalPages || 0;
 
   // Calculate paginated data base on selected data
   const paginatedData =
-    selectedRadio === "my-expenses" 
+    selectedRadio === "my-expenses"
       ? allExpenseHistory?.slice(
           (active - 1) * itemsPerPage,
           active * itemsPerPage
         )
-      : allExpenseHistory?.expenses?.slice().reverse() || [];
+      : allExpenseHistory?.expenses || [];
 
   const next = () => {
     if (active === totalPages || isFetching) return;
@@ -124,7 +124,6 @@ export default function AllHistoryForCeo() {
               onChange={() => handleRadioChange("my-expenses")}
               color="amber"
             />
-     
           </div>
         </div>
 

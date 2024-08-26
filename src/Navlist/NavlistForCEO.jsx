@@ -41,13 +41,13 @@ export default function NavlistForCEO() {
       >
         All Expense History
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/dashboard/ceo/membersExpense"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
         Individual Expenses
-      </NavLink>  
+      </NavLink>   */}
     </div>
   );
 }
