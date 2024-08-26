@@ -11,6 +11,7 @@ import NotesModal from "../Shared Component/NotesModal";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import ButtonLoading from "../Shared Component/ButtonLoading";
+import FileDownload from "../Shared Dashboard Component/FileDownload";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
@@ -227,12 +228,12 @@ export default function AllExpenses() {
                         {data?.notes ? (
                           <NotesModal notes={data?.notes} />
                         ) : (
-                          <p className="text-xs">No notes available</p>
+                          <p className="text-xs">No notes</p>
                         )}
                       </td>
                       <td>
-                        {data?.receipt ? (
-                          <ImageModal imgsrc={data?.receipt} />
+                        {data?.receipt.length > 0 ? (
+                        <FileDownload data={data} />
                         ) : (
                           <p className="text-xs">Not available</p>
                         )}

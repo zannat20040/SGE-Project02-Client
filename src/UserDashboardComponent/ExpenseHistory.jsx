@@ -8,9 +8,7 @@ import useGetExpense from "../Hooks & Context/useGetExpense";
 import ButtonLoading from "../Shared Component/ButtonLoading";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
-
+import FileDownload from "../Shared Dashboard Component/FileDownload";
 
 export default function ExpenseHistory() {
   const [startDate, setStartDate] = useState("");
@@ -51,32 +49,6 @@ export default function ExpenseHistory() {
     if (active === 1) return;
 
     setActive(active - 1);
-  };
-
-  // get a single expense data
-  const HandleExpense =async (data) => {
- 
-    // Extract username and receipt URLs
-    const username = data.username;
-    const receiptUrls = data.receipt;
-
-    // Create a new instance of JSZip
-    const zip = new JSZip();
-
-    // Fetch each receipt and add it to the zip file
-    await Promise.all(receiptUrls.map(async (url, index) => {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      zip.file(`receipt${index + 1}.${blob.type.split('/')[1]}`, blob);
-    }));
-
-    // Generate the zip file
-    const content = await zip.generateAsync({ type: 'blob' });
-
-    // Trigger download
-    saveAs(content, `${username}_receipts.zip`);
-
-  
   };
 
   return (
@@ -178,12 +150,11 @@ export default function ExpenseHistory() {
                     <td>{data?.date?.split("T")[0]}</td>
                     {/* downlaod */}
                     <td>
-                      <Button
-                        onClick={() => HandleExpense(data)}
-                        className={`bg-white  border  duration-400 hover:tracking-wider duration-200 rounded-full border-primary-color shadow-none text-primary-color font-medium hover:shadow-none  w-fit`}
-                      >
-                        {<TfiDownload />}
-                      </Button>
+                      {data?.receipt.length > 0 ? (
+                        <FileDownload data={data} />
+                      ) : (
+                        "No Files"
+                      )}
                     </td>
                   </tr>
                 ))

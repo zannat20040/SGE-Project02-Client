@@ -71,12 +71,11 @@ export default function AddExpense() {
   // };
 
   // Update this function to ensure `expenseTitle` is updated
-const HandleTitleLength = (e) => {
-  const value = e.target.value;
-  setExpenseTitle(value); // Ensure this updates the state
-  setIsLessThanFifty(value.length > 50);
-};
-
+  const HandleTitleLength = (e) => {
+    const value = e.target.value;
+    setExpenseTitle(value); // Ensure this updates the state
+    setIsLessThanFifty(value.length > 50);
+  };
 
   // expense added function
   const HandleExpenseAdd = async (e) => {
@@ -89,13 +88,16 @@ const HandleTitleLength = (e) => {
         formData.append("receipt", file); // Append each file to FormData
       });
     }
-    formData.append("expenseTitle", category === "Others" ? expenseTitle : category);
+    formData.append(
+      "expenseTitle",
+      category === "Others" ? expenseTitle : category
+    );
     formData.append("amount", amount);
     formData.append("role", userinfo?.role);
     formData.append("branch", userinfo?.branch);
     formData.append("date", date);
     formData.append("notes", notes);
-    formData.append("username", user?.displayName ? user?.displayName : 'CEO');
+    formData.append("username", user?.displayName ? user?.displayName : "CEO");
 
     try {
       const res = await axiosBase.post("/expense", formData, {
@@ -123,7 +125,6 @@ const HandleTitleLength = (e) => {
       setLoading(false);
     }
     setLoading(false);
-
   };
 
   return (
@@ -186,6 +187,7 @@ const HandleTitleLength = (e) => {
                 "Purpose should be less than 50 characters"}
             </label>
             <input
+              required
               disabled={!enableTitle}
               onChange={HandleTitleLength}
               name="purpose"
