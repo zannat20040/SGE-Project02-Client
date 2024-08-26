@@ -10,17 +10,18 @@ import ImageModal from "../Shared Component/ImageModal";
 import NotesModal from "../Shared Component/NotesModal";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import ButtonLoading from "../Shared Component/ButtonLoading";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const { userinfo } = useUserInfo();
   const [loading, setLoading] = useState(false);
+  const axiosBase = useAxiosBase();
+  const { user } = useContext(AuthContext);
   const { branchExpenses, refetch, isLoading, error } = useBranchExpense(
     userinfo?.branch
   );
-  const axiosBase = useAxiosBase();
-  const { user } = useContext(AuthContext);
 
   // pagination start from here
   const [active, setActive] = useState(1);
@@ -133,99 +134,112 @@ export default function AllExpenses() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.map((data, idx) => (
-                  <tr className="hover" key={data?._id}>
-                    <td>{idx + 1}</td>
-                    <td className="text-start">
-                      <p>{data?.username}</p>
-                      <p className="text-xs text-gray-500">{data?.email}</p>
-                    </td>
-                    <td>{data?.expenseTitle}</td>
-                    <td>${data?.amount}</td>
-                    {/* status change form */}
-                    <td>
-                      {data?.status === "pending" ? (
-                        <form
-                          className=" border rounded flex   w-fit mx-auto"
-                          onSubmit={(e) => HandleReciptStatus(e, data?._id)}
-                        >
-                          <select
-                            required
-                            name="status"
-                            id="status"
-                            defaultValue={""}
-                            className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  block w p-2 text-gray-400  text-xs "
-                          >
-                            <option value="" disabled hidden>
-                              Pending
-                            </option>
-                            <option
-                              className="text-black text-xs  capitalize"
-                              value={"granted"}
-                            >
-                              Granted
-                            </option>
-                            <option
-                              className="text-black text-xs "
-                              value={"rejected"}
-                            >
-                              Rejected
-                            </option>
-                          </select>
-
-                          <button
-                            type="submit"
-                            class="text-white  top-0 bottom-0 my-auto bg-primary-color p-2 rounded  outline-none focus:border-0 focus:!outline-none h-fit"
-                          >
-                            {loading ? (
-                              <span className="loading loading-spinner loading-xs"></span>
-                            ) : (
-                              <FaCheck className="text-xs" />
-                            )}
-                          </button>
-                        </form>
-                      ) : (
-                        <Chip
-                          variant="ghost"
-                          color={
-                            data.status === "auto granted" ||
-                            data.status === "granted"
-                              ? "green"
-                              : data.status === "rejected"
-                              ? "red"
-                              : "orange"
-                          }
-                          size="sm"
-                          value={data?.status}
-                          className={`font-bold text-xs  rounded  !capitalize ${
-                            data.status === "auto granted" ||
-                            data.status === "granted"
-                              ? "text-green-600"
-                              : data.status === "rejected"
-                              ? "text-red-600"
-                              : "text-orange-800"
-                          } `}
-                        />
-                      )}
-                    </td>
-                    <td>{data?.role}</td>
-                    <td>{data?.date?.split("T")[0]}</td>
-                    <td className="flex gap-2 justify-center ">
-                      {data?.notes !== "" ? (
-                        <NotesModal notes={data?.notes} />
-                      ) : (
-                        <p className="text-xs">No notes available</p>
-                      )}
-                    </td>
-                    <td>
-                      {data?.receipt ? (
-                        <ImageModal imgsrc={data?.receipt}/>
-                      ) : (
-                        <p className="text-xs">Not available</p>
-                      )}
+                {isLoading ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4">
+                      <ButtonLoading />
                     </td>
                   </tr>
-                ))}
+                ) : paginatedData && paginatedData.length <= 0 ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4 text-black">
+                      No data available
+                    </td>
+                  </tr>
+                ) : (
+                  paginatedData?.map((data, idx) => (
+                    <tr className="hover" key={data?._id}>
+                      <td>{idx + 1}</td>
+                      <td className="text-start">
+                        <p>{data?.username}</p>
+                        <p className="text-xs text-gray-500">{data?.email}</p>
+                      </td>
+                      <td>{data?.expenseTitle}</td>
+                      <td>${data?.amount}</td>
+                      {/* status change form */}
+                      <td>
+                        {data?.status === "pending" ? (
+                          <form
+                            className="border rounded flex w-fit mx-auto"
+                            onSubmit={(e) => HandleReciptStatus(e, data?._id)}
+                          >
+                            <select
+                              required
+                              name="status"
+                              id="status"
+                              defaultValue=""
+                              className="hover:bg-gray-100 rounded-none outline-0 border-gray-200 block w p-2 text-gray-400 text-xs"
+                            >
+                              <option value="" disabled hidden>
+                                Pending
+                              </option>
+                              <option
+                                className="text-black text-xs capitalize"
+                                value="granted"
+                              >
+                                Granted
+                              </option>
+                              <option
+                                className="text-black text-xs"
+                                value="rejected"
+                              >
+                                Rejected
+                              </option>
+                            </select>
+                            <button
+                              type="submit"
+                              className="text-white top-0 bottom-0 my-auto bg-primary-color p-2 rounded outline-none focus:border-0 focus:!outline-none h-fit"
+                            >
+                              {loading ? (
+                                <span className="loading loading-spinner loading-xs"></span>
+                              ) : (
+                                <FaCheck className="text-xs" />
+                              )}
+                            </button>
+                          </form>
+                        ) : (
+                          <Chip
+                            variant="ghost"
+                            color={
+                              data.status === "auto granted" ||
+                              data.status === "granted"
+                                ? "green"
+                                : data.status === "rejected"
+                                ? "red"
+                                : "orange"
+                            }
+                            size="sm"
+                            value={data?.status}
+                            className={`font-bold text-xs rounded !capitalize ${
+                              data.status === "auto granted" ||
+                              data.status === "granted"
+                                ? "text-green-600"
+                                : data.status === "rejected"
+                                ? "text-red-600"
+                                : "text-orange-800"
+                            }`}
+                          />
+                        )}
+                      </td>
+                      <td>{data?.role}</td>
+                      <td>{data?.date?.split("T")[0]}</td>
+                      <td className="flex gap-2 justify-center">
+                        {data?.notes ? (
+                          <NotesModal notes={data?.notes} />
+                        ) : (
+                          <p className="text-xs">No notes available</p>
+                        )}
+                      </td>
+                      <td>
+                        {data?.receipt ? (
+                          <ImageModal imgsrc={data?.receipt} />
+                        ) : (
+                          <p className="text-xs">Not available</p>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

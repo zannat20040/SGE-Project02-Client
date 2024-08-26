@@ -8,28 +8,32 @@ export default function useBranchExpense(branch) {
   const { user } = useContext(AuthContext);
 
   const {
-    data: branchExpenses,
+    data: response,
     refetch,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["branchExpenses", branch],
     queryFn: async () => {
-      const response = await axiosBase.post(
-        `/expense/branch`,
-        { branch },
-        {
-          headers: {
-            Authorization: `Bearer ${user?.email}`,
-          },
-        }
-      );
-      const data = response.data.data || [];
-      const reversedData = data?.slice().reverse();
-      return reversedData;
+      try {
+        const response = await axiosBase.post(
+          `/expense/branch`,
+          { branch },
+          {
+            headers: {
+              Authorization: `Bearer ${user?.email}`,
+            },
+          }
+        );
+        return response.data || [];
+      } catch (error) {
+        throw error;
+      }
     },
   });
 
+  // Extract the data from the response
+  const branchExpenses = response?.data.slice().reverse() || [];
 
   return { branchExpenses, refetch, isLoading, error };
 }

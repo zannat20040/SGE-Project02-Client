@@ -8,6 +8,7 @@ import BreadcrumsLayout from "../Shared Component/BreadcrumsLayout";
 import PaginationLayout from "../Shared Component/PaginationLayout";
 import { Button } from "@material-tailwind/react";
 import { IoIosPrint } from "react-icons/io";
+import ButtonLoading from "../Shared Component/ButtonLoading";
 
 export default function MembersExpense() {
   const [active, setActive] = useState(1);
@@ -16,42 +17,34 @@ export default function MembersExpense() {
   const itemsPerPage = 10;
   const { userinfo } = useUserInfo();
 
-  const {
-    data: membersExpenseHistory,
-    isLoading,
-  } = useQuery({
+  const { data: membersExpenseHistory, isLoading } = useQuery({
     queryKey: ["membersExpenseHistory", user?.email],
     queryFn: async () => {
       const url =
         userinfo.role === "ceo"
           ? `/users/expenses`
-          : `/users/expenses?branch=${userinfo.branch}`;
+          : `/users/expenses?branch=${userinfo?.branch}`;
 
       const response = await axiosBase.get(url, {
         headers: {
           Authorization: `Bearer ${user?.email}`,
         },
       });
-      const data = response?.data || [];
+      const data = response?.data?.result || [];
 
       return data;
     },
   });
 
-  
-  console.log(membersExpenseHistory)
-
   // pagination start from here
-  const totalPages = Math.ceil(
-    membersExpenseHistory?.result?.length / itemsPerPage
-  );
+  const totalPages = Math.ceil(membersExpenseHistory?.length / itemsPerPage);
 
   // Calculate paginated data
-  const paginatedData =
-    membersExpenseHistory?.result?.length > 0 &&
-    [...membersExpenseHistory?.result]
-      .reverse()
-      .slice((active - 1) * itemsPerPage, active * itemsPerPage);
+  const paginatedData = membersExpenseHistory?.length
+    ? [...membersExpenseHistory]
+        .reverse()
+        .slice((active - 1) * itemsPerPage, active * itemsPerPage)
+    : [];
 
   // pagination function
   const next = () => {
@@ -65,8 +58,6 @@ export default function MembersExpense() {
 
     setActive(active - 1);
   };
-
-  if (isLoading) return <Loading />;
 
   return (
     <div>
@@ -94,8 +85,18 @@ export default function MembersExpense() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.length <= 0 ? (
-                  <p>No data available</p>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4">
+                      <ButtonLoading />
+                    </td>
+                  </tr>
+                ) : paginatedData && paginatedData?.length <= 0 ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4 text-black">
+                      No data available
+                    </td>
+                  </tr>
                 ) : (
                   <>
                     {paginatedData &&
@@ -107,7 +108,7 @@ export default function MembersExpense() {
                           <td className="font-bold text-yellow-800">
                             ${parseFloat(data?.totalAmount).toFixed(2)}
                           </td>
-                         
+
                           <td>{data?.branch}</td>
                           <td
                             className={`font-bold text-xs  rounded  !capitalize ${
