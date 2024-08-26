@@ -13,7 +13,7 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
   return (
     <div className="hidden print:flex w-full" ref={ref}>
       {isLoading ? (
-        "Loading...."
+        <p className="p-10">Loading....</p>
       ) : (
         <div className="p-10 w-full">
           <div className="grid grid-cols-2 justify-between ">
@@ -92,28 +92,37 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
                 </tr>
               </thead>
               <tbody>
-                {tableData?.map((data, index) => (
-                  <tr className="hover" key={data?._id}>
-                    <td>{index + 1}</td>
-                    <td>{data?.expenseTitle}</td>
-                    <td>${data?.amount}</td>
-                    {/* status */}
-                    <td className="">
-                      <p
-                        className={`font-medium text-xs rounded !capitalize ${
-                          data.status === "Added"
-                            ? "text-green-600"
-                            : data.status === "Decline"
-                            ? "text-red-600"
-                            : "text-orange-800"
-                        }`}
-                      >
-                        {data?.status}
-                      </p>
+                {tableData && tableData?.length <= 0 ? (
+                  <tr>
+                    <td colSpan="9">
+                      <p className="text-center p-5">No data found</p>
                     </td>
-                    <td>{data?.date?.split("T")[0]}</td>
                   </tr>
-                ))}
+                ) : (
+                  tableData?.map((data, index) => (
+                    <tr className="hover" key={data?._id}>
+                      <td>{index + 1}</td>
+                      <td>{data?.expenseTitle}</td>
+                      <td>${data?.amount}</td>
+                      {/* status */}
+                      <td className="p-2 flex justify-center">
+                        <p
+                          className={`font-semibold text-xs rounded w-fit capitalize px-3 py-1 text-center ${
+                            data.status === "auto granted" ||
+                            data.status === "granted"
+                              ? "text-green-600 "
+                              : data.status === "rejected"
+                              ? "text-red-600 "
+                              : "text-orange-800 "
+                          } `}
+                        >
+                          {data?.status}
+                        </p>
+                      </td>
+                      <td>{data?.date?.split("T")[0]}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

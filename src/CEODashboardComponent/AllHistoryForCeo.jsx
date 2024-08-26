@@ -145,34 +145,38 @@ export default function AllHistoryForCeo() {
                     <ButtonLoading />
                   </td>
                 </tr>
+              ) : paginatedData && paginatedData?.length <= 0 ? (
+                <tr>
+                  <td colSpan="9" className="text-center py-4 text-black">
+                    No data available
+                  </td>
+                </tr>
               ) : (
-                <>
-                  {paginatedData?.map((data, idx) => (
-                    <tr className="hover py-2" key={data?._id}>
-                      <td className="p-2">{idx + 1}</td>
-                      <td>{data?.expenseTitle}</td>
-                      <td>{data?.email}</td>
-                      <td className="flex justify-center">
-                        <p
-                          className={`font-semibold text-xs rounded w-fit capitalize px-3 py-1 text-center ${
-                            data.status === "auto granted" ||
-                            data.status === "granted"
-                              ? "text-green-600 bg-green-100"
-                              : data.status === "rejected"
-                              ? "text-red-600 bg-red-100"
-                              : "text-orange-800 bg-orange-100"
-                          } `}
-                        >
-                          {data?.status}
-                        </p>
-                      </td>
-                      <td>{data?.role}</td>
-                      <td className="font-bold text-yellow-800">
-                        ${data?.amount}
-                      </td>
-                    </tr>
-                  ))}
-                </>
+                paginatedData?.map((data, idx) => (
+                  <tr className="hover py-2" key={data?._id}>
+                    <td className="p-2">{idx + 1}</td>
+                    <td>{data?.expenseTitle}</td>
+                    <td>{data?.email}</td>
+                    <td className="flex justify-center">
+                      <p
+                        className={`font-semibold text-xs rounded w-fit capitalize px-3 py-1 text-center ${
+                          data.status === "auto granted" ||
+                          data.status === "granted"
+                            ? "text-green-600 bg-green-100"
+                            : data.status === "rejected"
+                            ? "text-red-600 bg-red-100"
+                            : "text-orange-800 bg-orange-100"
+                        } `}
+                      >
+                        {data?.status}
+                      </p>
+                    </td>
+                    <td>{data?.role}</td>
+                    <td className="font-bold text-yellow-800">
+                      ${data?.amount}
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
