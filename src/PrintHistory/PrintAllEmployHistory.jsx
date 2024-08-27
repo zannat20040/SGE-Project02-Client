@@ -23,7 +23,6 @@ const PrintAllEmployHistory = forwardRef((props, ref) => {
     },
   });
 
-  console.log(membersExpenseHistory)
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>

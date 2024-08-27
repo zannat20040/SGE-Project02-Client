@@ -18,21 +18,20 @@ export default function MembersExpense() {
   const [active, setActive] = useState(1);
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
-  const itemsPerPage = 10;
   const { userinfo } = useUserInfo();
+  const itemsPerPage = 10;
+  const printAllRef = useRef();
+  const printAllSingle = useRef();
+  const [employeeEmail, setEmployeeEmail] = useState(null);
 
   // print
-  const printAllRef = useRef();
-  const individualPrintRef = useRef();
-
-
   const handlePrintAll = useReactToPrint({
     content: () => printAllRef.current,
   });
-  const handlePrintASingle = useReactToPrint({
-    content: () => individualPrintRef.current,
-  });
-
+  // print single data
+  const handlePrintASingle = (email) => {
+    setEmployeeEmail(email);
+  };
 
   // members short history
   const { data: membersExpenseHistory, isLoading } = useQuery({
@@ -91,7 +90,7 @@ export default function MembersExpense() {
           {/* table data */}
 
           <div className="overflow-x-auto  ">
-            <div className= "w-1/6 flex">
+            <div className="w-1/6 flex">
               <Button
                 type="submit"
                 onClick={handlePrintAll}
@@ -144,16 +143,12 @@ export default function MembersExpense() {
                           >
                             <Button
                               type="submit"
-                              onClick={handlePrintASingle}
+                              onClick={() => handlePrintASingle(data?.email)}
                               className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit
                         }`}
                             >
                               <IoIosPrint className="" />
                             </Button>
-                            <IndividualExpenseHistory
-                              ref={individualPrintRef}
-                              data={data}
-                            />
                           </td>
                         </tr>
                       ))}
@@ -175,6 +170,16 @@ export default function MembersExpense() {
               />
             </div>
           </div>
+
+          {employeeEmail && (
+            <div className="hidden">
+              <IndividualExpenseHistory
+                employeeEmail={employeeEmail}
+                setEmployeeEmail={setEmployeeEmail}
+                ref={printAllSingle}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

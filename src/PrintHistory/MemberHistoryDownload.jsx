@@ -9,7 +9,6 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
   const { user } = useContext(AuthContext);
   const { tableData, isLoading, isFetching } = useGetExpense();
 
-  console.log(tableData);
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>
