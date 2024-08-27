@@ -9,6 +9,7 @@ import { Button, Radio } from "@material-tailwind/react";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import ButtonLoading from "../Shared Component/ButtonLoading";
 import IndividualExpenseHistory from "../PrintHistory/IndividualExpenseHistory";
+import MemberHistoryDownload from "../PrintHistory/MemberHistoryDownload";
 
 export default function AllHistoryForCeo() {
   const [active, setActive] = useState(1);
@@ -105,8 +106,7 @@ export default function AllHistoryForCeo() {
           >
             Print My History
           </Button>
-          {/* <PrintEmployeeHistory ref={componentRef} print={active} /> */}
-          <IndividualExpenseHistory ref={componentRef} />
+          <MemberHistoryDownload ref={componentRef} />
           {/* expenses history type */}
           <div className="flex gap-5 text-sm">
             <Radio
@@ -131,7 +131,7 @@ export default function AllHistoryForCeo() {
             <thead>
               <tr className="text-primary-color  ">
                 <th className="pb-4">No.</th>
-                <th className="pb-4">Name</th>
+                <th className="pb-4">Title</th>
                 <th className="pb-4">Email</th>
                 <th className="pb-4">Status</th>
                 <th className="pb-4">Role</th>

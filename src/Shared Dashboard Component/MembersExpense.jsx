@@ -9,6 +9,10 @@ import PaginationLayout from "../Shared Component/PaginationLayout";
 import { Button } from "@material-tailwind/react";
 import { IoIosPrint } from "react-icons/io";
 import ButtonLoading from "../Shared Component/ButtonLoading";
+import MemberHistoryDownload from "../PrintHistory/MemberHistoryDownload";
+import { useReactToPrint } from "react-to-print";
+import IndividualExpenseHistory from "../PrintHistory/IndividualExpenseHistory";
+import PrintAllEmployHistory from "../PrintHistory/PrintAllEmployHistory";
 
 export default function MembersExpense() {
   const [active, setActive] = useState(1);
@@ -17,6 +21,20 @@ export default function MembersExpense() {
   const itemsPerPage = 10;
   const { userinfo } = useUserInfo();
 
+  // print
+  const printAllRef = useRef();
+  const individualPrintRef = useRef();
+
+
+  const handlePrintAll = useReactToPrint({
+    content: () => printAllRef.current,
+  });
+  const handlePrintASingle = useReactToPrint({
+    content: () => individualPrintRef.current,
+  });
+
+
+  // members short history
   const { data: membersExpenseHistory, isLoading } = useQuery({
     queryKey: ["membersExpenseHistory", user?.email],
     queryFn: async () => {
@@ -69,11 +87,22 @@ export default function MembersExpense() {
         />
 
         {/* table */}
-        <div className="bg-white px-6 py-10 mt-3">
+        <div className="bg-white px-6 py-10 mt-3 ">
           {/* table data */}
 
-          <div className="overflow-x-auto mt-8 ">
+          <div className="overflow-x-auto  ">
+            <div className= "w-1/6 flex">
+              <Button
+                type="submit"
+                onClick={handlePrintAll}
+                className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-full uppercase mb-10`}
+              >
+                Print overview
+              </Button>
+            </div>
             <table className="table table-xs text-center ">
+              <PrintAllEmployHistory ref={printAllRef} />
+
               <thead>
                 <tr className="text-primary-color  ">
                   <th className="pb-4">No.</th>
@@ -101,7 +130,7 @@ export default function MembersExpense() {
                   <>
                     {paginatedData &&
                       paginatedData?.map((data, idx) => (
-                        <tr className="hover" key={data._id}>
+                        <tr className="hover" key={data?._id}>
                           <td>{idx + 1}</td>
                           <td>{data?.username} </td>
                           <td>{data?.email}</td>
@@ -111,22 +140,20 @@ export default function MembersExpense() {
 
                           <td>{data?.branch}</td>
                           <td
-                            className={`font-bold text-xs  rounded  !capitalize ${
-                              data.status === "auto granted" ||
-                              data.status === "granted"
-                                ? "text-green-600 bg-green-300"
-                                : data.status === "rejected"
-                                ? "text-red-600 bg-red-300"
-                                : "text-orange-800 bg-orange-300"
-                            } `}
+                            className={`font-bold text-xs  rounded  !capitalize `}
                           >
                             <Button
                               type="submit"
+                              onClick={handlePrintASingle}
                               className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit
                         }`}
                             >
                               <IoIosPrint className="" />
                             </Button>
+                            <IndividualExpenseHistory
+                              ref={individualPrintRef}
+                              data={data}
+                            />
                           </td>
                         </tr>
                       ))}

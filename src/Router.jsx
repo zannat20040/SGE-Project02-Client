@@ -8,8 +8,8 @@ import AddExpense1 from "./Shared Dashboard Component/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
-import MemberHistoryDownload from "./UserDashboardComponent/MemberHistoryDownload";
-import MembersExpense from "./CEODashboardComponent/MembersExpense";
+import MemberHistoryDownload from "./PrintHistory/MemberHistoryDownload";
+import MembersExpense from "./Shared Dashboard Component/MembersExpense";
 import AllHistoryForCeo from "./CEODashboardComponent/AllHistoryForCeo";
 
 export const router = createBrowserRouter([

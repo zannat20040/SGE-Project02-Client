@@ -1,42 +1,29 @@
 import React, { forwardRef, useContext } from "react";
-import { Chip } from "@material-tailwind/react";
 import { AiOutlineGlobal } from "react-icons/ai";
-import useGetExpense from "../Hooks & Context/useGetExpense";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUserInfo from "../Hooks & Context/useUserInfo";
+import { useQuery } from "@tanstack/react-query";
 
-const PrintAllEmployHistory = forwardRef((props,profile, ref) => {
-//   const { tableData, isLoading } = useGetExpense();
+const PrintAllEmployHistory = forwardRef((props, ref) => {
   const { user } = useContext(AuthContext);
   const { userinfo } = useUserInfo();
 
-
-  const {
-    data: tableData,
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["expenses", user?.email],
+  const { data: membersExpenseHistory, isLoading } = useQuery({
+    queryKey: ["membersExpenseHistory", user?.email],
     queryFn: async () => {
-      if (!user?.email) {
-        return [];
-      }
-      try {
-        const response = await axiosBase.get(`/expense/${user?.email}`, {
-          headers: {
-            Authorization: `Bearer ${user?.email}`,
-          },
-        });
-        const data = response.data.data || [];
-        const reversedData = data?.slice().reverse();
-        return reversedData;
-      } catch (err) {
-        console.error("Error fetching expenses:", err.response.data.message); // Log error
-        return []; 
-      }
+     
+      const response = await axiosBase.get(`/users/expenses?branch=${userinfo?.branch}`, {
+        headers: {
+          Authorization: `Bearer ${user?.email}`,
+        },
+      });
+      const data = response?.data?.result || [];
+
+      return data;
     },
   });
 
+  console.log(membersExpenseHistory)
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>
@@ -112,36 +99,43 @@ const PrintAllEmployHistory = forwardRef((props,profile, ref) => {
             <table className="table table-xs text-center ">
               <thead>
                 <tr className="text-primary-color ">
-                  <th className="pb-4">#No</th>
-                  <th className="pb-4">Title</th>
-                  <th className="pb-4">Amount</th>
-                  <th className="pb-4">Category</th>
-                  <th className="pb-4">Status</th>
+                  <th className="pb-4">#No.</th>
+                  <th className="pb-4">Name</th>
+                  <th className="pb-4">Email</th>
+                  <th className="pb-4">Total Expense</th>
+                  <th className="pb-4">Branch</th>
                 </tr>
               </thead>
               <tbody>
-                {tableData?.map((data, index) => (
-                  <tr className="hover" key={data?._id}>
-                    <td>{index + 1}</td>
-                    <td>{data?.expenseTitle}</td>
-                    <td>${data?.amount}</td>
-                    {/* status */}
-                    <td className="">
-                      <p
-                        className={`font-medium text-xs rounded !capitalize ${
-                          data.status === "Added"
-                            ? "text-green-600"
-                            : data.status === "Decline"
-                            ? "text-red-600"
-                            : "text-orange-800"
-                        }`}
-                      >
-                        {data?.status}
-                      </p>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4">
+                      Loading......
                     </td>
-                    <td>{data?.date?.split("T")[0]}</td>
                   </tr>
-                ))}
+                ) : membersExpenseHistory &&
+                  membersExpenseHistory?.length <= 0 ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4 text-black">
+                      No data available
+                    </td>
+                  </tr>
+                ) : (
+                  <>
+                    {membersExpenseHistory &&
+                      membersExpenseHistory?.map((data, idx) => (
+                        <tr className="hover" key={data?._id}>
+                          <td>{idx + 1}</td>
+                          <td className="text-start">{data?.username} </td>
+                          <td>{data?.email}</td>
+                          <td className="font-bold text-yellow-800">
+                            ${parseFloat(data?.totalAmount).toFixed(2)}
+                          </td>
+                          <td>{data?.branch}</td>
+                        </tr>
+                      ))}
+                  </>
+                )}
               </tbody>
             </table>
           </div>

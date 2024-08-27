@@ -7,7 +7,7 @@ import { FaBars } from "react-icons/fa";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import Loading from "../Shared Component/Loading";
-import MemberHistoryDownload from "../UserDashboardComponent/MemberHistoryDownload";
+import MemberHistoryDownload from "../PrintHistory/MemberHistoryDownload";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import NavlistForCEO from "../Navlist/NavlistForCEO";
 import NavlistForFinance from "../Navlist/NavlistForFinance";
@@ -18,6 +18,7 @@ export default function DashboardSidebar() {
   const { signOutProfile, loading, setLoading } = useContext(AuthContext);
   const { userinfo } = useUserInfo();
 
+  // print
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,

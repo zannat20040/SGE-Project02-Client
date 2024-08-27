@@ -4,12 +4,45 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import useGetExpense from "../Hooks & Context/useGetExpense";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUserInfo from "../Hooks & Context/useUserInfo";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import { useQuery } from "@tanstack/react-query";
 
 const IndividualExpenseHistory = forwardRef((props, ref) => {
-  const { tableData, isLoading } = useGetExpense();
-  const { user } = useContext(AuthContext);
   const { userinfo } = useUserInfo();
+  const { user } = useContext(AuthContext);
+  const axiosBase = useAxiosBase();
+  const {data} = props
+  // console.log("from 14=====> ", data);
 
+
+  const {
+    data: tableData,
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["expenses", user?.email],
+    queryFn: async () => {
+      if (!user?.email) {
+        return [];
+      }
+      try {
+        const response = await axiosBase.get(`/expense/${user?.email}`, {
+          headers: {
+            Authorization: `Bearer ${user?.email}`,
+          },
+        });
+        const data = response.data.data || [];
+        // console.log("form 31===>", data);
+        const reversedData = data?.slice().reverse();
+        return reversedData;
+      } catch (err) {
+        console.error(err.response.data.message); // Log error
+        return [];
+      }
+    },
+  });
+
+  // console.log("form 40===>", tableData);
   return (
     <div className="hidden print:flex w-full print-container" ref={ref}>
       {isLoading ? (

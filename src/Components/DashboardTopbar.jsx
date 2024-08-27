@@ -1,20 +1,16 @@
 import {
   Avatar,
   Badge,
-  Button,
-  Chip,
-  Typography,
 } from "@material-tailwind/react";
 import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { CiDollar } from "react-icons/ci";
 import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import useUserInfo from "../Hooks & Context/useUserInfo";
-import { useLocation } from "react-router-dom";
 
 export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
-  const { totalAmount } = useGetExpenseContext();
+  const { totalAmount } = useGetExpenseContext(user?.email);
   const { userinfo } = useUserInfo();
 
   return (
