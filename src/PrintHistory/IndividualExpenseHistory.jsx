@@ -6,7 +6,8 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 
-const IndividualExpenseHistory = React.forwardRef(({ employeeEmail }, ref) => {
+// using
+const IndividualExpenseHistory = React.forwardRef(({ employeeEmail,setEmployeeEmail , employeeName}, ref) => {
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
   const { userinfo } = useUserInfo();
@@ -35,15 +36,10 @@ const IndividualExpenseHistory = React.forwardRef(({ employeeEmail }, ref) => {
         return [];
       }
     },
-    enabled: !!employeeEmail, // Only fetch if employeeEmail is not null
   });
-
-  // Handle side effects or data updates
-  useEffect(() => {
-    if (employeeEmail) {
-      refetch(); // Refetch data when employeeEmail changes
-    }
-  }, [employeeEmail, refetch]);
+  
+  setEmployeeEmail(null)
+ 
 
   // Print handler
   const handlePrint = useReactToPrint({
@@ -51,10 +47,8 @@ const IndividualExpenseHistory = React.forwardRef(({ employeeEmail }, ref) => {
   });
 
   useEffect(() => {
-    if (employeeEmail) {
-      handlePrint();
-    }
-  }, [employeeEmail, handlePrint]);
+    handlePrint();
+  }, [handlePrint]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -116,9 +110,9 @@ const IndividualExpenseHistory = React.forwardRef(({ employeeEmail }, ref) => {
           <p className="text-gray-600 text-xs">{userinfo?.branch}</p>
         </div>
         <div>
-          <p className="text-sm font-semibold text-gray-700 mb-1">From</p>
-          <p className="text-gray-600 text-xs">Finance name</p>
-          <p className="text-gray-600 text-xs">Branch Address</p>
+          <p className="text-sm font-semibold text-gray-700 mb-1">Of</p>
+          <p className="text-gray-600 text-xs">{employeeName}</p>
+          <p className="text-gray-600 text-xs">{employeeEmail}</p>
         </div>
       </div>
 

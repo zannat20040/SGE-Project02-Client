@@ -3,7 +3,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import { useQuery } from "@tanstack/react-query";
-
+// using
 const PrintAllEmployHistory = forwardRef((props, ref) => {
   const { user } = useContext(AuthContext);
   const { userinfo } = useUserInfo();
@@ -99,7 +99,7 @@ const PrintAllEmployHistory = forwardRef((props, ref) => {
               <thead>
                 <tr className="text-primary-color ">
                   <th className="pb-4">#No.</th>
-                  <th className="pb-4">Name</th>
+                  <th className="pb-4 text-start">Name</th>
                   <th className="pb-4">Email</th>
                   <th className="pb-4">Total Expense</th>
                   <th className="pb-4">Branch</th>

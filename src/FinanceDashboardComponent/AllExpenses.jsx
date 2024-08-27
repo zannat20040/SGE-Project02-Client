@@ -11,7 +11,7 @@ import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import ButtonLoading from "../Shared Component/ButtonLoading";
 import swal from 'sweetalert';
-import FileDownload from "../Shared Dashboard Component/FileDownload";
+import FileDownload from "../Shared Component/FileDownload";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");

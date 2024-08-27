@@ -23,14 +23,16 @@ export default function MembersExpense() {
   const printAllRef = useRef();
   const printAllSingle = useRef();
   const [employeeEmail, setEmployeeEmail] = useState(null);
+  const [employeeName, setEmployeeName] = useState(null);
 
   // print
   const handlePrintAll = useReactToPrint({
     content: () => printAllRef.current,
   });
   // print single data
-  const handlePrintASingle = (email) => {
+  const handlePrintASingle = (email,name) => {
     setEmployeeEmail(email);
+    setEmployeeName(name)
   };
 
   // members short history
@@ -80,21 +82,18 @@ export default function MembersExpense() {
     <div>
       <div>
         {/* breadcrumbs add */}
-        <BreadcrumsLayout
-          route1={"ceo"}
-          activeroute2={"individualMembersExpense "}
-        />
+        <BreadcrumsLayout route1={"ceo"} activeroute2={"expenseoverview "} />
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-3 ">
           {/* table data */}
 
           <div className="overflow-x-auto  ">
-            <div className="w-1/6 flex">
+            <div className="mb-10">
               <Button
                 type="submit"
                 onClick={handlePrintAll}
-                className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-full uppercase mb-10`}
+                className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  sm:w-fit w-full `}
               >
                 Print overview
               </Button>
@@ -143,7 +142,7 @@ export default function MembersExpense() {
                           >
                             <Button
                               type="submit"
-                              onClick={() => handlePrintASingle(data?.email)}
+                              onClick={() => handlePrintASingle(data?.email, data?.username)}
                               className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit
                         }`}
                             >
@@ -176,6 +175,8 @@ export default function MembersExpense() {
               <IndividualExpenseHistory
                 employeeEmail={employeeEmail}
                 setEmployeeEmail={setEmployeeEmail}
+                employeeName={employeeName}
+                setEmployeeName={setEmployeeName}
                 ref={printAllSingle}
               />
             </div>
