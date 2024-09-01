@@ -131,7 +131,7 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
               <p>
                 Total Expenses :{" "}
                 <span className="font-bold text-primary-color">
-                  ${totalAmount}
+                  ${parseFloat(totalAmount).toFixed(2)}
                 </span>
               </p>
             </div>

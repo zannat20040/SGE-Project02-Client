@@ -73,8 +73,8 @@ export default function Signup() {
       form.reset();
       navigate("/dashboard/reports");
     } catch (error) {
-      console.error("Signup error:", error.message);
-      swal("Ops!", error.message, "error");
+      console.error("Signup error:", error);
+      swal("Ops!", error.message , "error");
     } finally {
       setLoading(false);
     }

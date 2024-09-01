@@ -8,8 +8,9 @@ import { useReactToPrint } from "react-to-print";
 import { Button, Radio } from "@material-tailwind/react";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import ButtonLoading from "../Shared Component/ButtonLoading";
-import IndividualExpenseHistory from "../PrintHistory/IndividualExpenseHistory";
 import MemberHistoryDownload from "../PrintHistory/MemberHistoryDownload";
+import FileDownload from "../Shared Component/FileDownload";
+import NotesModal from "../Shared Component/NotesModal";
 
 export default function AllHistoryForCeo() {
   const [active, setActive] = useState(1);
@@ -42,15 +43,15 @@ export default function AllHistoryForCeo() {
     // data get based on selected radio
     const data =
       selectedRadio === "my-expenses"
-        ? response?.data?.data?.slice().reverse()
-        : response?.data;
+        ? response?.data?.data?.slice().reverse() || []
+        : response?.data || [];
 
     return data || [];
   };
 
   // Query to fetch expenses based on selected radio button
   const {
-    data: allExpenseHistory,
+    data: allExpenseHistory = [],
     refetch,
     isLoading,
     isFetching,
@@ -60,16 +61,19 @@ export default function AllHistoryForCeo() {
     keepPreviousData: true,
   });
 
+  console.log(allExpenseHistory);
+
   //   total page count base on selected radio
   const totalPages =
     selectedRadio === "my-expenses"
-      ? Math.ceil(allExpenseHistory?.length / itemsPerPage)
+      ? Math.ceil((allExpenseHistory?.length || 0) / itemsPerPage)
       : allExpenseHistory?.totalPages || 0;
 
   // Calculate paginated data base on selected data
+
   const paginatedData =
     selectedRadio === "my-expenses"
-      ? allExpenseHistory?.slice(
+      ? (allExpenseHistory || []).slice(
           (active - 1) * itemsPerPage,
           active * itemsPerPage
         )
@@ -92,6 +96,8 @@ export default function AllHistoryForCeo() {
     setSelectedRadio(value);
     setActive(1); // Reset pagination when changing radio button
   };
+
+  console.log(paginatedData);
 
   return (
     <div>
@@ -135,7 +141,15 @@ export default function AllHistoryForCeo() {
                 <th className="pb-4">Email</th>
                 <th className="pb-4">Status</th>
                 <th className="pb-4">Role</th>
-                <th className="pb-4">Total Expenses</th>
+                <th className="pb-4">Expenses</th>
+
+                {selectedRadio === "my-expenses" && (
+                  <>
+                    <th className="pb-4">Date</th>
+                    <th className="pb-4">Note</th>
+                    <th className="pb-4">Recipt</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -173,8 +187,29 @@ export default function AllHistoryForCeo() {
                     </td>
                     <td>{data?.role}</td>
                     <td className="font-bold text-yellow-800">
-                      ${data?.amount}
+                      ${parseFloat(data?.amount).toFixed(2)}{" "}
                     </td>
+
+                    {selectedRadio === "my-expenses" && (
+                      <>
+                        <td>{data?.date?.split("T")[0]}</td>
+                        <td className="flex gap-2 justify-center">
+                          {data?.notes ? (
+                            <NotesModal notes={data?.notes} />
+                          ) : (
+                            <p className="text-xs">No notes</p>
+                          )}
+                        </td>
+                        {/* downlaod */}
+                        <td>
+                          {data?.receipt?.length > 0 ? (
+                            <FileDownload data={data} />
+                          ) : (
+                            "No Files"
+                          )}
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))
               )}

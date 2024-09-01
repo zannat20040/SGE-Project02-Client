@@ -9,6 +9,7 @@ import ButtonLoading from "../Shared Component/ButtonLoading";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import FileDownload from "../Shared Component/FileDownload";
+import NotesModal from "../Shared Component/NotesModal";
 
 export default function ExpenseHistory() {
   const [startDate, setStartDate] = useState("");
@@ -16,7 +17,6 @@ export default function ExpenseHistory() {
   const [active, setActive] = useState(1);
   const itemsPerPage = 10;
   const { tableData, isLoading } = useGetExpense();
-  const { user } = useContext(AuthContext);
 
   // date filter
   const filteredData = tableData?.filter((item) => {
@@ -100,6 +100,7 @@ export default function ExpenseHistory() {
                 <th className="pb-4">Amount</th>
                 <th className="pb-4">Status</th>
                 <th className="pb-4">Date</th>
+                <th className="pb-4">Note</th>
                 <th className="pb-4">Recipt</th>
               </tr>
             </thead>
@@ -148,6 +149,13 @@ export default function ExpenseHistory() {
                       />
                     </td>
                     <td>{data?.date?.split("T")[0]}</td>
+                    <td>
+                      {data?.notes ? (
+                        <NotesModal notes={data?.notes} />
+                      ) : (
+                        <p className="text-xs">No notes</p>
+                      )}
+                    </td>
                     {/* downlaod */}
                     <td>
                       {data?.receipt?.length > 0 ? (

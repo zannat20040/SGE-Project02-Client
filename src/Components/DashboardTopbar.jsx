@@ -1,7 +1,4 @@
-import {
-  Avatar,
-  Badge,
-} from "@material-tailwind/react";
+import { Avatar, Badge } from "@material-tailwind/react";
 import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { CiDollar } from "react-icons/ci";
@@ -41,7 +38,7 @@ export default function DashboardTopbar() {
               className=" bg-yellow-800 "
             >
               <button className="bg-yellow-800 p-2 rounded text-white font-medium text-xs">
-                ${totalAmount}
+                ${parseFloat(totalAmount).toFixed(2)}
               </button>
             </Badge>
           </div>
@@ -58,8 +55,8 @@ export default function DashboardTopbar() {
             alt="avatar"
           />
           <div>
-            <h1 className="font-medium text-sm text-primary-color ">
-              {userinfo?.role === "ceo" ? "Ceo" : user?.displayName}
+            <h1 className="font-medium text-sm text-primary-color capitalize">
+              {user?.displayName}
             </h1>
             <p className="text-xs text-gray-400"> {user?.email}</p>
           </div>

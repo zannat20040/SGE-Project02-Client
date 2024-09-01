@@ -60,7 +60,6 @@ export default function AddExpense() {
     }
   };
 
-
   // Update this function to ensure `expenseTitle` is updated
   const HandleTitleLength = (e) => {
     const value = e.target.value;
@@ -83,7 +82,7 @@ export default function AddExpense() {
       "expenseTitle",
       category === "Others" ? expenseTitle : category
     );
-    formData.append("amount", amount);
+    formData.append("amount", parseFloat(amount).toFixed(2));
     formData.append("role", userinfo?.role);
     formData.append("branch", userinfo?.branch);
     formData.append("date", date);
