@@ -60,21 +60,12 @@ export default function AddExpense() {
     }
   };
 
-  // // title length check
-  // const HandleTitleLength = (e) => {
-  //   const value = e.target.value;
-  //   if (value.length > 50) {
-  //     setIsLessThanFifty(true);
-  //   } else {
-  //     setIsLessThanFifty(false);
-  //   }
-  // };
 
   // Update this function to ensure `expenseTitle` is updated
   const HandleTitleLength = (e) => {
     const value = e.target.value;
     setExpenseTitle(value); // Ensure this updates the state
-    setIsLessThanFifty(value.length > 50);
+    setIsLessThanFifty(value?.length > 50);
   };
 
   // expense added function
@@ -83,7 +74,7 @@ export default function AddExpense() {
     setLoading(true);
 
     const formData = new FormData();
-    if (showName.length > 0) {
+    if (showName?.length > 0) {
       showName.forEach((file) => {
         formData.append("receipt", file); // Append each file to FormData
       });

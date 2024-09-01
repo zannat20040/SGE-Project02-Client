@@ -145,7 +145,7 @@ export default function AllExpenses() {
                       <ButtonLoading />
                     </td>
                   </tr>
-                ) : paginatedData && paginatedData.length <= 0 ? (
+                ) : paginatedData && paginatedData?.length <= 0 ? (
                   <tr>
                     <td colSpan="9" className="text-center py-4 text-black">
                       No data available
@@ -236,7 +236,7 @@ export default function AllExpenses() {
                         )}
                       </td>
                       <td>
-                        {data?.receipt.length > 0 ? (
+                        {data?.receipt?.length > 0 ? (
                         <FileDownload data={data} />
                         ) : (
                           <p className="text-xs">Not available</p>

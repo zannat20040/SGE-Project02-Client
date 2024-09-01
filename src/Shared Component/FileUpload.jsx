@@ -24,7 +24,7 @@ export default function FileUpload({ setShowName, showName }) {
   return (
     <div className="file-upload">
       {/* File Previews */}
-      {showName.length > 0 ? (
+      {showName?.length > 0 ? (
         <div className="w-full mx-auto flex flex-col gap-2 rounded border-2 border-dashed border-primary-color p-3 bg-white">
           {showName.map((file, index) => (
             <div

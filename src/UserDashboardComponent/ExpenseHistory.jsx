@@ -150,7 +150,7 @@ export default function ExpenseHistory() {
                     <td>{data?.date?.split("T")[0]}</td>
                     {/* downlaod */}
                     <td>
-                      {data?.receipt.length > 0 ? (
+                      {data?.receipt?.length > 0 ? (
                         <FileDownload data={data} />
                       ) : (
                         "No Files"

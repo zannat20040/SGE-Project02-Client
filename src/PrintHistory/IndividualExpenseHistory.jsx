@@ -128,14 +128,14 @@ const IndividualExpenseHistory = React.forwardRef(({ employeeEmail,setEmployeeEm
             </tr>
           </thead>
           <tbody>
-            {tableData && tableData.length <= 0 ? (
+            {tableData && tableData?.length <= 0 ? (
               <tr>
                 <td colSpan="5">
                   <p className="text-center p-5">No data found</p>
                 </td>
               </tr>
             ) : (
-              tableData.map((data, index) => (
+              tableData?.map((data, index) => (
                 <tr className="hover" key={data?._id}>
                   <td>{index + 1}</td>
                   <td>{data?.expenseTitle}</td>

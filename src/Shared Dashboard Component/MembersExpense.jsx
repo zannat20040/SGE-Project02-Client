@@ -82,7 +82,7 @@ export default function MembersExpense() {
     <div>
       <div>
         {/* breadcrumbs add */}
-        <BreadcrumsLayout route1={"ceo"} activeroute2={"expenseoverview "} />
+        <BreadcrumsLayout route1={userinfo?.role} activeroute2={"expenseoverview "} />
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-3 ">
