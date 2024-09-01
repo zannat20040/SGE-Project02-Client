@@ -127,7 +127,7 @@ const PrintAllEmployHistory = forwardRef((props, ref) => {
                           <td>{idx + 1}</td>
                           <td className="text-start">{data?.username} </td>
                           <td>{data?.email}</td>
-                          <td className="font-bold text-yellow-800">
+                          <td className="font-bold text-yellow-800 py-3">
                             ${parseFloat(data?.totalAmount).toFixed(2)}
                           </td>
                           <td>{data?.branch}</td>
