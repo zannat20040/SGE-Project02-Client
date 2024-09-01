@@ -97,9 +97,9 @@ export default function AllExpenses() {
         <BreadcrumsLayout route1={"finance"} activeroute2={"allexpenses"} />
 
         <div className="bg-white px-6 py-10 mt-6 ">
-         <div className="flex justify-between">
+         <div className="flex justify-between items-center flex-wrap sm:flex-nowrap gap-2  mb-6">
            {/* filter by date */}
-           <form className="grid grid-cols-2 lg:w-1/3 sm:w-2/3  mb-6">
+           <form className="grid grid-cols-2 lg:w-1/3 sm:w-2/3 w-full">
             <div className="relative ">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                 <CiCalendarDate className="text-gray-400" />
@@ -130,10 +130,10 @@ export default function AllExpenses() {
             </div>
           </form>
           {/* filter by email */}
-          <label className="input input-bordered flex items-center gap-2  border-gray-200 lg:w-1/3 w-full text-sm rounded-none h-10">
+          <label className="input outline-none input-bordered flex items-center gap-2  border-gray-200 lg:w-1/3 w-full text-sm rounded-none h-10">
           <input
             type="text"
-            className="grow "
+            className="grow outline-none"
             placeholder="Search by employee email"
             onChange={(e) => setSearchQuery(e.target.value)}
           />

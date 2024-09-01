@@ -30,9 +30,9 @@ export default function MembersExpense() {
     content: () => printAllRef.current,
   });
   // print single data
-  const handlePrintASingle = (email,name) => {
+  const handlePrintASingle = (email, name) => {
     setEmployeeEmail(email);
-    setEmployeeName(name)
+    setEmployeeName(name);
   };
 
   // members short history
@@ -82,14 +82,15 @@ export default function MembersExpense() {
     <div>
       <div>
         {/* breadcrumbs add */}
-        <BreadcrumsLayout route1={userinfo?.role} activeroute2={"expenseoverview "} />
+        <BreadcrumsLayout
+          route1={userinfo?.role}
+          activeroute2={"expenseoverview "}
+        />
 
         {/* table */}
         <div className="bg-white px-6 py-10 mt-3 ">
           {/* table data */}
-
-          <div className="overflow-x-auto  ">
-            <div className="mb-10">
+          <div className="mb-10">
               <Button
                 type="submit"
                 onClick={handlePrintAll}
@@ -98,6 +99,8 @@ export default function MembersExpense() {
                 Print overview
               </Button>
             </div>
+          <div className="overflow-x-auto  ">
+         
             <table className="table table-xs text-center ">
               <PrintAllEmployHistory ref={printAllRef} />
 
@@ -142,7 +145,9 @@ export default function MembersExpense() {
                           >
                             <Button
                               type="submit"
-                              onClick={() => handlePrintASingle(data?.email, data?.username)}
+                              onClick={() =>
+                                handlePrintASingle(data?.email, data?.username)
+                              }
                               className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit
                         }`}
                             >

@@ -104,17 +104,17 @@ export default function AllHistoryForCeo() {
       <BreadcrumsLayout route1={userinfo?.role} activeroute2={"allhistory"} />
 
       <div className="bg-white px-6 py-10 ">
-        <div className="flex justify-between gap-5 items-center flex-row">
+        <div className="flex flex-wrap md:flex-nowrap justify-between gap-5 items-center flex-row ">
           <Button
             onClick={handlePrint}
             type="submit"
-            className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  w-fit `}
+            className={`rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none  md:w-fit w-full `}
           >
             Print My History
           </Button>
           <MemberHistoryDownload ref={componentRef} />
           {/* expenses history type */}
-          <div className="flex gap-5 text-sm">
+          <div className="flex gap-2 text-sm">
             <Radio
               name="type"
               label="All Expenses"

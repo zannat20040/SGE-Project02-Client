@@ -11,7 +11,7 @@ export default function DashboardTopbar() {
   const { userinfo } = useUserInfo();
 
   return (
-    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 sm:justify-between justify-end  items-center sticky top-0 left-0 z-10 ">
+    <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between   items-center sticky top-0 left-0 z-10 ">
       {/* role & branch */}
       <div>
         <p className="font-medium text-sm text-primary-color capitalize">
@@ -24,7 +24,7 @@ export default function DashboardTopbar() {
         {/* total expense */}
         {userinfo?.role !== "finance" && (
           <div className="flex gap-3 items-center">
-            <p className="text-primary-color font-medium text-sx md:flex hidden">
+            <p className="text-primary-color font-medium text-sm sm:flex hidden">
               Total Expense:
             </p>
 
@@ -53,6 +53,7 @@ export default function DashboardTopbar() {
           <Avatar
             src="https://docs.material-tailwind.com/img/face-2.jpg"
             alt="avatar"
+            className="hidden sm:flex"
           />
           <div>
             <h1 className="font-medium text-sm text-primary-color capitalize">

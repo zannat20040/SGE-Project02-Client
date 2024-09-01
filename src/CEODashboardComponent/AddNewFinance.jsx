@@ -222,7 +222,7 @@ export default function AddNewFinance() {
         <div className="flex mt-4 items-center justify-end gap-2">
           <Button
             type="submit"
-            className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none"
+            className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full sm:w-auto"
           >
             Create New Account
           </Button>
