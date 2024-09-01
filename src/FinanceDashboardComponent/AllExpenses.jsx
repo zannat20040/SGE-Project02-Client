@@ -21,20 +21,26 @@ export default function AllExpenses() {
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
   const { branchExpenses, refetch, isLoading, error } = useBranchExpense(userinfo?.branch);
+  const [searchQuery, setSearchQuery] = useState("");
+
 
   // pagination start from here
   const [active, setActive] = useState(1);
 
-  // date filter
+  // data & email filter
   const filteredData = branchExpenses?.filter((item) => {
     const itemDate = new Date(item.date);
     const fromDate = new Date(startDate);
     const toDate = new Date(endDate);
-
+    const emailMatch = item.email.toLowerCase().includes(searchQuery.toLowerCase());
+  
     return (
-      (!startDate || itemDate >= fromDate) && (!endDate || itemDate <= toDate)
+      (!startDate || itemDate >= fromDate) &&
+      (!endDate || itemDate <= toDate) &&
+      (!searchQuery || emailMatch)
     );
   });
+  
 
   const itemsPerPage = 10; // Show one item per page
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
@@ -91,8 +97,9 @@ export default function AllExpenses() {
         <BreadcrumsLayout route1={"finance"} activeroute2={"allexpenses"} />
 
         <div className="bg-white px-6 py-10 mt-6 ">
-          {/* filter by date */}
-          <form className="grid grid-cols-2 lg:w-1/3 sm:w-2/3  mb-6">
+         <div className="flex justify-between">
+           {/* filter by date */}
+           <form className="grid grid-cols-2 lg:w-1/3 sm:w-2/3  mb-6">
             <div className="relative ">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                 <CiCalendarDate className="text-gray-400" />
@@ -122,6 +129,28 @@ export default function AllExpenses() {
               />
             </div>
           </form>
+          {/* filter by email */}
+          <label className="input input-bordered flex items-center gap-2  border-gray-200 lg:w-1/3 w-full text-sm rounded-none h-10">
+          <input
+            type="text"
+            className="grow "
+            placeholder="Search by employee email"
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="h-4 w-4 opacity-70"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </label>
+         </div>
           {/* table data */}
           <div className="overflow-x-auto">
             <table className="table table-xs text-center ">
