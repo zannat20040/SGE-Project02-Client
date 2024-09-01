@@ -15,10 +15,10 @@ export default function AddNewFinance() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isPassSame, setIsPassSame] = useState(true);
-  const { createWithPass, loading, setLoading, signOutProfile, loginWithPass } =
-    useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const axiosBase = useAxiosBase();
+  const [loading, setLoading] = useState(false);
 
   // select branch option
   const branchoptions = [
@@ -34,6 +34,7 @@ export default function AddNewFinance() {
   // signup function
   const HandleNewFinanceAdd = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const form = e.target;
     const firstName = form.firstName.value;
@@ -45,7 +46,8 @@ export default function AddNewFinance() {
 
     if (password !== confirmpass) {
       setIsPassSame(false);
-      return;
+      setLoading(false); 
+      return; 
     }
 
     const financeData = {
@@ -54,36 +56,23 @@ export default function AddNewFinance() {
       email,
       password,
       branch,
-      role: "finance",
     };
 
-    // try catch function call
+   
     try {
-      setLoading(true);
-
-      // Create user
-      const userCredential = await createWithPass(email, password);
-      const user = userCredential.user;
-      // Update user profile
-      await updateProfile(user, {
-        displayName: `${firstName} ${lastName}`,
+      const res = await axiosBase.post("/create-finance", financeData, {
+        headers: {
+          Authorization: `Bearer ${user?.email}`,
+        },
       });
-
-      await loginWithPass("ceo@gmail.com", "123456"); 
-
-      const response = await axiosBase.post("/signup", financeData);
-      swal(
-        "Yes!",
-        "Finance added successfully. Email will be sent.",
-        "success"
-      );
+      console.log(res);
+      swal("Congratulations!", res.data.message, "success");
       navigate("/dashboard/ceo/allHistory");
-      form.reset();
-    } catch (error) {
-      console.error(error.message);
-      swal("Ops!", error, "error");
+    } catch (err) {
+      swal("Ops!", err.response?.data?.message || "An error occurred", "error");
     } finally {
       setLoading(false);
+      setIsPassSame(true);
     }
   };
 
