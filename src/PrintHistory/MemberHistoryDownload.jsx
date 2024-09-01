@@ -3,12 +3,13 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import useGetExpense from "../Hooks & Context/useGetExpense";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 // using
 const MemberHistoryDownload = forwardRef((props, ref) => {
   const { userinfo } = useUserInfo();
   const { user } = useContext(AuthContext);
-  const { tableData, isLoading, isFetching } = useGetExpense();
-
+  const { tableData, isLoading } = useGetExpense();
+  const { totalAmount } = useGetExpenseContext(user?.email);
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>
@@ -125,6 +126,15 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
                 )}
               </tbody>
             </table>
+            <hr className="w-full h-1" />
+            <div className="mt-4 text-end  ">
+              <p>
+                Total Expenses :{" "}
+                <span className="font-bold text-primary-color">
+                  ${totalAmount}
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       )}
