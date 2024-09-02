@@ -5,12 +5,6 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  // apiKey: "AIzaSyCPqaEz_FinWmuQmalmSaxc5LFaQ-mSbCg",
-  // authDomain: "sge-project02.firebaseapp.com",
-  // projectId: "sge-project02",
-  // storageBucket: "sge-project02.appspot.com",
-  // messagingSenderId: "683004837584",
-  // appId: "1:683004837584:web:2bbce219083af8dbe728d5"
 
   apiKey: import.meta.env.VITE_apiKey,
   authDomain: import.meta.env.VITE_authDomain,
