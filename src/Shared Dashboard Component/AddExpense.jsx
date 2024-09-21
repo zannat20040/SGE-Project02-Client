@@ -29,7 +29,7 @@ export default function AddExpense() {
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
   const { userinfo } = useUserInfo();
-  const { refetch } = useGetExpenseContext(); // expense data fetch
+  const { refetch } = useGetExpenseContext() ; // expense data fetch
 
   // select category option
   const categoryoptions = [
@@ -66,6 +66,8 @@ export default function AddExpense() {
     setExpenseTitle(value); // Ensure this updates the state
     setIsLessThanFifty(value?.length > 50);
   };
+
+  console.log('=========>',showName)
 
   // expense added function
   const HandleExpenseAdd = async (e) => {

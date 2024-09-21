@@ -9,7 +9,7 @@ const MemberHistoryDownload = forwardRef((props, ref) => {
   const { userinfo } = useUserInfo();
   const { user } = useContext(AuthContext);
   const { tableData, isLoading } = useGetExpense();
-  const { totalAmount } = useGetExpenseContext(user?.email);
+  const { totalAmount } = useGetExpenseContext(user?.email) || {};
 
   return (
     <div className="hidden print:flex w-full" ref={ref}>

@@ -7,7 +7,7 @@ import useUserInfo from "../Hooks & Context/useUserInfo";
 
 export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
-  const { totalAmount } = useGetExpenseContext(user?.email);
+  const { totalAmount } = useGetExpenseContext(user?.email) || {};
   const { userinfo } = useUserInfo();
 
   return (
