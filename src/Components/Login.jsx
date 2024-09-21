@@ -63,30 +63,31 @@ export default function Login() {
           </p>
         </div>
         <form onSubmit={HandleSignin}>
-          {/* email */}
+
+          <div className="border border-gray-200 rounded-md">
           <div className="relative ">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <div className="absolute  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
               <GoMail className=" text-gray-300 " />
             </div>
             <input
               name="email"
               required
               type="email"
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tl rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
+              className="bg-white  rounded-none outline-0  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
               placeholder="example@gmail.com"
             />
           </div>
 
           {/* pass */}
           <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <div className="absolute  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none border-t border-gray-200 ">
               <GoUnlock className=" text-gray-300" />
             </div>
             <input
               name="password"
               required
               type={passwordVisible ? "text" : "password"}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0  rounded-b  focus:outline-none"
+              className=" bg-white  rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t  focus:outline-none"
               placeholder="••••••••"
             />
             {/* Show/Hide Button */}
@@ -102,6 +103,9 @@ export default function Login() {
               )}
             </button>
           </div>
+          </div>
+          {/* email */}
+
           {/* remember checkbox & forget pass */}
           <div className="mt-4 flex sm:flex-row flex-col gap-3 justify-between sm:items-center items-start">
             <div className="form-control">

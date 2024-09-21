@@ -74,7 +74,7 @@ export default function Signup() {
       navigate("/dashboard/reports");
     } catch (error) {
       console.error("Signup error:", error);
-      swal("Ops!", error.message , "error");
+      swal("Ops!", error.message, "error");
     } finally {
       setLoading(false);
     }
@@ -100,127 +100,133 @@ export default function Signup() {
           </p>
         </div>
         <form onSubmit={HandleSignup} className="">
-          {/* name */}
-          <div className="grid grid-cols-2">
-            <div className="relative ">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <IoPersonOutline className="text-sm  text-gray-400  " />
+          <div className="border  rounded border-gray-200 ">
+            {/* name */}
+            <div className="grid grid-cols-2">
+              <div className="relative ">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none   ">
+                  <IoPersonOutline className="text-sm  text-gray-400  " />
+                </div>
+                <input
+                  name="firstName"
+                  required
+                  type="text"
+                  className="bg-white  border-r outline-0 h-full border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
+                  placeholder="John"
+                />
               </div>
-              <input
-                name="firstName"
-                required
-                type="text"
-                className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tl  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
-                placeholder="John"
-              />
-            </div>
 
+              <div className="relative ">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                  <IoPersonOutline className="text-sm  text-gray-400  " />
+                </div>
+                <input
+                  name="lastName"
+                  required
+                  type="text"
+                  className="   outline-0text-sm block w-full ps-10 p-2.5 text-gray-800  border-l-0 focus:outline-none"
+                  placeholder="Doe"
+                />
+              </div>
+            </div>
+            {/* email */}
             <div className="relative ">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <IoPersonOutline className="text-sm  text-gray-400  " />
+              <div
+                className="absolute border-y 
+                border-gray-200  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <GoMail className=" text-gray-400 text-sm " />
               </div>
               <input
-                name="lastName"
+                name="email"
                 required
-                type="text"
-                className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-l-0 focus:outline-none"
-                placeholder="Doe"
+                type="email"
+                className=" bg-white  outline-0 border-y 
+                  border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800  focus:outline-none"
+                placeholder="example@gmail.com"
               />
             </div>
-          </div>
-          {/* email */}
-          <div className="relative ">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <GoMail className=" text-gray-400 text-sm " />
-            </div>
-            <input
-              name="email"
-              required
-              type="email"
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-y-0 focus:outline-none"
-              placeholder="example@gmail.com"
-            />
-          </div>
-          {/* branch */}
-          <div className="relative ">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <CiLocationOn className="text-gray-400" />
-            </div>
-            <select
-              required
-              name="branch"
-              id="branch"
-              defaultValue={""}
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800  border h-full   "
-            >
-              <option value="" disabled>
-                Select your branch
-              </option>
-              {branchoptions?.map((option, i) => (
-                <option key={i} className="text-black ">
-                  {option}
+            {/* branch */}
+            <div className="relative ">
+              <div className=" absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none border-b border-gray-200">
+                <CiLocationOn className="text-gray-400" />
+              </div>
+              <select
+                required
+                name="branch"
+                id="branch"
+                defaultValue={""}
+                className="bg-white   rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800  border-b h-full   "
+              >
+                <option value="" disabled>
+                  Select your branch
                 </option>
-              ))}
-            </select>
-          </div>
-          {/* pass & confirm pass*/}
-          <div className="grid grid-cols-2">
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <GoUnlock className=" text-gray-400 text-sm " />
-              </div>
-              <input
-                name="password"
-                required
-                type={passwordVisible ? "text" : "password"}
-                className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0 border-r-0 rounded-bl focus:outline-none"
-                placeholder="••••••••"
-              />
-              {/* Show/Hide Button */}
-              <button
-                type="button"
-                onClick={() => setPasswordVisible(!passwordVisible)}
-                className="absolute right-3 top-0 bottom-0 my-auto"
-              >
-                {passwordVisible ? (
-                  <GoEyeClosed className="text-gray-300" />
-                ) : (
-                  <GoEye className="text-gray-300" />
-                )}
-              </button>
+                {branchoptions?.map((option, i) => (
+                  <option key={i} className="text-black ">
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="relative ">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <GoUnlock className=" text-gray-400 text-sm " />
+            {/* pass & confirm pass*/}
+            <div className="grid grid-cols-2">
+              <div className="relative">
+                <div className="absolute   inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                  <GoUnlock className=" text-gray-400 text-sm " />
+                </div>
+                <input
+                  name="password"
+                  required
+                  type={passwordVisible ? "text" : "password"}
+                  className="  bg-white  rounded-none outline-0   text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
+                  placeholder="••••••••"
+                />
+                {/* Show/Hide Button */}
+                <button
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                  className="absolute right-3 top-0 bottom-0 my-auto"
+                >
+                  {passwordVisible ? (
+                    <GoEyeClosed className="text-gray-300" />
+                  ) : (
+                    <GoEye className="text-gray-300" />
+                  )}
+                </button>
               </div>
-              <input
-                name="confirmpass"
-                required
-                type={confirmPasswordVisible ? "text" : "password"}
-                className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 rounded-br  text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0 focus:outline-none"
-                placeholder="••••••••"
-              />
-              {/* Show/Hide Button */}
-              <button
-                type="button"
-                onClick={() =>
-                  setConfirmPasswordVisible(!confirmPasswordVisible)
-                }
-                className="absolute right-3 top-0 bottom-0 my-auto"
-              >
-                {confirmPasswordVisible ? (
-                  <GoEyeClosed className="text-gray-300" />
-                ) : (
-                  <GoEye className="text-gray-300" />
-                )}
-              </button>
-            </div>
+              <div className="relative ">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                  <GoUnlock className=" text-gray-400 text-sm  " />
+                </div>
+                <input
+                  name="confirmpass"
+                  required
+                  type={confirmPasswordVisible ? "text" : "password"}
+                  className=" rounded-none outline-0   text-sm block w-full ps-10 p-2.5 text-gray-800   focus:outline-none bg-white "
+                  placeholder="••••••••"
+                />
+                {/* Show/Hide Button */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setConfirmPasswordVisible(!confirmPasswordVisible)
+                  }
+                  className="absolute right-3 top-0 bottom-0 my-auto"
+                >
+                  {confirmPasswordVisible ? (
+                    <GoEyeClosed className="text-gray-300" />
+                  ) : (
+                    <GoEye className="text-gray-300" />
+                  )}
+                </button>
+              </div>
 
-            {!isPassSame && (
-              <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
-                <CiWarning /> <span>Password didn't match</span>
-              </span>
-            )}
+              {!isPassSame && (
+                <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
+                  <CiWarning /> <span>Password didn't match</span>
+                </span>
+              )}
+            </div>
           </div>
           {/* remember checkbox  */}
           <div className="form-control mt-3 ">
