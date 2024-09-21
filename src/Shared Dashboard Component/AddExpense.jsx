@@ -17,21 +17,19 @@ import swal from "sweetalert";
 
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
-  const [showName, setShowName] = useState([]);
+  const [showName, setShowName] = useState();
   const [loading, setLoading] = useState(false);
   const [enableTitle, setEnableTitle] = useState(false);
   const [expenseTitle, setExpenseTitle] = useState("");
   const [isLessThanFifty, setIsLessThanFifty] = useState(false);
   const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
   const [notes, setNotes] = useState("");
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
   const { userinfo } = useUserInfo();
-  const { refetch } = useGetExpenseContext() ; // expense data fetch
+  const { refetch } = useGetExpenseContext(); // expense data fetch
 
-  // select category option
+  // Select category options
   const categoryoptions = [
     "Office Supplies",
     "Client-Related Expenses",
@@ -46,7 +44,7 @@ export default function AddExpense() {
     "Salary",
   ];
 
-  // category as title change
+  // Category selection and handling title enabling for 'Others'
   const HandleCategory = (e) => {
     const value = e.target.value;
     if (value === "Others") {
@@ -60,26 +58,25 @@ export default function AddExpense() {
     }
   };
 
-  // Update this function to ensure `expenseTitle` is updated
   const HandleTitleLength = (e) => {
     const value = e.target.value;
-    setExpenseTitle(value); // Ensure this updates the state
-    setIsLessThanFifty(value?.length > 50);
+    setExpenseTitle(value);
+    setIsLessThanFifty(value.length > 50);
   };
 
-  console.log('=========>',showName)
-
-  // expense added function
+  // Expense adding logic
   const HandleExpenseAdd = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    const date = e.target.date.value;
+    const amount = e.target.amount.value;
+
     const formData = new FormData();
-    if (showName?.length > 0) {
-      showName.forEach((file) => {
-        formData.append("receipt", file); // Append each file to FormData
-      });
+    if (showName) {
+      formData.append("receipt", showName[0]); // Single file
     }
+
     formData.append(
       "expenseTitle",
       category === "Others" ? expenseTitle : category
@@ -89,7 +86,10 @@ export default function AddExpense() {
     formData.append("branch", userinfo?.branch);
     formData.append("date", date);
     formData.append("notes", notes);
-    formData.append("username", user?.displayName ? user?.displayName : "CEO");
+    formData.append(
+      "username",
+      user?.displayName ? user?.displayName : "CEO"
+    );
 
     try {
       const res = await axiosBase.post("/expense", formData, {
@@ -99,12 +99,13 @@ export default function AddExpense() {
         },
       });
 
+
       const audio = new Audio(successSound);
       swal("Great!", res.data.message, "success");
       audio.play();
       refetch();
       e.target.reset();
-      setShowName([]);
+      setShowName(null); // Reset file upload
       navigate(
         userinfo?.role === "employee"
           ? "/dashboard/employee/history"
@@ -116,7 +117,7 @@ export default function AddExpense() {
     } finally {
       setLoading(false);
     }
-    setLoading(false);
+
   };
 
   return (
@@ -129,7 +130,7 @@ export default function AddExpense() {
       <form
         onSubmit={HandleExpenseAdd}
         className="bg-white px-10 py-10 mt-4"
-        encType="multipart/form-data"
+         action="/upload" method="POST" enctype="multipart/form-data"
       >
         <h1 className="md:text-lg text-base font-semibold capitalize mb-4 text-primary-color tracking-wider">
           Share your Expense details
@@ -142,122 +143,122 @@ export default function AddExpense() {
             "Purpose should be less than 50 characters"}
         </label>
 
-        {/* title & amount */}
-        <div className="grid grid-cols-2">
-          {/* CATEGORY */}
-          <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <BiCategory className="text-gray-400" />
-            </div>
-            <select
-              required
-              onChange={HandleCategory}
-              name="category"
-              value={category}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-[11px] text-gray-800 border-r-0 focus:outline-none"
-            >
-              <option disabled value="">
-                Choose your expense category
-              </option>
-              {categoryoptions.map((option, i) => (
-                <option key={i} className="text-black">
-                  {option}
+        <div className="rounded-md border border-gray-200">
+          {/* title & amount */}
+          <div className="grid grid-cols-2">
+            {/* CATEGORY */}
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <BiCategory className="text-gray-400" />
+              </div>
+              <select
+                required
+                onChange={HandleCategory}
+                name="category"
+                value={category}
+                className="bg-white h-full hover:bg-gray-100 border-b rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-[11px] text-gray-800 border-r-0 focus:outline-none"
+              >
+                <option disabled value="">
+                  Choose your expense category
                 </option>
-              ))}
-              <option className="text-black">Others</option>
-            </select>
+                {categoryoptions.map((option, i) => (
+                  <option key={i} className="text-black">
+                    {option}
+                  </option>
+                ))}
+                <option className="text-black">Others</option>
+              </select>
+            </div>
+
+            {/* PURPOSE */}
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <PiSubtitlesThin className="text-gray-400" />
+              </div>
+              <label className="absolute md:flex hidden text-red-700 -top-5 duration-150 text-xs">
+                {isLessThanFifty &&
+                  category === "Others" &&
+                  "Purpose should be less than 50 characters"}
+              </label>
+              <input
+                required
+                disabled={!enableTitle}
+                onChange={HandleTitleLength}
+                name="purpose"
+                value={expenseTitle}
+                placeholder={
+                  enableTitle
+                    ? "Write your expense purpose"
+                    : "Select Others from category to write here"
+                }
+                type="text"
+                className={`bg-white focus:outline-none hover:bg-gray-100 border-b rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 ${
+                  isLessThanFifty && category === "Others" && "border-red-700"
+                }`}
+              />
+            </div>
           </div>
 
-          {/* PURPOSE */}
+          {/* amount, date, branch */}
+          <div className="grid sm:grid-cols-3 grid-cols-1">
+            {/* AMOUNT */}
+            <div className="relative sm:col-span-3 md:col-span-1">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <MdAttachMoney className="text-gray-400" />
+              </div>
+              <input
+                name="amount"
+                // value={amount}
+                // onChange={(e) => setAmount(e.target.value)}
+                required
+                type="text"
+                className="bg-white hover:bg-gray-100 rounded-none outline-none border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-r  h-full "
+                placeholder="Expense Amount"
+              />
+            </div>
+
+            {/* DATE */}
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <CiCalendarDate className="text-gray-400" />
+              </div>
+
+              <input
+                name="date"
+                value={new Date().toISOString().split("T")[0]} 
+                disabled
+                className="bg-white hover:bg-gray-100 rounded-none !outline-none border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-r"
+              />
+            </div>
+
+            {/* BRANCH */}
+            <div className="relative sm:col-span-2 md:col-span-1">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <CiLocationOn className="text-gray-400" />
+              </div>
+              <input
+                disabled
+                name="branch"
+                value={userinfo?.branch}
+                className="bg-white capitalize hover:bg-gray-100 rounded-none outline-0 text-sm block w-full ps-10 p-2.5 text-gray-800 h-full"
+                placeholder="Expense Branch"
+              />
+            </div>
+          </div>
+
+          {/* NOTES */}
           <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <div className="absolute inset-0 flex items-center ps-3.5 pointer-events-none">
               <PiSubtitlesThin className="text-gray-400" />
             </div>
-            <label className="absolute md:flex hidden text-red-700 -top-5 duration-150 text-xs">
-              {isLessThanFifty &&
-                category === "Others" &&
-                "Purpose should be less than 50 characters"}
-            </label>
-            <input
-              required
-              disabled={!enableTitle}
-              onChange={HandleTitleLength}
-              name="purpose"
-              value={expenseTitle}
-              placeholder={
-                enableTitle
-                  ? "Write your expense purpose"
-                  : "Select Others from category to write here"
-              }
-              type="text"
-              className={`focus:outline-none hover:bg-gray-100 border rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 ${
-                isLessThanFifty && category === "Others" && "border-red-700"
-              }`}
+            <textarea
+              name="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="bg-white hover:bg-gray-100 border-t outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none rounded-none h-full "
+              placeholder="Write your additional notes...(optional)"
             />
           </div>
-        </div>
-
-        {/* amount, date, branch */}
-        <div className="grid sm:grid-cols-3 grid-cols-1">
-          {/* AMOUNT */}
-          <div className="relative sm:col-span-3 md:col-span-1">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <MdAttachMoney className="text-gray-400" />
-            </div>
-            <input
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-              type="text"
-              className="hover:bg-gray-100 rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-l h-full md:border-r-0 border-r border-b md:border-b-0"
-              placeholder="Expense Amount"
-            />
-          </div>
-
-          {/* DATE */}
-          <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <CiCalendarDate className="text-gray-400" />
-            </div>
-            <input
-              name="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-              type="date"
-              className="hover:bg-gray-100 rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-l sm:border-r-0 border-r border-b sm:border-b-0"
-              placeholder="Select expense date"
-            />
-          </div>
-
-          {/* BRANCH */}
-          <div className="relative sm:col-span-2 md:col-span-1">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <CiLocationOn className="text-gray-400" />
-            </div>
-            <input
-              disabled
-              name="branch"
-              value={userinfo?.branch}
-              className="capitalize hover:bg-gray-100 rounded-none outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-x h-full"
-              placeholder="Expense Branch"
-            />
-          </div>
-        </div>
-
-        {/* NOTES */}
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center ps-3.5 pointer-events-none">
-            <PiSubtitlesThin className="text-gray-400" />
-          </div>
-          <textarea
-            name="notes"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="hover:bg-gray-100 border outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none rounded-none h-full rounded-b"
-            placeholder="Write your additional notes...(optional)"
-          />
         </div>
 
         <h1 className="md:text-lg text-base font-semibold capitalize my-4 text-primary-color tracking-wider">

@@ -1,58 +1,51 @@
 import React, { useState, useRef } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
+import swal from "sweetalert";
+
 
 export default function FileUpload({ setShowName, showName }) {
-  // const [files, setFiles] = useState([]);
   const fileInputRef = useRef();
 
   // Handle file selection
   const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setShowName((prevFiles) => [...prevFiles, ...selectedFiles]);
+    const selectedFile = e.target.files[0];
+    
+    // Check if a file is selected and its size
+    if (selectedFile) {
+      if (selectedFile.size > 2 * 1024 * 1024) { // 2 MB limit
+        swal("File size must be less than 2 MB.");
+        return;
+      }
+      setShowName([selectedFile]); // Only allow one file
+    }
   };
 
-  // Handle clear individual file
-  const handleClearFile = (indexToRemove) => {
-    setShowName((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
-  };
-
-  // Handle add more files
-  const handleAddMore = () => {
-    fileInputRef.current.click();
+  // Handle clear file
+  const handleClearFile = () => {
+    setShowName([]); // Clear the file
   };
 
   return (
     <div className="file-upload">
-      {/* File Previews */}
+      {/* File Preview */}
       {showName?.length > 0 ? (
         <div className="w-full mx-auto flex flex-col gap-2 rounded border-2 border-dashed border-primary-color p-3 bg-white">
-          {showName.map((file, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-x-6 rounded border-2 border-dashed border-primary-color p-3 bg-white"
-            >
-              <div className="flex-1 space-y-1.5 overflow-hidden">
-                <h5 className="text-sm font-medium tracking-tight truncate text-primary-color">
-                  {file.name}
-                </h5>
-                <p className="text-gray-400 text-xs">
-                  {(file.size / 1024).toFixed(1)} KB
-                </p>
-              </div>
-              <div
-                onClick={() => handleClearFile(index)}
-                className="bg-primary-color p-1 rounded cursor-pointer"
-              >
-                <HiMiniXMark className="text-white" />
-              </div>
+          <div className="flex items-center gap-x-6 rounded border-2 border-dashed border-primary-color p-3 bg-white">
+            <div className="flex-1 space-y-1.5 overflow-hidden">
+              <h5 className="text-sm font-medium tracking-tight truncate text-primary-color">
+                {showName[0].name}
+              </h5>
+              <p className="text-gray-400 text-xs">
+                {(showName[0].size / 1024).toFixed(1)} KB
+              </p>
             </div>
-          ))}
-          <button type='button'
-            onClick={handleAddMore}
-            className="mt-2 px-4 py-2 bg-primary-color text-white rounded"
-          >
-            Add More
-          </button>
+            <div
+              onClick={handleClearFile}
+              className="bg-primary-color p-1 rounded cursor-pointer"
+            >
+              <HiMiniXMark className="text-white" />
+            </div>
+          </div>
         </div>
       ) : (
         // Upload
@@ -78,10 +71,12 @@ export default function FileUpload({ setShowName, showName }) {
           </svg>
           <div className="space-y-1.5 text-center">
             <h5 className="whitespace-nowrap text-sm font-medium tracking-tight text-primary-color">
-              Upload your Files
+              Upload your File
             </h5>
             <p className="text-xs text-gray-400">
-              File formats: PNG, JPEG, JPG, PDF, DOCX, etc.
+              File formats: .pdf, .jpg, .jpeg, and .png 
+              <br />
+              Max size: 2 MB
             </p>
           </div>
         </label>
@@ -92,10 +87,10 @@ export default function FileUpload({ setShowName, showName }) {
         onChange={handleFileChange}
         className="hidden"
         id="fileInput"
+        name='receipt'
         type="file"
-        multiple
+         accept=".pdf, .jpg, .jpeg, .png"
       />
     </div>
   );
 }
-
