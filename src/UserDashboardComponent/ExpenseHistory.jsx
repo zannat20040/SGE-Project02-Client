@@ -70,7 +70,7 @@ export default function ExpenseHistory() {
               id="default-datepicker"
               type="date"
               onChange={(e) => setStartDate(e.target.value)}
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border"
+              className="bg-white hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border"
               placeholder="From"
             />
           </div>
@@ -85,7 +85,7 @@ export default function ExpenseHistory() {
               name="date"
               id="default-datepicker"
               type="date"
-              className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border border-l-0"
+              className="bg-white hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border border-l-0"
               placeholder="To"
             />
           </div>
@@ -94,7 +94,7 @@ export default function ExpenseHistory() {
         <div className="overflow-x-auto">
           <table className="table table-xs text-center ">
             <thead>
-              <tr className="text-primary-color  ">
+              <tr className="text-primary-color border-b border-gray-100 ">
                 <th className="pb-4">No.</th>
                 <th className="pb-4">Title</th>
                 <th className="pb-4">Amount</th>
@@ -120,7 +120,7 @@ export default function ExpenseHistory() {
                 </tr>
               ) : (
                 paginatedData?.map((data, index) => (
-                  <tr className="hover" key={index}>
+                  <tr className="hover:bg-gray-200 border-b border-gray-200 " key={index}>
                     <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>${data?.amount}</td>
