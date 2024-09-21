@@ -37,7 +37,8 @@ export default function Signup() {
   // signup function
   const HandleSignup = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
+  
     const form = e.target;
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
@@ -45,40 +46,37 @@ export default function Signup() {
     const branch = form.branch.value;
     const password = form.password.value;
     const confirmpass = form.confirmpass.value;
-
+  
+    // Check if passwords match
     if (password !== confirmpass) {
-      setIsPassSame(false);
+      setIsPassSame(false);  // Show error when passwords don't match
+      setLoading(false);     // Stop loading if password doesn't match
       return;
     }
-
+    setIsPassSame(true);     // Reset state if passwords match
+  
     const userData = {
       firstName,
       lastName,
       email,
       password,
       branch,
-      role: "employee",
     };
-
-    //  firebase function call
+  
     try {
-      setLoading(true);
-      const userCredential = await createWithPass(email, password);
-      const user = userCredential.user;
-      await updateProfile(user, {
-        displayName: `${firstName} ${lastName}`,
-      });
-      const response = await axiosBase.post("/signup", userData);
-      swal("Great!", response.data.message, "success");
+      const res = await axiosBase.post("/signup", userData);
+      swal("Congratulations!", res.data.message, "success");
       form.reset();
-      navigate("/dashboard/reports");
-    } catch (error) {
-      console.error("Signup error:", error);
-      swal("Ops!", error.message, "error");
+      navigate("/");
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || "An error occurred";
+      swal("Ops!", errorMessage, "error");
     } finally {
       setLoading(false);
     }
   };
+
+  
   return (
     <div className="" id="signup">
       <div className=" card-body w-11/12 mx-auto text-center relative ">
@@ -124,7 +122,7 @@ export default function Signup() {
                   name="lastName"
                   required
                   type="text"
-                  className="   outline-0text-sm block w-full ps-10 p-2.5 text-gray-800  border-l-0 focus:outline-none"
+                  className=" bg-white  outline-0text-sm block w-full ps-10 p-2.5 text-gray-800  border-l-0 focus:outline-none"
                   placeholder="Doe"
                 />
               </div>
@@ -220,13 +218,15 @@ export default function Signup() {
                   )}
                 </button>
               </div>
-
-              {!isPassSame && (
-                <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
-                  <CiWarning /> <span>Password didn't match</span>
-                </span>
-              )}
             </div>
+          </div>
+
+          <div className="px-2">
+            {!isPassSame && (
+              <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
+                <CiWarning /> <span>Password didn't match</span>
+              </span>
+            )}
           </div>
           {/* remember checkbox  */}
           <div className="form-control mt-3 ">

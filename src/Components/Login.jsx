@@ -17,26 +17,32 @@ export default function Login() {
   const navigate = useNavigate();
   const axiosBase = useAxiosBase();
 
-  // login function
   const HandleSignin = async (e) => {
     e.preventDefault();
 
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+
+    setLoading(true); // Start loading
+
     try {
-      setLoading(true);
       const userCredential = await loginWithPass(email, password);
+
       const username = userCredential?.user?.displayName || "";
       const response = await axiosBase.post("/login", { email, username });
-      swal("Great!", response.data.message, "success");
-      form.reset();
-      navigate("/dashboard/reports");
-      setLoading(false);
+      console.log(response)
+
+      if (response.status === 201) {
+        swal("Great!", response.data.message, "success");
+        form.reset();
+        navigate("/dashboard/reports");
+        setLoading(false); 
+      }
     } catch (error) {
-      console.error("Login error:", error.message);
       swal("Oops!", error.message || "An unexpected error occurred", "error");
-      setLoading(false);
+      setLoading(false); // Stop loading
+
     } 
   };
 
@@ -63,46 +69,45 @@ export default function Login() {
           </p>
         </div>
         <form onSubmit={HandleSignin}>
-
           <div className="border border-gray-200 rounded-md">
-          <div className="relative ">
-            <div className="absolute  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <GoMail className=" text-gray-300 " />
+            <div className="relative ">
+              <div className="absolute  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <GoMail className=" text-gray-300 " />
+              </div>
+              <input
+                name="email"
+                required
+                type="email"
+                className="bg-white  rounded-none outline-0  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
+                placeholder="example@gmail.com"
+              />
             </div>
-            <input
-              name="email"
-              required
-              type="email"
-              className="bg-white  rounded-none outline-0  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
-              placeholder="example@gmail.com"
-            />
-          </div>
 
-          {/* pass */}
-          <div className="relative">
-            <div className="absolute  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none border-t border-gray-200 ">
-              <GoUnlock className=" text-gray-300" />
+            {/* pass */}
+            <div className="relative">
+              <div className="absolute  inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none border-t border-gray-200 ">
+                <GoUnlock className=" text-gray-300" />
+              </div>
+              <input
+                name="password"
+                required
+                type={passwordVisible ? "text" : "password"}
+                className=" bg-white  rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t  focus:outline-none"
+                placeholder="••••••••"
+              />
+              {/* Show/Hide Button */}
+              <button
+                type="button"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                className="absolute right-3 top-0 bottom-0 my-auto"
+              >
+                {passwordVisible ? (
+                  <GoEyeClosed className="text-gray-300" />
+                ) : (
+                  <GoEye className="text-gray-300" />
+                )}
+              </button>
             </div>
-            <input
-              name="password"
-              required
-              type={passwordVisible ? "text" : "password"}
-              className=" bg-white  rounded-none outline-0 border-gray-200   text-sm block w-full ps-10 p-2.5 text-gray-800  border-t  focus:outline-none"
-              placeholder="••••••••"
-            />
-            {/* Show/Hide Button */}
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-              className="absolute right-3 top-0 bottom-0 my-auto"
-            >
-              {passwordVisible ? (
-                <GoEyeClosed className="text-gray-300" />
-              ) : (
-                <GoEye className="text-gray-300" />
-              )}
-            </button>
-          </div>
           </div>
           {/* email */}
 
