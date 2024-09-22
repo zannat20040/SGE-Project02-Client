@@ -92,7 +92,7 @@ export default function AddNewFinance() {
               name="firstName"
               required
               type="text"
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tl  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
+              className="bg-white hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tl  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
               placeholder="John"
             />
           </div>
@@ -105,7 +105,7 @@ export default function AddNewFinance() {
               name="lastName"
               required
               type="text"
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-l-0 focus:outline-none"
+              className=" bg-white hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-l-0 focus:outline-none"
               placeholder="Doe"
             />
           </div>
@@ -119,7 +119,7 @@ export default function AddNewFinance() {
             name="email"
             required
             type="email"
-            className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-y-0 focus:outline-none"
+            className="bg-white hover:bg-gray-100 border rounded-none outline-0 border-gray-300   text-sm block w-full ps-10 p-2.5 text-gray-800  border-y-0 focus:outline-none"
             placeholder="example@gmail.com"
           />
         </div>
@@ -133,7 +133,7 @@ export default function AddNewFinance() {
             name="branch"
             id="branch"
             defaultValue={""}
-            className="hover:bg-gray-100  rounded-none outline-0 border-gray-300 text-sm block w-full ps-10 p-2.5 text-gray-800  border h-full   "
+            className="bg-white hover:bg-gray-100  rounded-none outline-0 border-gray-300 text-sm block w-full ps-10 p-2.5 text-gray-800  border h-full   "
           >
             <option value="" disabled>
               Select your branch
@@ -155,7 +155,7 @@ export default function AddNewFinance() {
               name="password"
               required
               type={passwordVisible ? "text" : "password"}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0 border-r-0 rounded-bl focus:outline-none"
+              className="bg-white hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-tr  text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0 border-r-0 rounded-bl focus:outline-none"
               placeholder="••••••••"
             />
             {/* Show/Hide Button */}
@@ -173,18 +173,18 @@ export default function AddNewFinance() {
           </div>
           <div className="relative ">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-              <GoUnlock className=" text-gray-800 text-sm " />
+              <GoUnlock className=" text-gray-400 text-sm " />
             </div>
             <input
               name="confirmpass"
               required
               type={confirmPasswordVisible ? "text" : "password"}
-              className="hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-br  text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0 focus:outline-none"
+              className="bg-white hover:bg-gray-100 border rounded-none outline-0 border-gray-300 rounded-br  text-sm block w-full ps-10 p-2.5 text-gray-800  border-t-0 focus:outline-none"
               placeholder="••••••••"
             />
             {/* Show/Hide Button */}
             <button
-              type="button"
+              type="submit"
               onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
               className="absolute right-3 top-0 bottom-0 my-auto"
             >
@@ -197,7 +197,7 @@ export default function AddNewFinance() {
           </div>
 
           {!isPassSame && (
-            <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
+            <span className="text-sm text-red-600 font-medium my-1 flex gap-1 items-center">
               <CiWarning /> <span>Password didn't match</span>
             </span>
           )}

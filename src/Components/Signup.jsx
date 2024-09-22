@@ -223,7 +223,7 @@ export default function Signup() {
 
           <div className="px-2">
             {!isPassSame && (
-              <span className="text-sm text-primary-color font-medium my-1 flex gap-1 items-center">
+              <span className="text-sm text-red-600 font-medium my-1 flex gap-1 items-center">
                 <CiWarning /> <span>Password didn't match</span>
               </span>
             )}
