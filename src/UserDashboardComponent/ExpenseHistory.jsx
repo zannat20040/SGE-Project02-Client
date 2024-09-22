@@ -107,20 +107,23 @@ export default function ExpenseHistory() {
             <tbody>
               {/* tr-1 */}
               {isLoading ? (
-                <tr>
+                <tr className="border-b border-gray-200">
                   <td colSpan="6" className="py-4 text-center">
                     <ButtonLoading />
                   </td>
                 </tr>
               ) : paginatedData && paginatedData?.length <= 0 ? (
-                <tr>
+                <tr className="border-b border-gray-200">
                   <td colSpan="9" className="text-center py-4 text-black">
                     No data available
                   </td>
                 </tr>
               ) : (
                 paginatedData?.map((data, index) => (
-                  <tr className="hover:bg-gray-200 border-b border-gray-200 " key={index}>
+                  <tr
+                    className="hover:bg-gray-200 border-b border-gray-200 "
+                    key={index}
+                  >
                     <td>{index + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>${data?.amount}</td>

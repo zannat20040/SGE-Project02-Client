@@ -154,13 +154,13 @@ export default function AllHistoryForCeo() {
             </thead>
             <tbody>
               {isLoading || isFetching ? (
-                <tr>
+                  <tr className='border-b border-gray-200'>
                   <td colSpan="6" className="py-4 text-center">
                     <ButtonLoading />
                   </td>
                 </tr>
               ) : paginatedData && paginatedData?.length <= 0 ? (
-                <tr>
+                <tr className='border-b border-gray-200'>
                   <td colSpan="9" className="text-center py-4 text-black">
                     No data available
                   </td>
