@@ -94,7 +94,7 @@ export default function ExpenseHistory() {
         <div className="overflow-x-auto">
           <table className="table table-xs text-center ">
             <thead>
-              <tr className="text-primary-color border-b border-gray-100 ">
+              <tr className="text-primary-color border-b border-gray-300 ">
                 <th className="pb-4">No.</th>
                 <th className="pb-4">Title</th>
                 <th className="pb-4">Amount</th>

@@ -135,7 +135,7 @@ export default function AllHistoryForCeo() {
         <div className="overflow-x-auto mt-8 ">
           <table className="table table-xs text-center ">
             <thead>
-              <tr className="text-primary-color  ">
+              <tr className="text-primary-color border-b border-gray-300 ">
                 <th className="pb-4">No.</th>
                 <th className="pb-4">Title</th>
                 <th className="pb-4">Email</th>
@@ -167,24 +167,28 @@ export default function AllHistoryForCeo() {
                 </tr>
               ) : (
                 paginatedData?.map((data, idx) => (
-                  <tr className="hover py-2" key={data?._id}>
+                  <tr
+                    className=" hover:bg-gray-100 border-b border-gray-200"
+                    key={data?._id}
+                  >
                     <td className="p-2">{idx + 1}</td>
                     <td>{data?.expenseTitle}</td>
                     <td>{data?.email}</td>
-                    <td className="flex justify-center">
+                    <td className="text-center p-2">
                       <p
-                        className={`font-semibold text-xs rounded w-fit capitalize px-3 py-1 text-center ${
+                        className={`font-semibold text-xs mx-auto rounded w-fit capitalize px-3 py-1 text-center ${
                           data.status === "auto granted" ||
                           data.status === "granted"
                             ? "text-green-600 bg-green-100"
                             : data.status === "rejected"
                             ? "text-red-600 bg-red-100"
                             : "text-orange-800 bg-orange-100"
-                        } `}
+                        }`}
                       >
                         {data?.status}
                       </p>
                     </td>
+
                     <td>{data?.role}</td>
                     <td className="font-bold text-yellow-800">
                       ${parseFloat(data?.amount).toFixed(2)}{" "}
