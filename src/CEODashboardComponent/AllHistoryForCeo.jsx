@@ -61,7 +61,6 @@ export default function AllHistoryForCeo() {
     keepPreviousData: true,
   });
 
-  console.log(allExpenseHistory);
 
   //   total page count base on selected radio
   const totalPages =
@@ -97,7 +96,6 @@ export default function AllHistoryForCeo() {
     setActive(1); // Reset pagination when changing radio button
   };
 
-  console.log(paginatedData);
 
   return (
     <div>

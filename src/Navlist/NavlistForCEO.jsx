@@ -53,7 +53,7 @@ export default function NavlistForCEO() {
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
-        Employee History
+        Individuals Expenses
       </NavLink>
     </div>
   );

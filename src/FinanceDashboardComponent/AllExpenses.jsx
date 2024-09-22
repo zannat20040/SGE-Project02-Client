@@ -110,7 +110,7 @@ export default function AllExpenses() {
                 id="default-datepicker"
                 type="date"
                 onChange={(e) => setStartDate(e.target.value)}
-                className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border"
+                className="bg-white hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border"
                 placeholder="From"
               />
             </div>
@@ -124,13 +124,13 @@ export default function AllExpenses() {
                 name="date"
                 id="default-datepicker"
                 type="date"
-                className="hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border border-l-0"
+                className="bg-white hover:bg-gray-100  rounded-none outline-0 border-gray-200  text-sm block w-full ps-10 p-2.5 text-gray-400  border border-l-0"
                 placeholder="To"
               />
             </div>
           </form>
           {/* filter by email */}
-          <label className="input outline-none input-bordered flex items-center gap-2  border-gray-200 lg:w-1/3 w-full text-sm rounded-none h-10">
+          <label className="bg-white input outline-none input-bordered flex items-center gap-2  border-gray-200 lg:w-1/3 w-full text-sm rounded-none h-10">
           <input
             type="text"
             className="grow outline-none"
@@ -155,7 +155,7 @@ export default function AllExpenses() {
           <div className="overflow-x-auto">
             <table className="table table-xs text-center ">
               <thead>
-                <tr className="text-primary-color  ">
+                <tr className="text-primary-color border-b border-gray-300 ">
                   <th className="pb-4">No.</th>
                   <th className="pb-4 text-start">Details</th>
                   <th className="pb-4">Title</th>
@@ -169,20 +169,20 @@ export default function AllExpenses() {
               </thead>
               <tbody>
                 {isLoading ? (
-                  <tr>
+                <tr className="text-primary-color border-b border-gray-300 ">
                     <td colSpan="9" className="text-center py-4">
                       <ButtonLoading />
                     </td>
                   </tr>
                 ) : paginatedData && paginatedData?.length <= 0 ? (
-                  <tr>
+                  <tr className="text-primary-color border-b border-gray-300 ">
                     <td colSpan="9" className="text-center py-4 text-black">
                       No data available
                     </td>
                   </tr>
                 ) : (
                   paginatedData?.map((data, idx) => (
-                    <tr className="hover" key={data?._id}>
+                    <tr className=" hover:bg-gray-100 border-b border-gray-200  " key={data?._id}>
                       <td>{idx + 1}</td>
                       <td className="text-start">
                         <p>{data?.username}</p>
@@ -202,7 +202,7 @@ export default function AllExpenses() {
                               name="status"
                               id="status"
                               defaultValue=""
-                              className="w-full hover:bg-gray-100 rounded-none outline-0 border-gray-200 block w p-2 text-gray-400 text-xs"
+                              className="w-full bg-white hover:bg-gray-100 rounded-none outline-0 border-gray-200 block w p-2 text-gray-400 text-xs"
                             >
                               <option value="" disabled hidden>
                                 Pending
@@ -257,7 +257,7 @@ export default function AllExpenses() {
                       </td>
                       <td>{data?.role}</td>
                       <td>{data?.date?.split("T")[0]}</td>
-                      <td className="flex gap-2 justify-center">
+                      <td className=" gap-2 justify-center">
                         {data?.notes ? (
                           <NotesModal notes={data?.notes} />
                         ) : (

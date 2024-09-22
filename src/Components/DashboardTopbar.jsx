@@ -9,7 +9,7 @@ export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
   const { totalAmount } = useGetExpenseContext(user?.email) || {};
   const { userinfo } = useUserInfo();
-
+  console.log(userinfo, user);
   return (
     <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between   items-center sticky top-0 left-0 z-10 ">
       {/* role & branch */}

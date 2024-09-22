@@ -42,14 +42,12 @@ export default function AllFinance() {
         }
       );
 
-      console.log(response.data);
       const data = response?.data?.users || [];
       return data;
     },
   });
 
   const onChange = (value) => {
-    console.log(`selected ${value}`);
     setSelectedBranch(value);
     refetch();
   };

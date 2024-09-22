@@ -31,7 +31,6 @@ export default function Login() {
 
       const username = userCredential?.user?.displayName || "";
       const response = await axiosBase.post("/login", { email, username });
-      console.log(response)
 
       if (response.status === 201) {
         swal("Great!", response.data.message, "success");

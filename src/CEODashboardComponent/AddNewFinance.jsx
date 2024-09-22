@@ -65,7 +65,6 @@ export default function AddNewFinance() {
           Authorization: `Bearer ${user?.email}`,
         },
       });
-      console.log(res);
       swal("Congratulations!", res.data.message, "success");
       navigate("/dashboard/ceo/allHistory");
     } catch (err) {
