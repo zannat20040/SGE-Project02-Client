@@ -105,7 +105,7 @@ export default function MembersExpense() {
               <PrintAllEmployHistory ref={printAllRef} />
 
               <thead>
-                <tr className="text-primary-color  ">
+                <tr className="text-primary-color  border-b border-gray-300">
                   <th className="pb-4">No.</th>
                   <th className="pb-4">Name</th>
                   <th className="pb-4">Email</th>
@@ -116,13 +116,13 @@ export default function MembersExpense() {
               </thead>
               <tbody>
                 {isLoading ? (
-                  <tr>
+                  <tr className='border-b border-gray-200'>
                     <td colSpan="9" className="text-center py-4">
                       <ButtonLoading />
                     </td>
                   </tr>
                 ) : paginatedData && paginatedData?.length <= 0 ? (
-                  <tr>
+                  <tr className='border-b border-gray-200'>
                     <td colSpan="9" className="text-center py-4 text-black">
                       No data available
                     </td>
@@ -131,7 +131,7 @@ export default function MembersExpense() {
                   <>
                     {paginatedData &&
                       paginatedData?.map((data, idx) => (
-                        <tr className="hover" key={data?._id}>
+                        <tr className="hover:bg-gray-100 border-b border-gray-200" key={data?._id}>
                           <td>{idx + 1}</td>
                           <td>{data?.username} </td>
                           <td>{data?.email}</td>

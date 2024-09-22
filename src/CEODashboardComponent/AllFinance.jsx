@@ -68,7 +68,7 @@ export default function AllFinance() {
               showSearch
               placeholder="Search finance by the Branch"
               optionFilterProp="label"
-              className="w-1/3 border border-gray-400 rounded-md outline-none hover:outline-none"
+              className="sm:w-1/3 w-2/3 border border-gray-400 rounded-md outline-none hover:outline-none"
               onChange={onChange}
               disabled={isLoading} // Disable until data loads
               options={[
