@@ -79,8 +79,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "download",
-    element: <MemberHistoryDownload />,
-  },
+  // {
+  //   path: "download",
+  //   element: <MemberHistoryDownload />,
+  // },
 ]);
