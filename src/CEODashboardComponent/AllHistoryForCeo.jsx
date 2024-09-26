@@ -11,6 +11,7 @@ import ButtonLoading from "../Shared Component/ButtonLoading";
 import MemberHistoryDownload from "../PrintHistory/MemberHistoryDownload";
 import FileDownload from "../Shared Component/FileDownload";
 import NotesModal from "../Shared Component/NotesModal";
+import PreviewReceipt from "../Shared Component/PreviewReceipt";
 
 export default function AllHistoryForCeo() {
   const [active, setActive] = useState(1);
@@ -61,7 +62,6 @@ export default function AllHistoryForCeo() {
     keepPreviousData: true,
   });
 
-
   //   total page count base on selected radio
   const totalPages =
     selectedRadio === "my-expenses"
@@ -95,7 +95,6 @@ export default function AllHistoryForCeo() {
     setSelectedRadio(value);
     setActive(1); // Reset pagination when changing radio button
   };
-
 
   return (
     <div>
@@ -152,13 +151,13 @@ export default function AllHistoryForCeo() {
             </thead>
             <tbody>
               {isLoading || isFetching ? (
-                  <tr className='border-b border-gray-200'>
+                <tr className="border-b border-gray-200">
                   <td colSpan="6" className="py-4 text-center">
                     <ButtonLoading />
                   </td>
                 </tr>
               ) : paginatedData && paginatedData?.length <= 0 ? (
-                <tr className='border-b border-gray-200'>
+                <tr className="border-b border-gray-200">
                   <td colSpan="9" className="text-center py-4 text-black">
                     No data available
                   </td>
@@ -205,7 +204,10 @@ export default function AllHistoryForCeo() {
                         {/* downlaod */}
                         <td>
                           {data?.receipt?.length > 0 ? (
-                            <FileDownload data={data} />
+                            <div className="flex gap-1 justify-center">
+                              <PreviewReceipt data={data} />
+                              <FileDownload data={data} />
+                            </div>
                           ) : (
                             "No Files"
                           )}
