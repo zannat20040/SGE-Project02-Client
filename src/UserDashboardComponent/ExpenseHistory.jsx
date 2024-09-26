@@ -10,6 +10,7 @@ import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import FileDownload from "../Shared Component/FileDownload";
 import NotesModal from "../Shared Component/NotesModal";
+import PreviewReceipt from "../Shared Component/PreviewReceipt";
 
 export default function ExpenseHistory() {
   const [startDate, setStartDate] = useState("");
@@ -51,6 +52,7 @@ export default function ExpenseHistory() {
     setActive(active - 1);
   };
 
+  console.log(paginatedData);
   return (
     <div>
       {/* breadcrumbs add */}
@@ -101,7 +103,7 @@ export default function ExpenseHistory() {
                 <th className="pb-4">Status</th>
                 <th className="pb-4">Date</th>
                 <th className="pb-4">Note</th>
-                <th className="pb-4">Recipt</th>
+                <th className="pb-4">See Recipt</th>
               </tr>
             </thead>
             <tbody>
@@ -162,7 +164,10 @@ export default function ExpenseHistory() {
                     {/* downlaod */}
                     <td>
                       {data?.receipt?.length > 0 ? (
-                        <FileDownload data={data} />
+                        <div className="flex gap-1 justify-center">
+                          <PreviewReceipt data={data} />
+                          <FileDownload data={data} />
+                        </div>
                       ) : (
                         "No Files"
                       )}

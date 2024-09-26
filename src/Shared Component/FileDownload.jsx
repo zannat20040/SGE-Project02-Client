@@ -7,14 +7,10 @@ export default function FileDownload({ data }) {
 
   // get a single expense data
   const HandleDownload = async (data) => {
-    const correctedPath = data?.receipt[0]?.path.replace(/\\/g, "/");
-    // console.log('Fetching from URL:', correctedPath);
-    // console.log('Fetching from URL:', data?.receipt[0]?.path);
+    const correctedPath = data?.receipt[0]?.downloadLink;
     const response = await fetch(correctedPath);
     const blob = await response.blob();
-    // console.log('Downloaded file type:', blob.type);
-    // console.log('Downloaded file :', data);
-    saveAs(blob, data?.receipt[0]?.filename); // Save the file with its original name
+    saveAs(blob, data?.receipt[0]?.downloadLink); 
   };
   return (
     <Button

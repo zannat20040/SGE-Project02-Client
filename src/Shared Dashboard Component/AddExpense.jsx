@@ -91,6 +91,13 @@ export default function AddExpense() {
       user?.displayName ? user?.displayName : "CEO"
     );
 
+    const dataObject = {};
+    formData.forEach((value, key) => {
+      dataObject[key] =  value; // Show file name or value
+    });
+  
+
+
     try {
       const res = await axiosBase.post("/expense", formData, {
         headers: {
