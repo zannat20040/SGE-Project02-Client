@@ -96,7 +96,7 @@ export default function Login() {
               />
               {/* Show/Hide Button */}
               <button
-                type="submit"
+                type="button"
                 onClick={() => setPasswordVisible(!passwordVisible)}
                 className="absolute right-3 top-0 bottom-0 my-auto"
               >
