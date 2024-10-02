@@ -91,8 +91,8 @@ export default function DashboardSidebar() {
                 className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full  "
               >
                 {userinfo?.role === "employee"
-                  ? "Download All History"
-                  : "Download All Expenses"}
+                  ? "Print All History"
+                  : "Print All Expenses"}
               </Button>
             )}
             <Button
