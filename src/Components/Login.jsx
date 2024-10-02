@@ -54,12 +54,13 @@ export default function Login() {
 
     // Check if email field is empty
     if (!resetEmail) {
-      setError("Email field is required.");
+      setError("Email field is required to reset password.");
       return;
     }
 
     resetPass(resetEmail)
       .then((res) => {
+        console.log('==63=======>',res)
         swal("Email sent", "Please check your inbox.", "success"); 
         setLoading(false); 
       })
