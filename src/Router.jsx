@@ -8,11 +8,13 @@ import AddExpense1 from "./Shared Dashboard Component/AddExpense";
 import ExpenseHistory from "./UserDashboardComponent/ExpenseHistory";
 import AllExpenses from "./FinanceDashboardComponent/AllExpenses";
 import AddNewFinance from "./CEODashboardComponent/AddNewFinance";
-import MemberHistoryDownload from "./PrintHistory/MemberHistoryDownload";
 import MembersExpense from "./Shared Dashboard Component/MembersExpense";
 import AllHistoryForCeo from "./CEODashboardComponent/AllHistoryForCeo";
 import AllFinance from "./CEODashboardComponent/AllFinance";
-import PrivateRoute from "./Hooks & Context/PrivateRoute";
+import PrivateRoute from "./Components/PrivateRoute";
+import EmployeeRoute from "./Components/EmployeeRoute";
+import FinanceRoute from "./Components/FinanceRoute";
+import CeoRoute from "./Components/CeoRoute";
 
 export const router = createBrowserRouter([
   {
@@ -52,7 +54,9 @@ export const router = createBrowserRouter([
         path: "employee/addexpense",
         element: (
           <PrivateRoute>
-            <AddExpense1 />,
+            <EmployeeRoute>
+              <AddExpense1 />,
+            </EmployeeRoute>
           </PrivateRoute>
         ),
       },
@@ -60,7 +64,9 @@ export const router = createBrowserRouter([
         path: "employee/history",
         element: (
           <PrivateRoute>
-            <ExpenseHistory />,
+            <EmployeeRoute>
+              <ExpenseHistory />,
+            </EmployeeRoute>
           </PrivateRoute>
         ),
       },
@@ -69,7 +75,9 @@ export const router = createBrowserRouter([
         path: "finance/allexpenses",
         element: (
           <PrivateRoute>
-            <AllExpenses />,
+            <FinanceRoute>
+              <AllExpenses />,
+            </FinanceRoute>
           </PrivateRoute>
         ),
       },
@@ -77,7 +85,9 @@ export const router = createBrowserRouter([
         path: "finance/allHistory",
         element: (
           <PrivateRoute>
-            <MembersExpense />,
+            <FinanceRoute>
+              <MembersExpense />,
+            </FinanceRoute>
           </PrivateRoute>
         ),
       },
@@ -86,7 +96,9 @@ export const router = createBrowserRouter([
         path: "ceo/addexpense",
         element: (
           <PrivateRoute>
-            <AddExpense1 />,
+            <CeoRoute>
+              <AddExpense1 />,
+            </CeoRoute>
           </PrivateRoute>
         ),
       },
@@ -94,7 +106,9 @@ export const router = createBrowserRouter([
         path: "ceo/allHistory",
         element: (
           <PrivateRoute>
-            <AllHistoryForCeo />,
+            <CeoRoute>
+              <AllHistoryForCeo />,
+            </CeoRoute>
           </PrivateRoute>
         ),
       },
@@ -102,7 +116,9 @@ export const router = createBrowserRouter([
         path: "ceo/addnewfinance",
         element: (
           <PrivateRoute>
-            <AddNewFinance />,
+            <CeoRoute>
+              <AddNewFinance />,
+            </CeoRoute>
           </PrivateRoute>
         ),
       },
@@ -110,15 +126,19 @@ export const router = createBrowserRouter([
         path: "ceo/allfinance",
         element: (
           <PrivateRoute>
-            <AllFinance />,
+            <CeoRoute>
+              <AllFinance />,
+            </CeoRoute>
           </PrivateRoute>
         ),
       },
       {
-        path: "ceo/membersExpense",
+        path: "ceo/memberExpense",
         element: (
           <PrivateRoute>
-            <MembersExpense />,
+            <CeoRoute>
+              <MembersExpense />,
+            </CeoRoute>
           </PrivateRoute>
         ),
       },

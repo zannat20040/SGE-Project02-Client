@@ -23,6 +23,7 @@ export default function useUserInfo() {
           Authorization: `Bearer ${user?.email}`,
         },
       });
+      
       return response.data;
     },
   });

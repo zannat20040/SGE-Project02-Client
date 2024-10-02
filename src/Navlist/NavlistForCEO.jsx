@@ -49,7 +49,7 @@ export default function NavlistForCEO() {
         All Finance
       </NavLink>
       <NavLink
-        to="/dashboard/finance/allHistory"
+        to="/dashboard/ceo/memberExpense"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
