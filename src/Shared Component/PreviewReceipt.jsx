@@ -3,16 +3,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import { Button, Dialog } from "@material-tailwind/react";
 ``;
 export default function PreviewReceipt({ data }) {
-  // const HandlePreview = () => {
-  //   const previewLink = data?.receipt?.[0]?.previewLink;
-  //   console.log(previewLink);
-  //   if (previewLink) {
-  //     window.open(previewLink, "_blank", "noopener,noreferrer");
-  //   }
-  // };
+
   const [open, setOpen] = React.useState(false);
-  console.log(data)
-  console.log(data.receipt[0].previewLink)
  
   const handleOpen = () => setOpen(!open);
   return (

@@ -52,7 +52,6 @@ export default function ExpenseHistory() {
     setActive(active - 1);
   };
 
-  console.log(paginatedData);
   return (
     <div>
       {/* breadcrumbs add */}

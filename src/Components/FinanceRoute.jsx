@@ -8,7 +8,6 @@ export default function FinanceRoute({ children }) {
   const { userinfo, isLoading } = useUserInfo();
   const { loading, user } = useContext(AuthContext);
   const location = useLocation();
-  console.log(userinfo);
 
   if (loading || isLoading) {
     return <Loading />;

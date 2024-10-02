@@ -9,8 +9,6 @@ export default function CeoRoute({ children }) {
   const { loading, user } = useContext(AuthContext);
   const location = useLocation();
 
-  console.log(userinfo);
-
   if (loading || isLoading) {
     return <Loading />;
   }
