@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import app from "../Firebase/firebase.config";
 
@@ -30,6 +31,11 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  const resetPass = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
+  };
+
   useEffect(() => {
     const unSubcribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -53,6 +59,7 @@ const AuthProvider = ({ children }) => {
     user,
     setLoading,
     loading,
+    resetPass,
   };
 
   return (

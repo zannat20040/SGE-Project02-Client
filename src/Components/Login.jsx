@@ -13,9 +13,12 @@ import PrimaryButton from "../Shared Component/PrimaryButton";
 export default function Login() {
   // states
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { loginWithPass, loading, setLoading } = useContext(AuthContext);
+  const { loginWithPass, loading, setLoading, resetPass } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const axiosBase = useAxiosBase();
+  const [resetEmail, setResetEmail] = useState("");
+  const [error, setError] = useState("");
 
   const HandleSignin = async (e) => {
     e.preventDefault();
@@ -36,14 +39,38 @@ export default function Login() {
         swal("Great!", response.data.message, "success");
         form.reset();
         navigate("/dashboard/reports");
-        setLoading(false); 
+        setLoading(false);
       }
     } catch (error) {
       swal("Oops!", error.message || "An unexpected error occurred", "error");
       setLoading(false); // Stop loading
-
-    } 
+    }
   };
+
+  // reset pass
+  const HandleResetPass = (e) => {
+    e.preventDefault();
+    setError(""); // Reset error message
+
+    // Check if email field is empty
+    if (!resetEmail) {
+      setError("Email field is required.");
+      return;
+    }
+
+    resetPass(resetEmail)
+      .then((res) => {
+        swal("Email sent", "Please check your inbox.", "success"); 
+        setLoading(false); 
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.error(errorMessage);
+        setError("Failed to send reset email. Please try again."); 
+        setLoading(false); 
+      });
+  };
+
 
   return (
     <div id="login">
@@ -74,11 +101,14 @@ export default function Login() {
                 <GoMail className=" text-gray-300 " />
               </div>
               <input
+                onChange={(e) => setResetEmail(e.target.value)}
                 name="email"
                 required
                 type="email"
-                className="bg-white  rounded-none outline-0  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none"
-                placeholder="example@gmail.com"
+                className={`bg-white  rounded-none outline-0  text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none ${
+                  error && "border border-red-500 rounded-t"
+                }`}
+                placeholder={error ? error : "example@gmail.com"}
               />
             </div>
 
@@ -111,7 +141,7 @@ export default function Login() {
           {/* email */}
 
           {/* remember checkbox & forget pass */}
-          <div className="mt-4 flex sm:flex-row flex-col gap-3 justify-between sm:items-center items-start">
+          <div className="mt-4 flex sm:flex-row flex-col-reverse gap-1 justify-between sm:items-center items-start">
             <div className="form-control">
               <label className="label cursor-pointer justify-start items-center gap-3 text-start ">
                 <input
@@ -122,17 +152,16 @@ export default function Login() {
                 <span className="label-text text-xs">Remember me</span>
               </label>
             </div>
+            <Link
+              onClick={HandleResetPass}
+              className="label-text text-xs hover:underline duration-300 flex justify-end w-full sm:w-fit "
+            >
+              Reset Password
+            </Link>
           </div>
 
           {/* button */}
           <div className="flex mt-4 items-center gap-2 md:flex-row flex-col">
-            {/* <Button
-              disabled={loading}
-              type="submit"
-              className="rounded-full bg-primary-color border border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-full md:w-fit "
-            >
-             
-            </Button> */}
             <PrimaryButton label={"Login Now"} style={"md:w-fit w-full"} />
             <Link to={"/signup"} className="w-full md:w-fit">
               <ButtonOutlined label={"Create New Account"} />
