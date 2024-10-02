@@ -12,6 +12,7 @@ import MemberHistoryDownload from "./PrintHistory/MemberHistoryDownload";
 import MembersExpense from "./Shared Dashboard Component/MembersExpense";
 import AllHistoryForCeo from "./CEODashboardComponent/AllHistoryForCeo";
 import AllFinance from "./CEODashboardComponent/AllFinance";
+import PrivateRoute from "./Hooks & Context/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -31,56 +32,96 @@ export const router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       // common route
       {
         path: "reports",
-        element: <ReportandInsights1 />,
+        element: (
+          <PrivateRoute>
+            <ReportandInsights1 />
+          </PrivateRoute>
+        ),
       },
       // employee routes
       {
         path: "employee/addexpense",
-        element: <AddExpense1 />,
+        element: (
+          <PrivateRoute>
+            <AddExpense1 />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "employee/history",
-        element: <ExpenseHistory />,
+        element: (
+          <PrivateRoute>
+            <ExpenseHistory />,
+          </PrivateRoute>
+        ),
       },
       // finance route
       {
         path: "finance/allexpenses",
-        element: <AllExpenses />,
+        element: (
+          <PrivateRoute>
+            <AllExpenses />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "finance/allHistory",
-        element: <MembersExpense />,
+        element: (
+          <PrivateRoute>
+            <MembersExpense />,
+          </PrivateRoute>
+        ),
       },
       // CEO route
       {
         path: "ceo/addexpense",
-        element: <AddExpense1 />,
+        element: (
+          <PrivateRoute>
+            <AddExpense1 />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "ceo/allHistory",
-        element: <AllHistoryForCeo />,
+        element: (
+          <PrivateRoute>
+            <AllHistoryForCeo />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "ceo/addnewfinance",
-        element: <AddNewFinance />,
+        element: (
+          <PrivateRoute>
+            <AddNewFinance />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "ceo/allfinance",
-        element: <AllFinance />,
+        element: (
+          <PrivateRoute>
+            <AllFinance />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "ceo/membersExpense",
-        element: <MembersExpense />,
+        element: (
+          <PrivateRoute>
+            <MembersExpense />,
+          </PrivateRoute>
+        ),
       },
     ],
   },
-  // {
-  //   path: "download",
-  //   element: <MemberHistoryDownload />,
-  // },
 ]);
