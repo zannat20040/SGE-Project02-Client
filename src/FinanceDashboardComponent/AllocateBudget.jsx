@@ -5,19 +5,21 @@ import {
   Button,
   Progress,
 } from "@material-tailwind/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import useBranchExpense from "../Hooks & Context/useBranchExpense";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { MdAttachMoney } from "react-icons/md";
+import toast from "react-hot-toast";
 
 export default function AllocateBudget() {
   const [open, setOpen] = React.useState(1);
   const { userinfo } = useUserInfo();
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
+  const [message, setMessage] = useState({ id: null, error: "" }); // Proper initialization
 
   const {
     data: allBudgets,
@@ -40,24 +42,60 @@ export default function AllocateBudget() {
     },
   });
 
-  console.log(allBudgets);
+  const HandleBudgetAllocate = async (e, id) => {
+    e.preventDefault();
+
+    const amount = e.target.amount.value;
+    const givenAmount = parseFloat(amount);
+    if (!givenAmount || givenAmount <= 0) {
+      setMessage({ id, error: "Please enter amount more than 0" });
+      return;
+    }
+
+    try {
+      const response = await axiosBase.patch(
+        `/finance/updateBudget/${id}`,
+        {
+          givenAmount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.email}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setMessage({ id, error: "" });
+        toast.success("Budget allocated successfully!");
+        e.target.reset();
+        refetch();
+      } else {
+        setMessage({ id, error: "" });
+        toast.error("Failed to allocate budget.");
+      }
+    } catch (error) {
+      setMessage({ id, error: "" });
+      toast.error(error.message || "An error occurred");
+    }
+  };
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+
   return (
     <div>
       {allBudgets?.map((employee, index) => (
-        <Accordion open={open === index + 1}>
+        <Accordion open={open === index + 1} key={employee?._id}>
+          {/* header */}
           <AccordionHeader
             onClick={() => handleOpen(index + 1)}
             className="flex justify-between items-center gap-10 border-0"
           >
             <div className="flex flex-col items-start text-start w-full">
               <p className="font-normal capitalize text-base">
-                {" "}
                 {employee?.name}
               </p>
               <p className="text-xs font-medium text-gray-500 ">
-                {" "}
                 {employee?.email}
               </p>
             </div>
@@ -65,6 +103,7 @@ export default function AllocateBudget() {
               +{employee?.givenBudget}
             </p>
           </AccordionHeader>
+          {/* progress */}
           <Progress
             value={(
               ((employee?.givenBudget - employee?.remainingBudget) /
@@ -86,6 +125,7 @@ export default function AllocateBudget() {
                 : "green"
             }
           />
+          {/* body */}
           <AccordionBody>
             <div>
               <p className="font-normal">
@@ -97,13 +137,25 @@ export default function AllocateBudget() {
               <p className="font-normal">
                 Allocation Due to :{" "}
                 <span className="font-semibold text-gray-500">
-                  {employee?.dueDate ? employee?.dueDate?.split("T")[0] : 'Not allocated'}
+                  {employee?.dueDate
+                    ? employee?.dueDate?.split("T")[0]
+                    : "Not allocated"}
                 </span>
               </p>
             </div>
 
             <div>
-              <form className="flex justify-between bg-white mt-6 border-2 rounded-full ">
+              {/* Display error message for this specific employee */}
+              {message.id === employee?._id && (
+                <p className="font-semibold text-red-600 mt-6">
+                  {message.error}
+                </p>
+              )}
+              {/* form */}
+              <form
+                onSubmit={(e) => HandleBudgetAllocate(e, employee?._id)}
+                className="flex justify-between bg-white mt-6 border-2 rounded-full "
+              >
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none ">
                     <MdAttachMoney className="text-gray-400" />
@@ -113,11 +165,17 @@ export default function AllocateBudget() {
                     required
                     type="text"
                     className=" rounded-l-full bg-white hover:bg-gray-100 rounded-none outline-none  text-sm block w-full ps-10 p-2.5 text-gray-800   h-full "
-                    placeholder="Enter allocated budget amount"
+                    placeholder={
+                      employee?.dueDate
+                        ? `You can allocate budget after ${
+                            employee?.dueDate?.split("T")[0]
+                          }`
+                        : "Enter allocated budget amount"
+                    }
                   />
                 </div>
                 <Button
-                  // disabled={isLessThanFifty}
+                  disabled={employee?.dueDate}
                   type="submit"
                   className={`rounded-full bg-primary-color border rounded-l-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-1/5`}
                 >
