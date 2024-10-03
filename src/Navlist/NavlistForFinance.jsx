@@ -12,7 +12,6 @@ export default function NavlistForFinance() {
     color: "#7B7C00",
   };
 
-  
   return (
     <div>
       <NavLink
@@ -21,6 +20,13 @@ export default function NavlistForFinance() {
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
       >
         Reports & Insights
+      </NavLink>
+      <NavLink
+        to="/dashboard/finance/budget"
+        className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
+        style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
+      >
+        Budget Manage
       </NavLink>
       <NavLink
         to="/dashboard/finance/allexpenses"
