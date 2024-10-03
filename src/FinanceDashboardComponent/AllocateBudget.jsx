@@ -85,7 +85,7 @@ export default function AllocateBudget() {
   return (
     <div>
       {allBudgets?.map((employee, index) => (
-        <Accordion open={open === index + 1} key={employee?._id}>
+        <Accordion open={open === index + 1} key={employee?._id} className="shadow p-5 pb-0">
           {/* header */}
           <AccordionHeader
             onClick={() => handleOpen(index + 1)}
@@ -161,6 +161,7 @@ export default function AllocateBudget() {
                     <MdAttachMoney className="text-gray-400" />
                   </div>
                   <input
+                    disabled={employee?.dueDate}
                     name="amount"
                     required
                     type="text"
