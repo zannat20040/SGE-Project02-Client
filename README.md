@@ -9,10 +9,10 @@ This repository contains the client-side code for the Finance Management Website
 - Features
 - Technologies Used
 - Installation
-- Usage
-- Folder Structure
-- Contributing
-- License
+- Environment Variables
+- Documentation
+- Used By
+- Support
 
 
 ## Features
@@ -27,7 +27,7 @@ This repository contains the client-side code for the Finance Management Website
 - **Expense Limits:** Employees are prevented from exceeding their monthly budget.
 - **Responsive Design:** Optimized for both desktop and mobile devices.
 - **Print System:** Users can generate and print reports of expenses, and other financial data for record-keeping or presentation purposes.
-## Tech Stack
+## Technologies Used
 
 **Framework:** React.js 
 
@@ -110,4 +110,3 @@ This project is used by the following companies:
 ## Support
 
 For support, email zannatulhema0110@gmail.com .
-
