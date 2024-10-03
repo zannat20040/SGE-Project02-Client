@@ -103,28 +103,6 @@ export const router = createBrowserRouter([
             </FinanceRoute>
           </PrivateRoute>
         ),
-        // children: [
-        //   {
-        //     path: "allocate",
-        //     element: (
-        //       <PrivateRoute>
-        //         <FinanceRoute>
-        //           <AllocateBudget />
-        //         </FinanceRoute>
-        //       </PrivateRoute>
-        //     ),
-        //   },
-        //   {
-        //     path: "request",
-        //     element: (
-        //       <PrivateRoute>
-        //         <FinanceRoute>
-        //           <BudgetRequest />
-        //         </FinanceRoute>
-        //       </PrivateRoute>
-        //     ),
-        //   },
-        // ],
       },
       // CEO route
       {

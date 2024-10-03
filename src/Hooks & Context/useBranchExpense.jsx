@@ -25,11 +25,12 @@ export default function useBranchExpense(branch) {
             },
           }
         );
-        return data;
+        return data; 
       } catch (error) {
+        return []; 
       }
     },
-    enabled: !!branch,
+    enabled: !!branch, // Ensures the query only runs when branch is truthy
   });
 
   // Extract and reverse the data
