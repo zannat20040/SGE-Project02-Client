@@ -7,7 +7,7 @@ import useUserInfo from "../Hooks & Context/useUserInfo";
 
 export default function DashboardTopbar() {
   const { user } = useContext(AuthContext);
-  const { totalAmount } = useGetExpenseContext(user?.email) || {};
+  const { remainingBalance} = useGetExpenseContext(user?.email) || {};
   const { userinfo } = useUserInfo();
   return (
     <div className="bg-white  w-full h-fit p-4 flex flex-wrap gap-1 justify-between   items-center sticky top-0 left-0 z-10 ">
@@ -37,7 +37,7 @@ export default function DashboardTopbar() {
               className=" bg-yellow-800 "
             >
               <button className="bg-yellow-800 p-2 rounded text-white font-medium text-xs">
-                ${parseFloat(totalAmount).toFixed(2)}
+                ${parseFloat(remainingBalance).toFixed(2)}
               </button>
             </Badge>
           </div>

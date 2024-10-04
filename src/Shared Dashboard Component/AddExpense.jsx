@@ -14,6 +14,7 @@ import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 import successSound from "../assets/WhatsApp Audio 2024-08-03 at 18.45.20_2a165e76.mp3";
 import useUserInfo from "../Hooks & Context/useUserInfo";
 import swal from "sweetalert";
+import toast from "react-hot-toast";
 
 export default function AddExpense() {
   const { user } = useContext(AuthContext);
@@ -27,8 +28,9 @@ export default function AddExpense() {
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
   const { userinfo } = useUserInfo();
-  const { refetch } = useGetExpenseContext(); // expense data fetch
+  const { refetchBudget, remainingBalance } = useGetExpenseContext(); // expense data fetch
 
+  console.log('showname==>',showName)
   // Select category options
   const categoryoptions = [
     "Office Supplies",
@@ -70,7 +72,16 @@ export default function AddExpense() {
     setLoading(true);
 
     const date = e.target.date.value;
-    const amount = e.target.amount.value;
+    const amount = parseFloat(e.target.amount.value); 
+
+    const remainingBudget = remainingBalance;
+
+    // Check if amount exceeds remaining balance
+    if (amount > remainingBudget) {
+      setLoading(false);
+      toast.error("Expense Amount exceeds your remaining budget!");
+      return;
+    }
 
     const formData = new FormData();
     if (showName) {
@@ -81,22 +92,17 @@ export default function AddExpense() {
       "expenseTitle",
       category === "Others" ? expenseTitle : category
     );
-    formData.append("amount", parseFloat(amount).toFixed(2));
+    formData.append("amount", amount.toFixed(2));
     formData.append("role", userinfo?.role);
     formData.append("branch", userinfo?.branch);
     formData.append("date", date);
     formData.append("notes", notes);
-    formData.append(
-      "username",
-      user?.displayName ? user?.displayName : "CEO"
-    );
+    formData.append("username", user?.displayName ? user?.displayName : "CEO");
 
     const dataObject = {};
     formData.forEach((value, key) => {
-      dataObject[key] =  value; // Show file name or value
+      dataObject[key] = value; // Show file name or value
     });
-  
-
 
     try {
       const res = await axiosBase.post("/expense", formData, {
@@ -106,11 +112,10 @@ export default function AddExpense() {
         },
       });
 
-
       const audio = new Audio(successSound);
       swal("Great!", res.data.message, "success");
       audio.play();
-      refetch();
+      refetchBudget();
       e.target.reset();
       setShowName(null); // Reset file upload
       navigate(
@@ -124,7 +129,6 @@ export default function AddExpense() {
     } finally {
       setLoading(false);
     }
-
   };
 
   return (
@@ -137,7 +141,9 @@ export default function AddExpense() {
       <form
         onSubmit={HandleExpenseAdd}
         className="bg-white px-10 py-10 mt-4"
-         action="/upload" method="POST" enctype="multipart/form-data"
+        action="/upload"
+        method="POST"
+        enctype="multipart/form-data"
       >
         <h1 className="md:text-lg text-base font-semibold capitalize mb-4 text-primary-color tracking-wider">
           Share your Expense details
@@ -232,7 +238,7 @@ export default function AddExpense() {
 
               <input
                 name="date"
-                value={new Date().toISOString().split("T")[0]} 
+                value={new Date().toISOString().split("T")[0]}
                 disabled
                 className="bg-white hover:bg-gray-100 rounded-none !outline-none border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-r"
               />

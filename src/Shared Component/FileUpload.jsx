@@ -2,14 +2,13 @@ import React, { useState, useRef } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
 import swal from "sweetalert";
 
-
 export default function FileUpload({ setShowName, showName }) {
   const fileInputRef = useRef();
 
   // Handle file selection
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    
+
     // Check if a file is selected and its size
     if (selectedFile) {
       if (selectedFile.size > 2 * 1024 * 1024) { // 2 MB limit
@@ -23,6 +22,7 @@ export default function FileUpload({ setShowName, showName }) {
   // Handle clear file
   const handleClearFile = () => {
     setShowName([]); // Clear the file
+    fileInputRef.current.value = ''; // Reset file input value to allow re-selecting the same file
   };
 
   return (
@@ -89,7 +89,7 @@ export default function FileUpload({ setShowName, showName }) {
         id="fileInput"
         name='receipt'
         type="file"
-         accept=".pdf, .jpg, .jpeg, .png"
+        accept=".pdf, .jpg, .jpeg, .png"
       />
     </div>
   );
