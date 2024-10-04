@@ -60,7 +60,6 @@ export default function Login() {
 
     resetPass(resetEmail)
       .then((res) => {
-        console.log('==63=======>',res)
         swal("Email sent", "Please check your inbox.", "success"); 
         setLoading(false); 
       })

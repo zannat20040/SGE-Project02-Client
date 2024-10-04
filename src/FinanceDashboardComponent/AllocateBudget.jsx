@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdAttachMoney } from "react-icons/md";
 import toast from "react-hot-toast";
 import ButtonLoading from "../Shared Component/ButtonLoading";
+import { GiVuvuzelas } from "react-icons/gi";
 
 export default function AllocateBudget() {
   const [open, setOpen] = React.useState(1);
@@ -21,27 +22,6 @@ export default function AllocateBudget() {
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
   const [message, setMessage] = useState({ id: null, error: "" }); // Proper initialization
-
-  // const {
-  //   data: allBudgets,
-  //   isLoading,
-  //   refetch,
-  // } = useQuery({
-  //   queryKey: ["allBudgets", user?.email, userinfo?.branch],
-  //   queryFn: async () => {
-  //     const response = await axiosBase.get(
-  //       `finance/budgets?branch=${userinfo?.branch}&additionalBranch=all`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${user?.email}`,
-  //         },
-  //       }
-  //     );
-
-  //     const data = response?.data?.users || [];
-  //     return data;
-  //   },
-  // });
 
   const {
     data: employeeDetails,
@@ -71,6 +51,7 @@ export default function AllocateBudget() {
 
     const amount = e.target.amount.value;
     const givenAmount = parseFloat(amount);
+
     if (!givenAmount || givenAmount <= 0) {
       setMessage({ id, error: "Please enter amount more than 0" });
       return;
@@ -120,12 +101,12 @@ export default function AllocateBudget() {
           <Accordion
             open={open === index + 1}
             key={employee?._id}
-            className="shadow p-5 pb-0"
+            className="shadow rounded p-5 pb-0"
           >
             {/* header */}
             <AccordionHeader
               onClick={() => handleOpen(index + 1)}
-              className="flex justify-between items-center gap-10 border-0"
+              className="flex justify-between items-center gap-x-5 border-0"
             >
               <div className="flex flex-col items-start text-start w-full">
                 <p className="font-normal capitalize text-base">
@@ -136,25 +117,28 @@ export default function AllocateBudget() {
                 </p>
               </div>
               <p className="text-right text-base font-semibold text-primary-color">
-                +{employee?.givenBudget || "0.00"}
+                +{employee?.budget?.givenBudget || "0.00"}
               </p>
             </AccordionHeader>
             {/* progress */}
             <Progress
               value={(
-                ((employee?.givenBudget - employee?.remainingBudget) /
-                  employee?.givenBudget) *
+                ((employee?.budget?.givenBudget -
+                  employee?.budget?.remainingBudget) /
+                  employee?.budget?.givenBudget) *
                 100
               ).toFixed(2)}
               size="sm"
               color={
-                ((employee?.givenBudget - employee?.remainingBudget) /
-                  employee?.givenBudget) *
+                ((employee?.budget?.givenBudget -
+                  employee?.budget?.remainingBudget) /
+                  employee?.budget?.givenBudget) *
                   100 >=
                 70
                   ? "red"
-                  : ((employee?.givenBudget - employee?.remainingBudget) /
-                      employee?.givenBudget) *
+                  : ((employee?.budget?.givenBudget -
+                      employee?.budget?.remainingBudget) /
+                      employee?.budget?.givenBudget) *
                       100 >=
                     40
                   ? "amber"
@@ -167,13 +151,14 @@ export default function AllocateBudget() {
                 <p className="font-normal">
                   Budget Allocated On :{" "}
                   <span className="font-semibold text-gray-500">
-                    {employee?.allocationDate?.split("T")[0] || "Not allocated"}
+                    {employee?.budget?.allocationDate?.split("T")[0]}
                   </span>
                 </p>
                 <p className="font-normal">
                   Allocation Due to :{" "}
                   <span className="font-semibold text-gray-500">
-                    {employee?.dueDate?.split("T")[0] || "Not allocated"}
+                    {employee?.budget?.dueDate?.split("T")[0] ||
+                      "Not allocated"}
                   </span>
                 </p>
               </div>
@@ -195,22 +180,22 @@ export default function AllocateBudget() {
                       <MdAttachMoney className="text-gray-400" />
                     </div>
                     <input
-                      disabled={employee?.dueDate}
+                      disabled={employee?.budget?.dueDate}
                       name="amount"
                       required
                       type="text"
                       className=" rounded-l-full bg-white hover:bg-gray-100 rounded-none outline-none  text-sm block w-full ps-10 p-2.5 text-gray-800   h-full "
                       placeholder={
-                        employee?.dueDate
+                        employee?.budget?.dueDate
                           ? `You can allocate budget after ${
-                              employee?.dueDate?.split("T")[0]
+                              employee?.budget?.dueDate?.split("T")[0]
                             }`
                           : "Enter allocated budget amount"
                       }
                     />
                   </div>
                   <Button
-                    disabled={employee?.dueDate}
+                    disabled={employee?.budget?.dueDate}
                     type="submit"
                     className={`rounded-full bg-primary-color border rounded-l-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-1/5`}
                   >
