@@ -36,7 +36,6 @@ export const ExpenseProvider = ({ children }) => {
     },
   });
 
-  console.log(employeeDetail);
 
   const { tableData, refetch, isLoading } = useGetExpense();
 

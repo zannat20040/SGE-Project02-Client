@@ -44,7 +44,6 @@ export default function AllocateBudget() {
     },
   });
 
-  console.log(employeeDetails);
 
   const HandleBudgetAllocate = async (e, id) => {
     e.preventDefault();
@@ -116,8 +115,8 @@ export default function AllocateBudget() {
                   {employee?.email}
                 </p>
               </div>
-              <p className="text-right text-base font-semibold text-primary-color">
-                +{employee?.budget?.givenBudget || "0.00"}
+              <p className="text-right text-sm font-semibold text-primary-color w-fit">
+                Total Amount: ${employee?.budget?.givenBudget || "0.00"}
               </p>
             </AccordionHeader>
             {/* progress */}

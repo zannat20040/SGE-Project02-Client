@@ -13,6 +13,7 @@ import ButtonLoading from "../Shared Component/ButtonLoading";
 import swal from "sweetalert";
 import FileDownload from "../Shared Component/FileDownload";
 import PreviewReceipt from "../Shared Component/PreviewReceipt";
+import { useGetExpenseContext } from "../Hooks & Context/ExpenseContext";
 
 export default function AllExpenses() {
   const [endDate, setEndDate] = useState("");
@@ -21,6 +22,7 @@ export default function AllExpenses() {
   const [loadingItems, setLoadingItems] = useState({});
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
+  const { refetchBudget } = useGetExpenseContext(); // expense data fetch
   const { branchExpenses, refetch, isLoading, error } = useBranchExpense(
     userinfo?.branch
   );
@@ -84,8 +86,10 @@ export default function AllExpenses() {
         }
       );
       swal("Great", response.data.message, "success");
-      refetch();
+      refetchBudget();
+      refetch()
     } catch (err) {
+      console.log(err);
       e.target.reset();
       swal("Ops", "Something went wrong", "error");
     } finally {

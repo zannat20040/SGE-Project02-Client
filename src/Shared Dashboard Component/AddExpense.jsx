@@ -30,7 +30,6 @@ export default function AddExpense() {
   const { userinfo } = useUserInfo();
   const { refetchBudget, remainingBalance } = useGetExpenseContext(); // expense data fetch
 
-  console.log('showname==>',showName)
   // Select category options
   const categoryoptions = [
     "Office Supplies",
