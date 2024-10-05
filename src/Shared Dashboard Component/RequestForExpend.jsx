@@ -8,29 +8,42 @@ import { FaUser } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 import { MdAttachMoney } from "react-icons/md";
 import { PiSubtitlesThin } from "react-icons/pi";
+import useAxiosBase from "../Hooks & Context/useAxiosBase";
 
 export default function RequestForExpend() {
   const { userinfo } = useUserInfo();
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const axiosBase = useAxiosBase();
 
-  const HandleBudgetExpend = (e) => {
+  const HandleBudgetExpend = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const form = e.target;
-    const name = form.name.value;
     const email = form.email.value;
     const amount = form.amount.value;
     const note = form.note.value;
 
     const requestData = {
-      name,
       email,
       requestBudget: parseFloat(amount),
       requestNote: note,
     };
 
-    console.log("data====>", requestData);
+    try {
+      const response = await axiosBase.patch(`/expendreq`, requestData, {
+        headers: {
+          Authorization: `Bearer ${user?.email}`,
+        },
+      });
+      swal("Great", response.data.message, "success");
+      form.reset();
+    } catch (err) {
+      console.log(err);
+      swal("Ops", err.response.data.message, "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -98,6 +111,7 @@ export default function RequestForExpend() {
               </div>
               <textarea
                 name="note"
+                required
                 className="bg-white hover:bg-gray-100 border-t outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none rounded-none h-full "
                 placeholder="Write your request note ...(optional)"
               />
