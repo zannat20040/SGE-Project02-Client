@@ -71,7 +71,7 @@ export default function AddExpense() {
     setLoading(true);
 
     const date = e.target.date.value;
-    const amount = parseFloat(e.target.amount.value); 
+    const amount = parseFloat(e.target.amount.value);
 
     const remainingBudget = remainingBalance;
 
@@ -81,7 +81,7 @@ export default function AddExpense() {
       toast.error("Expense Amount exceeds your remaining budget!");
       return;
     }
-    if (amount <=0 ) {
+    if (amount <= 0) {
       setLoading(false);
       toast.error("Expense Amount can not be zero!");
       return;
@@ -225,10 +225,9 @@ export default function AddExpense() {
               </div>
               <input
                 name="amount"
-                // value={amount}
-                // onChange={(e) => setAmount(e.target.value)}
                 required
-                type="text"
+                type="number"
+                step="0.01"
                 className="bg-white hover:bg-gray-100 rounded-none outline-none border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 border-r  h-full "
                 placeholder="Expense Amount"
               />

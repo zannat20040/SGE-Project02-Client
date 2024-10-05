@@ -18,6 +18,7 @@ import CeoRoute from "./Components/CeoRoute";
 import BudgetManage from "./FinanceDashboardComponent/BudgetManage";
 import BudgetRequest from "./FinanceDashboardComponent/BudgetRequest";
 import AllocateBudget from "./FinanceDashboardComponent/AllocateBudget";
+import RequestForExpend from "./Shared Dashboard Component/RequestForExpend";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <EmployeeRoute>
               <ExpenseHistory />,
+            </EmployeeRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "employee/budgetexpend",
+        element: (
+          <PrivateRoute>
+            <EmployeeRoute>
+              <RequestForExpend />
             </EmployeeRoute>
           </PrivateRoute>
         ),
@@ -151,6 +162,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <CeoRoute>
               <MembersExpense />,
+            </CeoRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "ceo/budgetexpend",
+        element: (
+          <PrivateRoute>
+            <CeoRoute>
+              <RequestForExpend />
             </CeoRoute>
           </PrivateRoute>
         ),

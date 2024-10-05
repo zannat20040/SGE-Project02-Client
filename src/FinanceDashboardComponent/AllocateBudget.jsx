@@ -44,7 +44,6 @@ export default function AllocateBudget() {
     },
   });
 
-
   const HandleBudgetAllocate = async (e, id) => {
     e.preventDefault();
 
@@ -182,7 +181,8 @@ export default function AllocateBudget() {
                       disabled={employee?.budget?.dueDate}
                       name="amount"
                       required
-                      type="text"
+                      type="number"
+                      step="0.01"
                       className=" rounded-l-full bg-white hover:bg-gray-100 rounded-none outline-none  text-sm block w-full ps-10 p-2.5 text-gray-800   h-full "
                       placeholder={
                         employee?.budget?.dueDate

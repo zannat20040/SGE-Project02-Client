@@ -21,6 +21,13 @@ export default function NavlistForCEO() {
         Reports & Insights
       </NavLink>
       <NavLink
+        to="/dashboard/ceo/budgetexpend"
+        className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
+        style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
+      >
+        Expend Budget
+      </NavLink>
+      <NavLink
         to="/dashboard/ceo/addexpense"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
@@ -41,7 +48,7 @@ export default function NavlistForCEO() {
       >
         Add New Finance
       </NavLink>
-       <NavLink
+      <NavLink
         to="/dashboard/ceo/allfinance"
         className="rounded-l-full w-full block py-3 px-3 font-medium duration-300"
         style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
