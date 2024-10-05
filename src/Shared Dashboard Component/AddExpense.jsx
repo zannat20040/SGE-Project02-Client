@@ -81,6 +81,11 @@ export default function AddExpense() {
       toast.error("Expense Amount exceeds your remaining budget!");
       return;
     }
+    if (amount <=0 ) {
+      setLoading(false);
+      toast.error("Expense Amount can not be zero!");
+      return;
+    }
 
     const formData = new FormData();
     if (showName) {

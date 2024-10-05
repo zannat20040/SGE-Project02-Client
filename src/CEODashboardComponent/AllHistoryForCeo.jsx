@@ -152,7 +152,7 @@ export default function AllHistoryForCeo() {
             <tbody>
               {isLoading || isFetching ? (
                 <tr className="border-b border-gray-200">
-                  <td colSpan="6" className="py-4 text-center">
+                  <td colSpan="9" className="py-4 text-center">
                     <ButtonLoading />
                   </td>
                 </tr>

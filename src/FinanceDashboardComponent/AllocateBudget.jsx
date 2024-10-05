@@ -116,7 +116,7 @@ export default function AllocateBudget() {
                 </p>
               </div>
               <p className="text-right text-sm font-semibold text-primary-color w-fit">
-                Total Amount: ${employee?.budget?.givenBudget || "0.00"}
+                Allocated Amount: ${employee?.budget?.givenBudget || "0.00"}
               </p>
             </AccordionHeader>
             {/* progress */}
