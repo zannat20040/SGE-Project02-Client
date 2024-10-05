@@ -128,7 +128,7 @@ export default function AddExpense() {
           : "/dashboard/ceo/allHistory"
       );
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       swal("Oops!", err.response?.data?.error || "An error occurred", "error");
     } finally {
       setLoading(false);

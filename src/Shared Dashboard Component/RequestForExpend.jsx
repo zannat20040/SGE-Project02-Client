@@ -47,7 +47,6 @@ export default function RequestForExpend() {
       swal("Great", response.data.message, "success");
       form.reset();
     } catch (err) {
-      console.log(err);
       swal("Ops", err.response.data.message, "error");
     } finally {
       setLoading(false);

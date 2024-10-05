@@ -44,10 +44,10 @@ export default function BudgetRequest() {
         return data;
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.warn("No users found:", error.response.data.message);
+          // console.warn("No users found:", error.response.data.message);
           return [];
         } else {
-          console.error("Error fetching users:", error);
+          // console.error("Error fetching users:", error);
           throw new Error("Failed to fetch users");
         }
       }
@@ -55,7 +55,6 @@ export default function BudgetRequest() {
   });
 
   const HandleAccept = async (data) => {
-    console.log(data);
     const acceptedBudget = data.budget.requestBudget;
 
     swal({
@@ -80,13 +79,11 @@ export default function BudgetRequest() {
           );
 
           if (response.status === 200) {
-            console.log(response.data);
             swal(response.data.message, {
               icon: "success",
             });
             refetch(); // Make sure refetch is defined properly
           } else {
-            console.log(response);
             swal("Failed to accept budget expension request.", {
               icon: "error",
             });
@@ -96,7 +93,7 @@ export default function BudgetRequest() {
           swal(error.response?.data?.message || "An error occurred", {
             icon: "error",
           });
-          console.error(error);
+          // console.error(error);
         }
       } else {
         swal("You canceled the budget expansion");
@@ -135,13 +132,11 @@ export default function BudgetRequest() {
           );
 
           if (response.status === 200) {
-            console.log(response.data);
             swal(response.data.message, {
               icon: "success",
             });
             refetch(); // Make sure refetch is defined properly
           } else {
-            console.log(response);
             swal("Failed to accept budget expension request.", {
               icon: "error",
             });
@@ -151,7 +146,6 @@ export default function BudgetRequest() {
           swal(error.response?.data?.message || "An error occurred", {
             icon: "error",
           });
-          console.error(error);
         }
       } else {
         swal("You canceled the budget expansion");

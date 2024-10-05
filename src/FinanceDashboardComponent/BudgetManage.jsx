@@ -43,10 +43,14 @@ export default function BudgetManage() {
             </div>
           </div>
           <div className="mt-20">
-            {selectedRadio==='allocate' ? <AllocateBudget /> : <BudgetRequest />}
+            {selectedRadio === "allocate" ? (
+              <AllocateBudget />
+            ) : (
+              <BudgetRequest />
+            )}
           </div>
         </div>
-        <div className="bg-white px-6 py-10 col-span-2">dsviusdhvs</div>
+        <div className="bg-white px-6 py-10 col-span-2">statistics</div>
       </div>
     </div>
   );

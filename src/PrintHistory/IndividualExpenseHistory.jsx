@@ -32,7 +32,7 @@ const IndividualExpenseHistory = React.forwardRef(({ employeeEmail,setEmployeeEm
         const data = response.data.data || [];
         return data.slice().reverse(); // Reverse the data as needed
       } catch (err) {
-        console.error(err.response?.data?.message || 'Error fetching data');
+        // console.error(err.response?.data?.message || 'Error fetching data');
         return [];
       }
     },
