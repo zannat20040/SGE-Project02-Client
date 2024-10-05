@@ -10,8 +10,9 @@ import {
   AccordionHeader,
   Button,
 } from "@material-tailwind/react";
-import { IoIosPrint } from "react-icons/io";
 import { MdAttachMoney } from "react-icons/md";
+import swal from "sweetalert";
+import toast from "react-hot-toast";
 
 export default function BudgetRequest() {
   const { userinfo } = useUserInfo();
@@ -20,6 +21,7 @@ export default function BudgetRequest() {
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   const [openForm, setOpenForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     data: expendRequests,
@@ -28,25 +30,134 @@ export default function BudgetRequest() {
   } = useQuery({
     queryKey: ["expendRequests", user?.email, userinfo?.branch],
     queryFn: async () => {
-      const response = await axiosBase.get(
-        `/finance/getUsers?branch=${userinfo?.branch}&additional=all&role=employee,ceo,admin&action=request`,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.email}`,
-          },
-        }
-      );
+      try {
+        const response = await axiosBase.get(
+          `/finance/getUsers?branch=${userinfo?.branch}&additional=all&role=employee,ceo,admin&action=request`,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.email}`,
+            },
+          }
+        );
 
-      const data = response?.data?.users || [];
-      return data;
+        const data = response?.data?.users || [];
+        return data;
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.warn("No users found:", error.response.data.message);
+          return [];
+        } else {
+          console.error("Error fetching users:", error);
+          throw new Error("Failed to fetch users");
+        }
+      }
     },
   });
 
-  const HandleAccept = (data) => {
-    console.log("======data===>", data);
-  };
-  const HandleChange = () => {};
+  const HandleAccept = async (data) => {
+    console.log(data);
+    const acceptedBudget = data.budget.requestBudget;
 
+    swal({
+      title: `The requested amount is $${acceptedBudget}`,
+      text: "Once accepted, you will not be able to change this!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willAccept) => {
+      // Add async here to handle async operations
+      if (willAccept) {
+        try {
+          // Use await to handle the asynchronous axios call
+          const response = await axiosBase.patch(
+            `/finance/acceptexpendreq/${data?._id}`,
+            { amount: acceptedBudget },
+            {
+              headers: {
+                Authorization: `Bearer ${user?.email}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log(response.data);
+            swal(response.data.message, {
+              icon: "success",
+            });
+            refetch(); // Make sure refetch is defined properly
+          } else {
+            console.log(response);
+            swal("Failed to accept budget expension request.", {
+              icon: "error",
+            });
+          }
+        } catch (error) {
+          // Use error.response to handle axios error messages from server
+          swal(error.response?.data?.message || "An error occurred", {
+            icon: "error",
+          });
+          console.error(error);
+        }
+      } else {
+        swal("You canceled the budget expansion");
+      }
+    });
+  };
+
+  // chnge amount
+  const HandleChange = async (e, data) => {
+    e.preventDefault();
+    const acceptedBudget = e.target.amount.value;
+    if (acceptedBudget <= 0) {
+      toast.error("Please enter amount more than 0");
+      return;
+    }
+
+    swal({
+      title: `The requested amount is $${acceptedBudget}`,
+      text: "Once accepted, you will not be able to change this!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willAccept) => {
+      // Add async here to handle async operations
+      if (willAccept) {
+        try {
+          // Use await to handle the asynchronous axios call
+          const response = await axiosBase.patch(
+            `/finance/acceptexpendreq/${data?._id}`,
+            { amount: acceptedBudget },
+            {
+              headers: {
+                Authorization: `Bearer ${user?.email}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log(response.data);
+            swal(response.data.message, {
+              icon: "success",
+            });
+            refetch(); // Make sure refetch is defined properly
+          } else {
+            console.log(response);
+            swal("Failed to accept budget expension request.", {
+              icon: "error",
+            });
+          }
+        } catch (error) {
+          // Use error.response to handle axios error messages from server
+          swal(error.response?.data?.message || "An error occurred", {
+            icon: "error",
+          });
+          console.error(error);
+        }
+      } else {
+        swal("You canceled the budget expansion");
+      }
+    });
+  };
   return (
     <div>
       <div>
@@ -55,7 +166,7 @@ export default function BudgetRequest() {
             <ButtonLoading />
           </p>
         ) : expendRequests && expendRequests?.length <= 0 ? (
-          <p className="text-center py-4 text-black">No data available</p>
+          <p className="text-center py-4 text-black">No request available</p>
         ) : (
           <div className=" shadow px-5">
             {expendRequests &&
@@ -81,34 +192,40 @@ export default function BudgetRequest() {
 
                   {/* body */}
                   <AccordionBody>
-                    <div className="font-medium">
+                    <div className="font-normal">
                       <p>
-                        Due time: {data?.budget?.allocationDate.split("T")[0]} -{" "}
-                        {data?.budget?.dueDate.split("T")[0]}
+                        Due time:{" "}
+                        <span className="font-semibold text-gray-500">
+                          {data?.budget?.allocationDate.split("T")[0]} -{" "}
+                          {data?.budget?.dueDate.split("T")[0]}
+                        </span>
                       </p>
                       <p>
                         Given budget:{" "}
-                        <span className="text-gray-700 font-semibold ">
-                          ${data?.budget?.givenBudget}
+                        <span className="font-semibold text-gray-500 ">
+                          ${data?.budget?.givenBudget.toFixed(2)}
                         </span>{" "}
                       </p>
                       <p>
                         Remaining budget:{" "}
-                        <span className="text-gray-700 font-semibold ">
-                          ${data?.budget?.remainingBudget}
+                        <span className="font-semibold text-gray-500">
+                          ${data?.budget?.remainingBudget.toFixed(2)}
                         </span>
                       </p>
                       <p>
                         Request budget:{" "}
-                        <span className="text-gray-700 font-semibold ">
-                          ${data?.budget?.requestBudget}
+                        <span className="font-semibold text-gray-500 ">
+                          ${data?.budget?.requestBudget.toFixed(2)}
                         </span>
                       </p>
                       <p>Request Note: {data?.budget?.requestNote}</p>
                     </div>
 
                     {openForm && (
-                      <form className="flex border border-gray-300 rounded-full mt-5">
+                      <form
+                        className="flex border border-gray-300 rounded-full mt-5"
+                        onSubmit={(e) => HandleChange(e, data)}
+                      >
                         <div className="relative w-full">
                           <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none ">
                             <MdAttachMoney className="text-gray-400" />

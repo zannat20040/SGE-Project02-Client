@@ -9,6 +9,7 @@ import { IoMail } from "react-icons/io5";
 import { MdAttachMoney } from "react-icons/md";
 import { PiSubtitlesThin } from "react-icons/pi";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
+import toast from "react-hot-toast";
 
 export default function RequestForExpend() {
   const { userinfo } = useUserInfo();
@@ -16,6 +17,7 @@ export default function RequestForExpend() {
   const [loading, setLoading] = useState(false);
   const axiosBase = useAxiosBase();
 
+  // directly accept the request
   const HandleBudgetExpend = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -23,6 +25,12 @@ export default function RequestForExpend() {
     const email = form.email.value;
     const amount = form.amount.value;
     const note = form.note.value;
+
+    if (amount <= 0) {
+      toast.error("Please enter amount more than 0");
+      setLoading(false);
+      return;
+    }
 
     const requestData = {
       email,
@@ -45,6 +53,7 @@ export default function RequestForExpend() {
       setLoading(false);
     }
   };
+
 
   return (
     <div>
