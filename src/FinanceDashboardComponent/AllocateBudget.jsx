@@ -21,7 +21,7 @@ export default function AllocateBudget() {
   const { userinfo } = useUserInfo();
   const axiosBase = useAxiosBase();
   const { user } = useContext(AuthContext);
-  const [message, setMessage] = useState({ id: null, error: "" }); // Proper initialization
+  const [message, setMessage] = useState({ id: null, error: "" });
 
   const {
     data: employeeDetails,
@@ -196,7 +196,7 @@ export default function AllocateBudget() {
                   <Button
                     disabled={employee?.budget?.dueDate}
                     type="submit"
-                    className={`rounded-full bg-primary-color border rounded-l-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-1/5`}
+                    className={`rounded-full bg-primary-color border rounded-l-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-2/5`}
                   >
                     Add this
                   </Button>
