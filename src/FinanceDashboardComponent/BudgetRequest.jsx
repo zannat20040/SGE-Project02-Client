@@ -266,12 +266,12 @@ console.log(user.email)
 
                     {openForm && (
                       <form
-                        className="flex border border-gray-300 rounded-full mt-5"
+                        className="flex md:flex-row flex-col border border-gray-300 md:rounded-full rounded-md mt-5"
                         onSubmit={(e) => HandleChange(e, data)}
                       >
                         <Button
                           onClick={() => setOpenForm(!openForm)}
-                          className={`rounded-full bg-primary-color border rounded-r-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-1/5`}
+                          className={`md:rounded-full rouned-md rounded-b-none bg-primary-color border md:rounded-r-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none md:w-1/5 w-full`}
                         >
                           Cancel
                         </Button>
@@ -290,7 +290,7 @@ console.log(user.email)
                         </div>
                         <Button
                           type="submit"
-                          className={`rounded-full bg-primary-color border rounded-l-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-2/5`}
+                          className={`md:rounded-full rouned-md rounded-t-none bg-primary-color border md:rounded-l-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none md:w-2/5 w-full`}
                         >
                           Add this
                         </Button>
@@ -299,8 +299,8 @@ console.log(user.email)
 
                     <div
                       className={`${
-                        openForm ? "mt-2 " : "mt-5"
-                      } flex gap-2 justify-end`}
+                        openForm ? "mt-2 " : "md:mt-5 mt-10"
+                      } flex md:flex-row flex-col gap-2 justify-end`}
                     >
                       {/* Allbuttons */}
 
@@ -309,21 +309,21 @@ console.log(user.email)
                           <Button
                             onClick={() => setOpenForm(!openForm)}
                             type="submit"
-                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
+                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none md:w-fit  `}
                           >
                             Change the Amount
                           </Button>
                           <Button
                             onClick={() => HandleAccept(data)}
                             type="button"
-                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
+                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none md:w-fit  `}
                           >
                             Accept
                           </Button>
                           <Button
                             onClick={() => HandleDeny(data)}
                             type="button"
-                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
+                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none md:w-fit `}
                           >
                             Deny
                           </Button>
