@@ -17,10 +17,10 @@ export default function BudgetManage() {
         activeroute2={"budget-manage"}
       />
 
-      <div className="grid grid-cols-5 gap-5 mt-3">
+      <div className="grid lg:grid-cols-5 grid-cols-1 lg:gap-5 space-y-5 lg:space-y-0 mt-3">
         <div className="bg-white px-6 py-10 col-span-3">
-          <div className="flex  justify-between gap-5 items-center">
-            <p className="font-semibold text-xl text-primary-color ">
+          <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-between gap-5 items-center">
+            <p className="font-semibold text-xl text-primary-color md:text-start text-center ">
               {selectedRadio === "allocate"
                 ? "Allocate the Budget"
                 : "Request for the Budget Expension"}

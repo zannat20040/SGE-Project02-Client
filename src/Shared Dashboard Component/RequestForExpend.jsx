@@ -10,12 +10,15 @@ import { MdAttachMoney } from "react-icons/md";
 import { PiSubtitlesThin } from "react-icons/pi";
 import useAxiosBase from "../Hooks & Context/useAxiosBase";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function RequestForExpend() {
   const { userinfo } = useUserInfo();
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const axiosBase = useAxiosBase();
+  const navigate = useNavigate();
+
 
   // directly accept the request
   const HandleBudgetExpend = async (e) => {
@@ -46,8 +49,18 @@ export default function RequestForExpend() {
       });
       swal("Great", response.data.message, "success");
       form.reset();
+      navigate(
+        userinfo?.role === "employee"
+          ? "/dashboard/employee/history"
+          : "/dashboard/ceo/allHistory"
+      );
     } catch (err) {
       swal("Ops", err.response.data.message, "error");
+      navigate(
+        userinfo?.role === "employee"
+          ? "/dashboard/employee/history"
+          : "/dashboard/ceo/allHistory"
+      );
     } finally {
       setLoading(false);
     }
@@ -121,7 +134,7 @@ export default function RequestForExpend() {
                 name="note"
                 required
                 className="bg-white hover:bg-gray-100 border-t outline-0 border-gray-200 text-sm block w-full ps-10 p-2.5 text-gray-800 focus:outline-none rounded-none h-full "
-                placeholder="Write your request note ...(optional)"
+                placeholder="Write your request note ....."
               />
             </div>
           </div>

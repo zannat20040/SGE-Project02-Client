@@ -105,7 +105,7 @@ export default function AllocateBudget() {
               {/* header */}
               <AccordionHeader
                 onClick={() => handleOpen(index + 1)}
-                className="flex justify-between items-center gap-x-5 border-0 p-5"
+                className="flex flex-wrap md:flex-nowrap justify-between items-center gap-x-5 border-0 p-5"
               >
                 <div className="flex flex-col items-start text-start w-full">
                   <p className="font-normal capitalize text-base">
@@ -172,7 +172,7 @@ export default function AllocateBudget() {
                   {/* form */}
                   <form
                     onSubmit={(e) => HandleBudgetAllocate(e, employee?._id)}
-                    className="flex justify-between bg-white mt-6 border-2 rounded-full "
+                    className="flex  justify-between bg-white mt-6 border-2 rounded-full "
                   >
                     <div className="relative w-full">
                       <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none ">
