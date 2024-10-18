@@ -21,8 +21,8 @@ export default function BudgetRequest() {
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   const [openForm, setOpenForm] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+console.log(user.email)
+  // data get
   const {
     data: expendRequests,
     isLoading,
@@ -54,6 +54,7 @@ export default function BudgetRequest() {
     },
   });
 
+  // accept function
   const HandleAccept = async (data) => {
     const acceptedBudget = data.budget.requestBudget;
 
@@ -101,7 +102,7 @@ export default function BudgetRequest() {
     });
   };
 
-  // chnge amount
+  // change amount function
   const HandleChange = async (e, data) => {
     e.preventDefault();
     const acceptedBudget = e.target.amount.value;
@@ -152,6 +153,54 @@ export default function BudgetRequest() {
       }
     });
   };
+
+  // deny function
+  const HandleDeny = (data) => {
+    const acceptedBudget = data.budget.requestBudget;
+
+    swal({
+      title: `The requested amount was $${acceptedBudget}`,
+      text: "Once denied the request, you will not be able to change this!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willAccept) => {
+      // Add async here to handle async operations
+      if (willAccept) {
+        try {
+          // Use await to handle the asynchronous axios call
+          const response = await axiosBase.patch(
+            `/finance/denyexpendreq/${data?._id}`, {},
+            {
+              headers: {
+                Authorization: `Bearer ${user?.email}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            swal(response.data.message, {
+              icon: "success",
+            });
+            refetch(); // Make sure refetch is defined properly
+          } else {
+            swal("Failed to accept budget expension request.", {
+              icon: "error",
+            });
+          }
+        } catch (error) {
+          // Use error.response to handle axios error messages from server
+          swal(error.response?.data?.message || "An error occurred", {
+            icon: "error",
+          });
+          // console.error(error);
+        }
+      } else {
+        swal("You have canceled the budget denial process.");
+      }
+    });
+  };
+
   return (
     <div>
       <div>
@@ -272,7 +321,7 @@ export default function BudgetRequest() {
                             Accept
                           </Button>
                           <Button
-                            // onClick={() => HandleDeny(data)}
+                            onClick={() => HandleDeny(data)}
                             type="button"
                             className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
                           >
