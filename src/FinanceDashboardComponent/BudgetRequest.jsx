@@ -190,26 +190,26 @@ export default function BudgetRequest() {
                       <p>
                         Due time:{" "}
                         <span className="font-semibold text-gray-500">
-                          {data?.budget?.allocationDate.split("T")[0]} -{" "}
-                          {data?.budget?.dueDate.split("T")[0]}
+                          {data?.budget?.allocationDate?.split("T")[0]} -{" "}
+                          {data?.budget?.dueDate?.split("T")[0]}
                         </span>
                       </p>
                       <p>
                         Given budget:{" "}
                         <span className="font-semibold text-gray-500 ">
-                          ${data?.budget?.givenBudget.toFixed(2)}
+                          ${data?.budget?.givenBudget?.toFixed(2)}
                         </span>{" "}
                       </p>
                       <p>
                         Remaining budget:{" "}
                         <span className="font-semibold text-gray-500">
-                          ${data?.budget?.remainingBudget.toFixed(2)}
+                          ${data?.budget?.remainingBudget?.toFixed(2)}
                         </span>
                       </p>
                       <p>
                         Request budget:{" "}
                         <span className="font-semibold text-gray-500 ">
-                          ${data?.budget?.requestBudget.toFixed(2)}
+                          ${data?.budget?.requestBudget?.toFixed(2)}
                         </span>
                       </p>
                       <p>Request Note: {data?.budget?.requestNote}</p>
@@ -220,6 +220,12 @@ export default function BudgetRequest() {
                         className="flex border border-gray-300 rounded-full mt-5"
                         onSubmit={(e) => HandleChange(e, data)}
                       >
+                        <Button
+                          onClick={() => setOpenForm(!openForm)}
+                          className={`rounded-full bg-primary-color border rounded-r-none border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-1/5`}
+                        >
+                          Cancel
+                        </Button>
                         <div className="relative w-full">
                           <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none ">
                             <MdAttachMoney className="text-gray-400" />
@@ -229,7 +235,7 @@ export default function BudgetRequest() {
                             required
                             type="number"
                             step="0.01"
-                            className=" rounded-l-full bg-white hover:bg-gray-100 rounded-none outline-none  text-sm block w-full ps-10 p-2.5 text-gray-800   h-full "
+                            className=" bg-white hover:bg-gray-100 rounded-none outline-none  text-sm block w-full ps-10 p-2.5 text-gray-800   h-full "
                             placeholder="Enter the amount"
                           />
                         </div>
@@ -247,22 +253,32 @@ export default function BudgetRequest() {
                         openForm ? "mt-2 " : "mt-5"
                       } flex gap-2 justify-end`}
                     >
-                      {/* form */}
-                      <Button
-                        onClick={() => setOpenForm(!openForm)}
-                        type="submit"
-                        className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
-                      >
-                        {openForm ? "Cancel" : " Change the Amount"}
-                      </Button>
+                      {/* Allbuttons */}
+
                       {openForm || (
-                        <Button
-                          onClick={() => HandleAccept(data)}
-                          type="button"
-                          className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
-                        >
-                          Accept the request
-                        </Button>
+                        <>
+                          <Button
+                            onClick={() => setOpenForm(!openForm)}
+                            type="submit"
+                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
+                          >
+                            Change the Amount
+                          </Button>
+                          <Button
+                            onClick={() => HandleAccept(data)}
+                            type="button"
+                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
+                          >
+                            Accept
+                          </Button>
+                          <Button
+                            // onClick={() => HandleDeny(data)}
+                            type="button"
+                            className={`rounded-full bg-primary-color border  border-primary-color font-medium hover:border-primary-color hover:bg-white hover:text-primary-color duration-400 hover:shadow-none w-fit `}
+                          >
+                            Deny
+                          </Button>
+                        </>
                       )}
                     </div>
                   </AccordionBody>
